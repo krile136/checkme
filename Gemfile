@@ -70,3 +70,5 @@ gem 'font-awesome-rails'
 
 gem 'compass-rails', '3.1.0'
 gem 'sprockets'
+
+gem 'materialize-sass'
