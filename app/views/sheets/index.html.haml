@@ -1,0 +1,89 @@
+%nav.white{role: "navigation"}
+  .nav-wrapper.container
+    = link_to "CheckMe！", "#",id: 'logo-container', class:"brand-logo orange-text text-darken-4"
+    %ul.right.hide-on-med-and-down
+      %li
+        = link_to "新規登録", "#", class: "black-text"
+      %li
+        = link_to "ログイン", "#", class: "black-text"
+    %ul#nav-mobile.sidenav
+      %li
+        = link_to "新規登録", "#", class: "black-text"
+      %li
+        = link_to "ログイン", "#", class: "black-text"
+    = link_to "#",class: "sidenav-trigger right","data-target": "nav-mobile" do
+      %i.material-icons.black-text menu
+
+#index-banner.parallax-container
+  .section.no-pad-bot
+    .container
+      %br/
+      %br/
+      %h1.header.center.teal-text.text-lighten-2 CheckMe！
+      .row.center
+        %h5.header.col.s12.light.white-text
+          チェックシートを作って
+          %br/
+          共有しよう
+      .row.center
+        = link_to "さぁ、始めよう", "#", class: "btn-large waves-effect waves-light teal lighten-1", id: "download-botton"
+      %br/
+      %br/
+  .parallax
+    = image_tag "background1.jpg"
+.container
+  .section
+    / Icon Section
+    .row
+      .col.s12.m4
+        .icon-block
+          %h2.center.brown-text
+            %i.material-icons.medium check_circle_outline
+          %h6.center
+            シンプルなチェックシート
+          %p.light 作るのにも、チェックを入れるのにも便利なシンプルなチェックシート。シートを作るのがメンドくさい？そんな時は公開されているシートを「プル」しちゃおう！
+      .col.s12.m4
+        .icon-block
+          %h2.center.brown-text
+            %i.material-icons.medium group
+          %h6.center チェックシートをシェア
+          %p.light 作ったチェックシートを仲間と共有してみよう。同じ目標に向かって、どれだけ進んでいるかも目視できて便利だね。
+      .col.s12.m4
+        .icon-block
+          %h2.center.brown-text
+            %i.material-icons.medium devices
+          %h6.center PCでも、スマホでも
+          %p.light お手持ちのPCでもスマホでも、チェックシートを作ったり、チェックしたり、共有したり、プルしたり。いつでもどこでも、忘れないように。
+%footer.page-footer.teal
+  .container
+    .row
+      .col.l6.s12
+        %h5.white-text Company Bio
+        %p.grey-text.text-lighten-4 We are a team of college students working on this project like it's our full time job. Any amount would help support and continue development on this project and is greatly appreciated.
+      .col.l3.s12
+        %h5.white-text Settings
+        %ul
+          %li
+            %a.white-text{:href => "#!"} Link 1
+          %li
+            %a.white-text{:href => "#!"} Link 2
+          %li
+            %a.white-text{:href => "#!"} Link 3
+          %li
+            %a.white-text{:href => "#!"} Link 4
+      .col.l3.s12
+        %h5.white-text Connect
+        %ul
+          %li
+            %a.white-text{:href => "#!"} Link 1
+          %li
+            %a.white-text{:href => "#!"} Link 2
+          %li
+            %a.white-text{:href => "#!"} Link 3
+          %li
+            %a.white-text{:href => "#!"} Link 4
+  .footer-copyright
+    .container
+      Made by
+      %a.brown-text.text-lighten-3{:href => "http://materializecss.com"} Materialize
+    
