@@ -1,0 +1,43 @@
+= render "shared/header"
+#new-user-parallax.parallax-container
+  .container
+    .row.login-form
+      %br/
+      %br/
+      %br/
+      .col.s12.m6.offset-m3
+        .card.hoverable
+          .card-content
+            %span.card-title.center 新規登録
+            .divider
+            .spacer_half
+            = form_with model: @user, url: user_registration_path, id: 'new_user', class: 'new_user',local: true do |f|
+              .form-inputs.row
+                .input-field.col.s12
+                  %i.material-icons.prefix email
+                  = f.email_field :email, autofocus: true, required: true
+                  = f.label :email
+                .input-field.col.s12
+                  %i.material-icons.prefix lock
+                  = f.password_field :password, autocomplete: "off", required: true
+                  = f.label :password
+                  %span.hint-text
+                    パスワードは
+                    = @minimum_password_length
+                    文字以上
+                .input-field.col.s12
+                  %i.material-icons.prefix lock
+                  = f.password_field :password_confirmation, autocomplete: "off", required: true
+                  = f.label :password_confirmation
+                  %span.hint-text
+                    再度パスワードを入力してください
+              .form-actions.center
+                = f.submit "登録", class: "btn waves-effect teal lighten-1 white-text"
+          .card-action
+            .devise-links
+              = render "devise/shared/links"
+  .parallax
+    = image_tag "background1.jpg"
+
+
+
