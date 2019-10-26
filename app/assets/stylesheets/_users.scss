@@ -1,7 +1,9 @@
+// 新規登録、ログイン画面のparallaxの高さを100vhに変更する
 #new-user-parallax{
   height: 100vh;
 }
 
+// inputフィールドがフォーカスした時の色を変更する
 .input-field .active {
   color: #26a69a!important;
 }

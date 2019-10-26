@@ -1,0 +1,20 @@
+%nav.white{role: "navigation"}
+  .nav-wrapper.container
+    = link_to "CheckMe！", root_path,id: 'logo-container', class:"brand-logo orange-text text-darken-4"
+    %ul.right.hide-on-med-and-down
+      %li
+        -# %i.material-icons.medium check_circle_outline
+        = link_to "新規登録", new_user_registration_path, class: "black-text"
+      %li
+        = link_to "ログイン", new_user_session_path, class: "black-text"
+    %ul#nav-mobile.sidenav
+      %li
+        = link_to new_user_registration_path, class: "black-text" do
+          %i.material-icons.medium how_to_reg
+          新規登録
+      %li
+        = link_to new_user_session_path, class: "black-text" do
+          %i.material-icons.medium directions_run
+          ログイン
+    = link_to "#",class: "sidenav-trigger right","data-target": "nav-mobile" do
+      %i.material-icons.black-text menu

@@ -1,19 +1,4 @@
-%nav.white{role: "navigation"}
-  .nav-wrapper.container
-    = link_to "CheckMe！", "#",id: 'logo-container', class:"brand-logo orange-text text-darken-4"
-    %ul.right.hide-on-med-and-down
-      %li
-        = link_to "新規登録", new_user_registration_path, class: "black-text"
-      %li
-        = link_to "ログイン", new_user_session_path, class: "black-text"
-    %ul#nav-mobile.sidenav
-      %li
-        = link_to "新規登録", new_user_registration_path, class: "black-text"
-      %li
-        = link_to "ログイン", new_user_session_path, class: "black-text"
-    = link_to "#",class: "sidenav-trigger right","data-target": "nav-mobile" do
-      %i.material-icons.black-text menu
-
+= render "shared/header"
 #index-banner.parallax-container
   .section.no-pad-bot
     .container
