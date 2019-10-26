@@ -1,0 +1,14 @@
+#new-user-parallax{
+  height: 100vh;
+}
+
+.input-field .active {
+  color: #26a69a!important;
+}
+.input-field .prefix.active {
+  color: #26a69a!important;
+}
+.row .input-field input:focus {
+  border-bottom: 1px solid #26a69a !important;
+  box-shadow: 0 1px 0 0 #26a69a !important
+}
