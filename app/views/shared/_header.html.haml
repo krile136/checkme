@@ -2,19 +2,46 @@
   .nav-wrapper.container
     = link_to "CheckMe！", root_path,id: 'logo-container', class:"brand-logo orange-text text-darken-4"
     %ul.right.hide-on-med-and-down
-      %li
-        -# %i.material-icons.medium check_circle_outline
-        = link_to "新規登録", new_user_registration_path, class: "black-text"
-      %li
-        = link_to "ログイン", new_user_session_path, class: "black-text"
+      - if user_signed_in?
+        %li
+          = link_to "マイページ", user_path(current_user.id), class: "black-text"
+        %li
+          = link_to "シートを作成", new_user_session_path, class: "black-text"
+        %li
+          = link_to "シートを探す", new_user_session_path, class: "black-text"
+        %li
+          = link_to "ログアウト", new_user_session_path, class: "red-text"
+      - else
+        %li
+          = link_to "新規登録", new_user_registration_path, class: "black-text"
+        %li
+          = link_to "ログイン", new_user_session_path, class: "black-text"
     %ul#nav-mobile.sidenav
-      %li
-        = link_to new_user_registration_path, class: "black-text" do
-          %i.material-icons.medium how_to_reg
-          新規登録
-      %li
-        = link_to new_user_session_path, class: "black-text" do
-          %i.material-icons.medium directions_run
-          ログイン
+      -if user_signed_in?
+        %li
+          = link_to  user_path(current_user.id), class: "black-text" do
+            %i.material-icons.medium person
+            マイページ
+        %li
+          = link_to "#", class: "black-text" do
+            %i.material-icons.medium create
+            シートを作る
+        %li
+          = link_to  "#", class: "black-text" do
+            %i.material-icons.medium find_in_page
+            シートを探す
+        %li
+          = link_to "#", class: "red-text" do
+            %i.material-icons.medium exit_to_app
+            ログアウト
+      -else
+        %li
+          = link_to new_user_registration_path, class: "black-text" do
+            %i.material-icons.medium how_to_reg
+            新規登録
+        %li
+          = link_to new_user_session_path, class: "black-text" do
+            %i.material-icons.medium directions_run
+            ログイン
     = link_to "#",class: "sidenav-trigger right","data-target": "nav-mobile" do
       %i.material-icons.black-text menu

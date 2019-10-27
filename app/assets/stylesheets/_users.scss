@@ -14,3 +14,58 @@
   border-bottom: 1px solid #26a69a !important;
   box-shadow: 0 1px 0 0 #26a69a !important
 }
+
+// テキストを中央ぞろえ（縦）
+.text-vert-center{
+  line-height: 33px;
+}
+// アイコンを中央ぞろえ（縦）
+.icon-vert-center{
+  vertical-align: middle;
+}
+.icon-in-text{
+  margin-left: 10px;
+}
+// シートのrowにフォーカスした時にjsで色ををつけるが
+// その領域の角を丸める
+.sheet-index{
+  border-radius: 20px;
+}
+
+// btn-flatのクラスをもつボタンがフォーカスされている時、透明に上書き
+.btn-flat:focus{
+  background-color: transparent;
+}
+
+// マイページのシートの右の：マークの設定
+.show_circle_btn{
+  padding: 0;
+  border-radius: 50%;
+  width: 36px;
+}
+// マイページのシートの右の:マークにマウスを重ねた時、色を変える
+.show_circle_btn:hover {
+  background: #b2dfdb;
+}
+
+// dropdownの内容を変更
+.dropdown-content {
+  background-color: #fff;
+  margin: 0;
+  display: none;
+  min-width: 200px;
+  overflow-y: auto;
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 9999;
+  transform-origin: 0 0;
+}
+.dropdown-content li > a, .dropdown-content li > span {
+  font-size: 12px;
+  color: #000000;
+  display: block;
+  line-height: 22px;
+  padding: 14px 16px;
+}
