@@ -1,6 +1,6 @@
 $(document).on('turbolinks:load', function () {
   // １行の高さ 60(px)
-  var col_height = 60;
+  var row_height = 60;
 
   //要素の取得
   var elements = document.getElementsByClassName("drag-and-drop");
@@ -8,6 +8,9 @@ $(document).on('turbolinks:load', function () {
   //要素内のクリックされた位置を取得するグローバル（のような）変数
   var x;
   var y;
+
+  // 空いている行のoffsetTopを記録しておく
+  var drag_row_top;
 
   // materializeのブロックは12個に分かれているが、その前提として
   // 画面幅の85%に縮小したものを分割している
@@ -25,6 +28,12 @@ $(document).on('turbolinks:load', function () {
     //クラス名に .drag-on を追加し、.drag-offを削除
     $(this).removeClass("drag-off");
     $(this).addClass("drag-on");
+
+    // 空いている行の初期値を設定
+    drag_row_top = this.offsetTop;
+
+    // 一番正面に持ってくる
+    $(this).css('z-index', 100);
 
     //タッチイベントとマウスのイベントの差異を吸収
     if (e.type === "mousedown") {
@@ -58,24 +67,20 @@ $(document).on('turbolinks:load', function () {
       var event = e.changedTouches[0];
     }
 
-    //フリックしたときに画面を動かさないようにデフォルト動作を抑制
-    e.preventDefault();
-
     // ドラッグした行を動かす前に、他の行の上下の定義づけをする
     // 移動アニメーション中の時は定義づけをスキップする
     $.each(drag_off_list, function () {
-      // console.log(this.offsetTop);
-      if (drag.offsetTop <= this.offsetTop && this.offsetTop % col_height == 0) {
+      if (drag.offsetTop <= this.offsetTop && this.offsetTop % row_height == 0) {
         $(this).addClass(".drag_over");
       } else {
         $(this).addClass(".drag_under");
       }
     });
-    // console.log(drag.style.top);
+
     //マウスが動いた場所に要素を動かす（縦移動のみ）
     drag.style.top = event.pageY - y + "px";
-    if (drag.offsetTop < col_height / 2) {
-      drag.style.top = col_height / 2 + "px";
+    if (drag.offsetTop < row_height / 2) {
+      drag.style.top = row_height / 2 + "px";
     }
     // 本アプリは縦移動のみだが、materializeのコンテンツを自由に移動させる時は
     // offsetの分だけblock（＝１ブロックの横幅が入っている）を引いてやれば
@@ -87,15 +92,17 @@ $(document).on('turbolinks:load', function () {
     $.each(drag_off_list, function () {
       if ($(this).hasClass(".drag_over")) {
         if (drag.offsetTop > this.offsetTop) {
-          $(this).animate({ top: this.offsetTop - col_height + "px" }, 'fast');
+          $(this).animate({ top: this.offsetTop - row_height + "px" }, 'fast');
           $(this).removeClass(".drag_over");
           $(this).addClass(".drag_under");
+          drag_row_top += row_height;
         }
       } else if ($(this).hasClass(".drag_under")) {
         if (drag.offsetTop <= this.offsetTop) {
-          $(this).animate({ top: this.offsetTop + col_height + "px" }, 'fast');
+          $(this).animate({ top: this.offsetTop + row_height + "px" }, 'fast');
           $(this).removeClass(".drag_under");
           $(this).addClass(".drag_over");
+          drag_row_top -= row_height;
         }
       }
     });
@@ -115,20 +122,24 @@ $(document).on('turbolinks:load', function () {
 
     // 一番下の行の位置を取得しつつ、.drag_underと.drag_overを削除
     var last_list_y = 0;
+    var top_list_y = 100;
     $.each(drag_off_list, function () {
       last_list_y = Math.max(last_list_y, this.offsetTop);
+      top_list_y = Math.min(top_list_y, this.offsetTop);
       $(this).removeClass(".drag_under");
       $(this).removeClass(".drag_over");
     });
 
-    // ドラッグした行が一番下の行よりも下に移動していた場合、一番下に来るように修正
-    if (drag.offsetTop >= (last_list_y + 57)) {
-      $(".drag-on").animate({ top: last_list_y + col_height + "px" }, 'fast');
+    if (drag.offsetTop > last_list_y) {                                       // ドラッグした行が一番下の行よりも下に移動していた場合、一番下に来るように修正
+      $(drag).animate({ top: last_list_y + row_height + "px" }, 'fast');
+    } else if (drag.offsetTop < (row_height * 2) && top_list_y == 100) {      // ドラッグした行が一番上（offsetTop < 60)に移動していた場合、一番上に来るように修正
+      $(drag).animate({ top: row_height + "px" }, 'fast');
+    } else {                                                                  // 行と行の間で止まった時、間に綺麗に収める
+      $(drag).animate({ top: drag_row_top + "px" }, 'fast');
     }
-    // ドラッグした行が一番上（offsetTop < 60)に移動していた場合、一番上に来るように修正
-    if (drag.offsetTop < col_height) {
-      $(".drag-on").animate({ top: col_height + "px" }, 'fast');
-    }
+
+    // z-indexを1まで下げていく
+    $(drag).animate({ zIndex: 0 }, 'fast');
 
     //ムーブベントハンドラの消去
     document.body.removeEventListener("mousemove", mmove, false);
