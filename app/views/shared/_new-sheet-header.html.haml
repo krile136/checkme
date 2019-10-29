@@ -1,0 +1,50 @@
+%nav.white{role: "navigation"}
+  .nav-wrapper.container
+    = link_to "シートタイトル大", root_path,id: 'logo-container', class:"brand-logo orange-text text-darken-4 hide-on-med-and-down"
+    = link_to "シートタイトル中", root_path,id: 'logo-container', class:"orange-text text-darken-4 hide-on-large-only hide-on-small-only"
+    = link_to "シートタイトル小", root_path,id: 'logo-container', class:"orange-text text-darken-4 hide-on-med-and-up"
+    %ul.right.hide-on-med-and-down
+      - if user_signed_in?
+        %li
+          = link_to "保存する", "#", class: "black-text"
+        %li
+          = link_to "新しいシートを作る", "#", class: "black-text"
+        %li
+          = link_to "タイトルを編集", "#", class: "black-text"
+        %li
+          = link_to "TOPへ戻る", root_path, class: "black-text"
+        %li
+          = link_to "マイページへ戻る", user_path(current_user.id), class: "black-text"
+    %ul#nav-mobile.sidenav
+      -if user_signed_in?
+        %li
+          = link_to "#", class: "black-text" do
+            %i.material-icons.medium person
+            保存する
+        %li
+          = link_to "#", class: "black-text" do
+            %i.material-icons.medium create
+            新しいシートを作る
+        %li
+          = link_to  "#", class: "black-text" do
+            %i.material-icons.medium find_in_page
+            タイトルを編集する
+        %li
+          = link_to root_path, class: "red-text" do
+            %i.material-icons.medium exit_to_app
+            トップへ戻る
+        %li
+          = link_to user_path(current_user.id), class: "red-text" do
+            %i.material-icons.medium exit_to_app
+            マイページへ戻る
+      -else
+        %li
+          = link_to new_user_registration_path, class: "black-text" do
+            %i.material-icons.medium how_to_reg
+            新規登録
+        %li
+          = link_to new_user_session_path, class: "black-text" do
+            %i.material-icons.medium directions_run
+            ログイン
+    = link_to "#",class: "sidenav-trigger right","data-target": "nav-mobile" do
+      %i.material-icons.black-text menu

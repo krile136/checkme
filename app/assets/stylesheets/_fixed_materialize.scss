@@ -69,3 +69,31 @@
   line-height: 22px;
   padding: 14px 16px;
 }
+
+// sheet#newで使うカードのクラスを書き換える
+#sheet-new{
+  position: relative;
+  .row{
+    margin-bottom: 0;
+  }
+  .card{
+    margin: 0;
+    margin-bottom: 7px;
+    .card-content{
+      padding: 0;
+      height: 50px;
+      border-radius: 0 0 0 0;
+      .card-text{
+        display: block;
+        line-height: 50px;
+        margin-left: 10px;
+      }
+    }
+  }
+}
+
+ul {
+    margin: auto;
+    width: 40%;
+    text-align: center;
+}
