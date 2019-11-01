@@ -5,7 +5,14 @@
 // を追加し、高さを残りのページ幅とすることでページのどこをクリックしてもメニューが閉じるようにする。
 
 $(document).on('turbolinks:load', function () {
+  dropdown_click_full();
   var body_h = $('body').height();
   var window_h = innerHeight;
-  $('.click_for_dropdown').height(Math.max(0, window_h - body_h));
+  var added_height = Math.max(0, window_h - body_h);
+  $('.click_for_dropdown').height(added_height);
 });
+
+function dropdown_click_full() {
+  var fixed_added_height = Math.max(0, $('.click_for_dropdown').height() - row_height);
+  $('.click_for_dropdown').height(fixed_added_height);
+}
