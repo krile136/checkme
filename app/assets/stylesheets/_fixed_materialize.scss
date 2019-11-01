@@ -90,4 +90,17 @@
       }
     }
   }
+  .row_container{
+    width: 100%;
+    height: calc(360px + 30px);
+  }
+  .button_field{
+    width: 90%;
+  }
+  .row_add_button{
+    float: right;
+  }
+  .click_for_dropdown{
+    width: 100%;
+  }
 }

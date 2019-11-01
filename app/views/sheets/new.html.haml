@@ -2,36 +2,63 @@
 .container#sheet-new
   %br/
   %br/
-  .row
-    .col.s12.m10.offset-m1.drag-and-drop.top-1.drag-off
-      .card.green.lighten-5
-        .card-content.black-text
-          %span.card-text 見出し１
-  .row
-    .col.s11.offset-s1.m9.offset-m2.drag-and-drop.top-2.drag-off
-      .card.lime.lighten-5
-        .card-content.black-text
-          %span.card-text チェック項目１
-  .row
-    .col.s11.offset-s1.m9.offset-m2.drag-and-drop.top-3.drag-off
-      .card.lime.lighten-5
-        .card-content.black-text
-          %span.card-text チェック項目２
-  .row
-    .col.s12.m10.offset-m1.drag-and-drop.top-4.drag-off
-      .card.green.lighten-5
-        .card-content.black-text
-          %span.card-text 見出し２
-  .row
-    .col.s11.offset-s1.m9.offset-m2.drag-and-drop.top-5.drag-off
-      .card.lime.lighten-5
-        .card-content.black-text
-          %span.card-text チェック項目３
-  .row
-    .col.s11.offset-s1.m9.offset-m2.drag-and-drop.top-6.drag-off
-      .card.lime.lighten-5
-        .card-content.black-text
-          %span.card-text チェック項目４
+  .row_container
+    .row
+      .col.s12.m10.offset-m1.drag-and-drop.top-1.drag-off
+        .card.green.lighten-5
+          .card-content.black-text
+            %span.card-text 見出し１
+    .row
+      .col.s11.offset-s1.m9.offset-m2.drag-and-drop.top-2.drag-off
+        .card.lime.lighten-5
+          .card-content.black-text
+            %span.card-text チェック項目１
+    .row
+      .col.s11.offset-s1.m9.offset-m2.drag-and-drop.top-3.drag-off
+        .card.lime.lighten-5
+          .card-content.black-text
+            %span.card-text チェック項目２
+    .row
+      .col.s12.m10.offset-m1.drag-and-drop.top-4.drag-off
+        .card.green.lighten-5
+          .card-content.black-text
+            %span.card-text 見出し２
+    .row
+      .col.s11.offset-s1.m9.offset-m2.drag-and-drop.top-5.drag-off
+        .card.lime.lighten-5
+          .card-content.black-text
+            %span.card-text チェック項目３
+    .row
+      .col.s11.offset-s1.m9.offset-m2.drag-and-drop.top-6.drag-off
+        .card.lime.lighten-5
+          .card-content.black-text
+            %span.card-text チェック項目４
+  .row.button_field
+    = link_to "#", class: "dropdown-trigger btn-floating row_add_button red","data-target": "dropdown1" do
+      %i.material-icons.small.icon-vert-center.center add
+    %ul#dropdown1.dropdown-content
+      %li
+        = link_to "" do
+          %i.material-icons text_fields
+          名前を変更
+      %li
+        = link_to "" do
+          %i.material-icons delete
+          削除
+.click_for_dropdown
+  -# .btn-floating.btn-large.waves-effect.waves-light.red.row_add_button
+  -# = link_to "#", class: "col s1 m1 btn-floating btn-large waves-effect waves-light red dropdown-trigger","data-target": "dropdown2" do
+  -#   %i.material-icons add
+  -# %ul#dropdown2.dropdown-content
+  -#   %li
+  -#     = link_to "" do
+  -#       %i.material-icons text_fields
+  -#       名前を変更
+  -#   %li
+  -#     = link_to "" do
+  -#        %i.material-icons delete
+  -#       削除
+
 
 
 
