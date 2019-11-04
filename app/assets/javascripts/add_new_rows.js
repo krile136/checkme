@@ -8,7 +8,7 @@ $(document).on('turbolinks:load', function () {
                         <div class="card-text">
                           見出し
                           <a class="card-button btn-flat show_circle_btn mouse_on_cursor_move">
-                            <i class="material-icons small card-icon-vert">menu</i>
+                            <i class="material-icons small card-icon-vert">sort</i>
                           </a>
                         </div>
                       </div>
@@ -27,7 +27,7 @@ $(document).on('turbolinks:load', function () {
                         <div class="card-text">
                           チェック項目
                           <a class="card-button btn-flat show_circle_btn mouse_on_cursor_move">
-                            <i class="material-icons small card-icon-vert">menu</i>
+                            <i class="material-icons small card-icon-vert">sort</i>
                           </a>
                         </div>
                       </div>
