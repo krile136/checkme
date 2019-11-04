@@ -9,15 +9,39 @@ var y;
 var drag_row_top;
 
 // ドラッグ&ドロップイベントを付与するための配列
-var elemtents
+var elemtents;
 
 // 移動が終了したあとのモーションが終わるためのフラグ
 var is_finish_motion = false;
 
+var is_button_click = false;
+
+var parent_card;
+
 $(document).on('turbolinks:load', function () {
 
   //要素の取得
-  elements = $('.drag-and-drop');
+  // elements = $('.drag-and-drop');
+  elements = $('.card-button');
+  console.log(elements.length);
+  // $('body').on('mousedown', function () {
+  //   if (is_button_click) {
+  //     console.log("trueの状態だね");
+  //     is_button_click = false;
+  //     console.log("falseにしたよ");
+  //   } else {
+  //     console.log("falseの状態だね");
+  //   }
+  // })
+
+
+  // $('.card-button').on("mousedown", function () {
+  //   is_button_click = true;
+  //   console.log("重なってるよ(mousedown");
+  //   instances.dropdown('open');
+  // });
+
+
 
   //マウスが要素内で押されたとき、又はタッチされたとき発火
   for (var i = 0; i < elements.length; i++) {
@@ -28,19 +52,25 @@ $(document).on('turbolinks:load', function () {
 })
 //マウスが押された際の関数
 function mdown(e) {
+  e.preventDefault();
   if (!is_finish_motion) {
 
-    e.preventDefault();
+    parent_card = $(this).parent().parent().parent().parent();
+    // console.log($(this).parent().parent().parent().parent());
 
     //クラス名に .drag-on を追加し、.drag-offを削除
-    $(this).removeClass("drag-off");
-    $(this).addClass("drag-on");
+    // $(this).removeClass("drag-off");
+    // $(this).addClass("drag-on");
+    parent_card.removeClass("drag-off");
+    parent_card.addClass("drag-on");
 
     // 空いている行の初期値を設定
-    drag_row_top = this.offsetTop;
+    // drag_row_top = this.offsetTop;
+    drag_row_top = parent_card[0].offsetTop;
 
     // 一番正面に持ってくる
-    $(this).css('z-index', 100);
+    // $(this).css('z-index', 100);
+    parent_card.css('z-index', 100);
 
     //タッチイベントとマウスのイベントの差異を吸収
     if (e.type === "mousedown") {
@@ -49,9 +79,33 @@ function mdown(e) {
       var event = e.changedTouches[0];
     }
 
+    // console.log("parent_card= ", parent_card);
+    // console.log("left= ", parent_card[0].offsetLeft);
+    // console.log("top=", parent_card[0].offsetTop);
     //要素内の相対座標を取得
-    x = event.pageX - this.offsetLeft
-    y = event.pageY - this.offsetTop
+    // x = event.pageX - this.offsetLeft
+    // y = event.pageY - this.offsetTop
+    x = event.pageX - parent_card[0].offsetLeft
+    y = event.pageY - parent_card[0].offsetTop
+    // console.log("x=", x);
+    // console.log("y=", y);
+
+
+    // ドラッグされていない他の要素を取得
+    var drag_off_list = $(".drag-off");
+
+    // var drag = $(this)[0];
+    var drag = parent_card[0];
+
+    // ドラッグした行を動かす前に、他の行の上下の定義づけをする
+    // 移動アニメーション中の時は定義づけをスキップする
+    $.each(drag_off_list, function () {
+      if (drag.offsetTop <= this.offsetTop && this.offsetTop % row_height == 0) {
+        $(this).addClass(".drag_over");
+      } else {
+        $(this).addClass(".drag_under");
+      }
+    });
 
     //ムーブイベントにコールバック
     document.body.addEventListener("mousemove", mmove, false);
@@ -75,16 +129,6 @@ function mmove(e) {
     var event = e.changedTouches[0];
   }
 
-  // ドラッグした行を動かす前に、他の行の上下の定義づけをする
-  // 移動アニメーション中の時は定義づけをスキップする
-  $.each(drag_off_list, function () {
-    if (drag.offsetTop <= this.offsetTop && this.offsetTop % row_height == 0) {
-      $(this).addClass(".drag_over");
-    } else {
-      $(this).addClass(".drag_under");
-    }
-  });
-
   //マウスが動いた場所に要素を動かす（縦移動のみ）
   drag.style.top = event.pageY - y + "px";
   if (drag.offsetTop < row_height / 2) {
@@ -98,7 +142,10 @@ function mmove(e) {
         $(this).animate({ top: this.offsetTop - row_height + "px" }, 'fast');
         $(this).removeClass(".drag_over");
         $(this).addClass(".drag_under");
+        console.log(drag_row_top);
+        console.log(row_height);
         drag_row_top += row_height;
+        console.log(drag_row_top);
       }
     } else if ($(this).hasClass(".drag_under")) {
       if (drag.offsetTop <= this.offsetTop) {
@@ -106,8 +153,27 @@ function mmove(e) {
         $(this).removeClass(".drag_under");
         $(this).addClass(".drag_over");
         drag_row_top -= row_height;
+        console.log(drag_row_top);
       }
     }
+    // $.each(drag_off_list, function () {
+    //   if (parent_card.hasClass(".drag_over")) {
+    //     if (drag.offsetTop > parent_card[0].offsetTop) {
+    //       parent_card[0].animate({ top: parent_card[0].offsetTop - row_height + "px" }, 'fast');
+    //       parent_card[0].removeClass(".drag_over");
+    //       parent_card[0].addClass(".drag_under");
+    //       drag_row_top += row_height;
+    //       console.log(drag_row_top);
+    //     }
+    //   } else if (parent_card.hasClass(".drag_under")) {
+    //     if (drag.offsetTop <= parent_card[0].offsetTop) {
+    //       parent_card[0].animate({ top: parent_card[0].offsetTop + row_height + "px" }, 'fast');
+    //       parent_card[0].removeClass(".drag_under");
+    //       parent_card[0].addClass(".drag_over");
+    //       drag_row_top -= row_height;
+    //       console.log(drag_row_top);
+    //     }
+    //   }
   });
 
   //マウスボタンが離されたときに発火

@@ -1,7 +1,8 @@
 .drag-and-drop {
-  cursor: move;
   position: absolute;
-  // z-index: 1000;
+}
+.mouse_on_cursor_move{
+	  cursor: move;
 }
 .drag-on {
   z-index: 1001;

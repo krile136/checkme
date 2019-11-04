@@ -5,7 +5,12 @@ $(document).on('turbolinks:load', function () {
                   <div class="col s12 m10 offset-m1 drag-and-drop drag-off" style="top:${added_height}px">
                     <div class="card green lighten-5">
                       <div class="card-content black-text">
-                        <span class="card-text">見出し</span>
+                        <div class="card-text">
+                          見出し
+                          <a class="card-button btn-flat show_circle_btn mouse_on_cursor_move">
+                            <i class="material-icons small card-icon-vert">menu</i>
+                          </a>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -19,7 +24,12 @@ $(document).on('turbolinks:load', function () {
                   <div class="col s11 offset-s1 m9 offset-m2 drag-and-drop drag-off" style="top:${added_height}px">
                     <div class="card lime lighten-5">
                       <div class="card-content black-text">
-                        <span class="card-text">チェック項目</span>
+                        <div class="card-text">
+                          チェック項目
+                          <a class="card-button btn-flat show_circle_btn mouse_on_cursor_move">
+                            <i class="material-icons small card-icon-vert">menu</i>
+                          </a>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -31,7 +41,7 @@ $(document).on('turbolinks:load', function () {
   function add_col_html(html, added_height) {
     $('.row_container').height(added_height + 30);
     $('.row_container').append(html);
-    elements = $('.drag-and-drop');
+    elements = $('.card-button');
     for (var i = 0; i < elements.length; i++) {
       elements[i].addEventListener("mousedown", mdown, { passive: false });
       elements[i].addEventListener("touchstart", mdown, { passive: false });

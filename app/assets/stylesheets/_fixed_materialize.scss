@@ -44,7 +44,7 @@
   width: 36px;
 }
 // マイページのシートの右の:マークにマウスを重ねた時、色を変える
-.show_circle_btn:hover {
+.user_show_hover:hover {
   background: #b2dfdb;
 }
 
@@ -86,8 +86,22 @@
       .card-text{
         display: block;
         line-height: 50px;
-        margin-left: 10px;
+        margin-left: 15px;
       }
+      .card-button{
+        display: block;
+        float: right;
+        width: 50px;
+        height: 50px;
+        position: relative;
+      }
+      .card-icon-vert{
+        position: absolute;
+        top: 7px;
+        left: 15px;
+        z-index: 3;
+      }
+
     }
   }
   .row_container{
