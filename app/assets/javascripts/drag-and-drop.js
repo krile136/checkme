@@ -24,11 +24,16 @@ var parent_card;
 // 画面幅の85%に縮小したものを分割している
 var block = innerWidth * 0.85 / 12;
 
+// 垂直or水平移動のフラグ管理
 var is_event_vert = true;
 var is_event_decide = false;
 
-// 左に行をずらすときの最大値
+// 左に行をずらすときの最大値（ピクセルだけど計算用にintにしている）
 var left_limit = -100;
+
+// rowの裏に隠れているボタンのrightの位置
+left_default = 60;
+right_default = 15;
 
 $(document).on('turbolinks:load', function () {
 
@@ -53,12 +58,15 @@ function mdown(e) {
   $.each(elements, function () {
     if ($(this)[0].style.left == (left_limit + 'px')) {
       $(this).animate({ left: 0 + "px" }, 'fast');
+      var right = $(this).find(".back-btn--right");
+      var left = $(this).find(".back-btn--left");
+      $(right).animate({ right: right_default + "px" }, 'fast');
+      $(left).animate({ right: left_default + "px" }, 'fast');
     }
   });
 
   // 親のカード情報を取得
   parent_card = $(this).parent().parent().parent().parent();
-  console.log("parent_left= ", parent_card[0].style.left);
 
   if (!is_finish_motion && parent_card[0].style.left != (left_limit + "px")) {
 
@@ -170,11 +178,16 @@ function mmove(e) {
           drag_row_top -= row_height;
         }
       }
+      console.log(drag_row_top);
     });
   } else {                                     // 水平移動の時
     left_limit = -100
     var slide_amount = Math.max(left_limit, Math.min(0, event.pageX - x - block));
     drag.style.left = slide_amount + "px";
+    var right = $('.drag-on').find(".back-btn--right");
+    var left = $('.drag-on').find(".back-btn--left");
+    right[0].style.right = right_default + slide_amount + "px";
+    left[0].style.right = left_default + slide_amount + "px";
   }
   //マウスボタンが離されたときに発火
   drag.addEventListener("mouseup", mup, false);
@@ -203,20 +216,29 @@ function mup(e) {
     } else if (drag.offsetTop < (row_height * 2) && top_list_y == 100) {      // ドラッグした行が一番上（offsetTop < 60)に移動していた場合、一番上に来るように修正
       $(drag).animate({ top: row_height + "px" }, 'fast');
     } else {                                                                  // 行と行の間で止まった時、間に綺麗に収める
+      console.log("途中だよ");
       $(drag).animate({ top: drag_row_top + "px" }, 'fast');
     }
   } else {                      //水平移動が終了した時
     finished_x = event.pageX - x - block;
     if (finished_x <= (left_limit * 0.4)) {     // limitの4割以上左にスライドしていれば、リミットまで、そうでなければ初期いちに戻す
       $(drag).animate({ left: left_limit + "px" }, 'fast');
+      var right = $('.drag-on').find(".back-btn--right");
+      var left = $('.drag-on').find(".back-btn--left");
+      $(right).animate({ right: right_default + left_limit + "px" }, 'fast');
+      $(left).animate({ right: left_default + left_limit + "px" }, 'fast');
     } else {
       $(drag).animate({ left: 0 + "px" }, 'fast');
+      var right = $('.drag-on').find(".back-btn--right");
+      var left = $('.drag-on').find(".back-btn--left");
+      $(right).animate({ right: right_default + "px" }, 'fast');
+      $(left).animate({ right: left_default + "px" }, 'fast');
     }
   }
   // 縦移動or横移動の決定フラグをfalseにする
   is_event_decide = false;
   // z-indexを0まで下げていく
-  $(drag).animate({ zIndex: 0 }, 'fast');
+  $(drag).animate({ zIndex: 2 }, 'fast');
 
   //ムーブベントハンドラの消去
   document.body.removeEventListener("mousemove", mmove, false);

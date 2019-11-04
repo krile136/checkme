@@ -1,11 +1,23 @@
 .drag-and-drop {
-  position: absolute;
+	position: absolute;
+	z-index: 2;
 }
 .mouse_on_cursor_move{
 	  cursor: move;
 }
 .drag-on {
   z-index: 1001;
+}
+.back-btn{
+	&--right{
+		right: 15px;
+	}
+	&--left{
+		right: 60px;
+	}
+	z-index: 0;
+	top: 7px;
+	position: absolute;
 }
 .top{
   &-1{
