@@ -45,6 +45,26 @@ $(document).on('turbolinks:load', function () {
     elements[i].addEventListener("mousedown", mdown, { passive: false });
     elements[i].addEventListener("touchstart", mdown, { passive: false });
   }
+
+  // 削除ボタンが押されたとき、カードを削除する
+  $('.modal-delete').on('click', function (e) {
+    modal_delete(e, this);
+  });
+
+  // 編集ボタンが押されたとき、カードの中身のテキストをモーダル中のinputに反映させる
+  $('.back-btn--left').on('click', function (e) {
+    modal_reflect(e, this);
+  });
+
+  // モーダルウィンドウのキャンセルが押されたとき
+  $('.modal-cancel').on('click', function (e) {
+    modal_cancel(e);
+  });
+
+  // モーダルウィンドウの変更が押されたとき
+  $('.modal-change').on('click', function (e) {
+    modal_update(e, this);
+  })
 })
 
 //マウスが押された際の関数
@@ -62,6 +82,7 @@ function mdown(e) {
       var left = $(this).find(".back-btn--left");
       $(right).animate({ right: right_default + "px" }, 'fast');
       $(left).animate({ right: left_default + "px" }, 'fast');
+      $(this).animate({ zIndex: 1 }, 'fast');
     }
   });
 
@@ -178,7 +199,6 @@ function mmove(e) {
           drag_row_top -= row_height;
         }
       }
-      console.log(drag_row_top);
     });
   } else {                                     // 水平移動の時
     left_limit = -100
@@ -216,29 +236,32 @@ function mup(e) {
     } else if (drag.offsetTop < (row_height * 2) && top_list_y == 100) {      // ドラッグした行が一番上（offsetTop < 60)に移動していた場合、一番上に来るように修正
       $(drag).animate({ top: row_height + "px" }, 'fast');
     } else {                                                                  // 行と行の間で止まった時、間に綺麗に収める
-      console.log("途中だよ");
       $(drag).animate({ top: drag_row_top + "px" }, 'fast');
     }
+    // z-indexを1まで下げていく
+    $(drag).animate({ zIndex: 1 }, 'fast');
   } else {                      //水平移動が終了した時
     finished_x = event.pageX - x - block;
-    if (finished_x <= (left_limit * 0.4)) {     // limitの4割以上左にスライドしていれば、リミットまで、そうでなければ初期いちに戻す
+    if (finished_x <= (left_limit * 0.4)) {     // limitの4割以上左にスライドしていれば、リミットまで、そうでなけれ初期位置に戻す
       $(drag).animate({ left: left_limit + "px" }, 'fast');
       var right = $('.drag-on').find(".back-btn--right");
       var left = $('.drag-on').find(".back-btn--left");
       $(right).animate({ right: right_default + left_limit + "px" }, 'fast');
       $(left).animate({ right: left_default + left_limit + "px" }, 'fast');
+      // z-indexを1まで下げていく
+      $(drag).animate({ zIndex: 2 }, 'fast');
     } else {
       $(drag).animate({ left: 0 + "px" }, 'fast');
       var right = $('.drag-on').find(".back-btn--right");
       var left = $('.drag-on').find(".back-btn--left");
       $(right).animate({ right: right_default + "px" }, 'fast');
       $(left).animate({ right: left_default + "px" }, 'fast');
+      // z-indexを2まで下げていく
+      $(drag).animate({ zIndex: 1 }, 'fast');
     }
   }
   // 縦移動or横移動の決定フラグをfalseにする
   is_event_decide = false;
-  // z-indexを0まで下げていく
-  $(drag).animate({ zIndex: 2 }, 'fast');
 
   //ムーブベントハンドラの消去
   document.body.removeEventListener("mousemove", mmove, false);
@@ -250,6 +273,7 @@ function mup(e) {
   reset_classes();
 }
 
+// マウスを話したとき、しばらくクリックやタッチ操作を無効にする
 function prevent_click_and_touch() {
   is_finish_motion = true;
   setTimeout(function () {
@@ -268,5 +292,51 @@ function reset_classes() {
     $(this).addClass("drag-off");
   });
 }
+
+// モーダル関係の関数
+function modal_cancel(e) {
+  e.preventDefault();
+}
+
+function modal_update(e, elem) {
+  e.preventDefault();
+  var parent = $(elem).parent().parent().parent();
+  var text_content = parent.find('#text-content');
+  var input_text = parent.find('#autocomplete-input').val();
+  text_content.text(input_text);
+}
+
+function modal_delete(e, elem) {
+  e.preventDefault();
+  var delete_branch = $(elem).parent().parent().parent();
+  var branch_top = delete_branch[0].offsetTop;
+  delete_branch.parent().remove();
+
+  // 削除する行より下の行を上に動かす
+  elements = $('.drag-and-drop');
+  $.each(elements, function () {
+    if ($(this)[0].offsetTop > branch_top) {
+      $(this).animate({ top: $(this)[0].offsetTop - row_height + "px" }, 'fast');
+    }
+  });
+  $('.row_container').animate({ height: $(".row_container").height() - row_height }, 'fast');
+
+  // 画面のクリック有効範囲の調整
+  dropdown_click_full(false);
+}
+function modal_reflect(e, elem) {
+  e.preventDefault();
+  var parent = $(elem).parent();
+  var text_content = parent.find('#text-content').text();
+  var input_field = parent.find('#autocomplete-input')
+  input_field.val(text_content);
+}
 // このコードはhttps://q-az.net/elements-drag-and-drop/
 // を元に開発されています
+
+// なぜ水平と垂直でZ-indexのanimate先の数字を変えているのか?
+// 見出しやキャンセルするときのモーダルウィンドウを表示するとき、どうやらモーダルの
+// z-indexは親依存になると見られる。
+// よって、垂直移動した行は常に水平移動した行よりも後ろになっている必要がある。
+// したがって、垂直移動の時は1に、水平移動したときは2になるようにして常に
+// 他のカードよりも水平移動したカードが上になるように設定している。

@@ -83,6 +83,11 @@
       padding: 0;
       height: 50px;
       border-radius: 0 0 0 0;
+      #text-content{
+        width: calc(100% - 50px);
+        float: left;
+        display: block;
+      }
       .card-text{
         display: block;
         line-height: 50px;
@@ -99,14 +104,13 @@
         position: absolute;
         top: 7px;
         left: 15px;
-        z-index: 3;
+        // z-index: 3;
       }
 
     }
   }
   .row_container{
     width: 100%;
-    height: calc(360px + 30px);
   }
   .button_field{
     width: 90%;

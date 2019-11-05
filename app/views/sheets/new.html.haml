@@ -5,62 +5,60 @@
   .row_container
     .row
       .col.s12.m10.offset-m1.drag-and-drop.top-1.drag-off
-        .show_circle_btn.btn.back-btn.back-btn--right
-        .show_circle_btn.btn.back-btn.back-btn--left
+        .show_circle_btn.btn.back-btn.back-btn--right.red.modal-trigger{:href => "#modal1"}
+          %i.material-icons.small.card-icon-vert delete
+        #modal1.modal
+          .modal-content
+            %h6 このカードを削除しますか？
+          .modal-footer
+            %a.modal-cancel.modal-close.waves-effect.waves-green.btn-flat{:href => "#!"} キャンセル
+            %a.modal-delete.modal-close.waves-effect.waves-green.btn-flat{:href => "#!"} 削除する
+        .show_circle_btn.btn.back-btn.back-btn--left.blue.darken-1.modal-trigger{:href => "#modal2"}
+          %i.material-icons.small.card-icon-vert edit
+        #modal2.modal
+          .modal-content
+            .row
+              .input-field.col.s12
+                %i.material-icons.prefix edit
+                %input#autocomplete-input.autocomplete{:type => "text"}/
+                %label{:for => "autocomplete-input"}
+          .modal-footer
+            %a.modal-cancel.modal-close.waves-effect.waves-green.btn-flat{:href => "#!"} キャンセル
+            %a.modal-change.modal-close.waves-effect.waves-green.btn-flat{:href => "#!"} 変更する
         .card.green.lighten-5
           .card-content.black-text
             .card-text
-              見出し
+              #text-content
+                見出し
               %a.card-button.btn-flat.show_circle_btn.mouse_on_cursor_move
                 %i.material-icons.small.card-icon-vert sort
     .row
       .col.s11.offset-s1.m9.offset-m2.drag-and-drop.top-2.drag-off
-        .show_circle_btn.btn.back-btn.back-btn--right
-        .show_circle_btn.btn.back-btn.back-btn--left
+        .show_circle_btn.btn.back-btn.back-btn--right.red.modal-trigger{:href => "#modal3"}
+          %i.material-icons.small.card-icon-vert delete
+        #modal3.modal
+          .modal-content
+            %h6 このカードを削除しますか？
+          .modal-footer
+            %a.modal-cancel.modal-close.waves-effect.waves-green.btn-flat{:href => "#!"} キャンセル
+            %a.modal-delete.modal-close.waves-effect.waves-green.btn-flat{:href => "#!"} 削除する
+        .show_circle_btn.btn.back-btn.back-btn--left.blue.darken-1.modal-trigger{:href => "#modal4"}
+          %i.material-icons.small.card-icon-vert edit
+        #modal4.modal
+          .modal-content
+            .row
+              .input-field.col.s12
+                %i.material-icons.prefix edit
+                %input#autocomplete-input.autocomplete{:type => "text"}/
+                %label{:for => "autocomplete-input"}
+          .modal-footer
+            %a.modal-cancel.modal-close.waves-effect.waves-green.btn-flat{:href => "#!"} キャンセル
+            %a.modal-change.modal-close.waves-effect.waves-green.btn-flat{:href => "#!"} 変更する
         .card.lime.lighten-5
           .card-content.black-text
             .card-text
-              チェック項目１
-              %a.card-button.btn-flat.show_circle_btn.mouse_on_cursor_move
-                %i.material-icons.small.card-icon-vert sort
-    .row
-      .col.s11.offset-s1.m9.offset-m2.drag-and-drop.top-3.drag-off
-        .show_circle_btn.btn.back-btn.back-btn--right
-        .show_circle_btn.btn.back-btn.back-btn--left
-        .card.lime.lighten-5
-          .card-content.black-text
-            .card-text
-              チェック項目２
-              %a.card-button.btn-flat.show_circle_btn.mouse_on_cursor_move
-                %i.material-icons.small.card-icon-vert sort
-    .row
-      .col.s12.m10.offset-m1.drag-and-drop.top-4.drag-off
-        .show_circle_btn.btn.back-btn.back-btn--right
-        .show_circle_btn.btn.back-btn.back-btn--left
-        .card.green.lighten-5
-          .card-content.black-text
-            .card-text
-              見出し２
-              %a.card-button.btn-flat.show_circle_btn.mouse_on_cursor_move
-                %i.material-icons.small.card-icon-vert sort
-    .row
-      .col.s11.offset-s1.m9.offset-m2.drag-and-drop.top-5.drag-off
-        .show_circle_btn.btn.back-btn.back-btn--right
-        .show_circle_btn.btn.back-btn.back-btn--left
-        .card.lime.lighten-5
-          .card-content.black-text
-            .card-text
-              チェック項目３
-              %a.card-button.btn-flat.show_circle_btn.mouse_on_cursor_move
-                %i.material-icons.small.card-icon-vert sort
-    .row
-      .col.s11.offset-s1.m9.offset-m2.drag-and-drop.top-6.drag-off
-        .show_circle_btn.btn.back-btn.back-btn--right
-        .show_circle_btn.btn.back-btn.back-btn--left
-        .card.lime.lighten-5
-          .card-content.black-text
-            .card-text
-              チェック項目４
+              #text-content
+                チェック項目
               %a.card-button.btn-flat.show_circle_btn.mouse_on_cursor_move
                 %i.material-icons.small.card-icon-vert sort
   .row.button_field
