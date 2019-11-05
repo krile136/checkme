@@ -1,6 +1,10 @@
 modal_num = 5;
 
 $(document).on('turbolinks:load', function () {
+
+  // 何かしらのページに移動した時にmodal_numをリセットする
+  modal_num = 5
+
   // 見出しの組み立て
   function build_head(added_height) {
     var html = `<div class="row">
@@ -132,7 +136,6 @@ $(document).on('turbolinks:load', function () {
       modal_update(e, this);
     })
     modal_num += 2;
-    console.log(modal_num);
   }
 
   // $('#make_head').on('click', function (e) {

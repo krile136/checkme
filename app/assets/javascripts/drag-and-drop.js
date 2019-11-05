@@ -32,8 +32,8 @@ var is_event_decide = false;
 var left_limit = -100;
 
 // rowの裏に隠れているボタンのrightの位置
-left_default = 60;
-right_default = 15;
+var left_default = 60;
+var right_default = 15;
 
 $(document).on('turbolinks:load', function () {
 
@@ -310,19 +310,21 @@ function modal_delete(e, elem) {
   e.preventDefault();
   var delete_branch = $(elem).parent().parent().parent();
   var branch_top = delete_branch[0].offsetTop;
-  delete_branch.parent().remove();
+  if (branch_top != 0) {
+    delete_branch.parent().remove();
 
-  // 削除する行より下の行を上に動かす
-  elements = $('.drag-and-drop');
-  $.each(elements, function () {
-    if ($(this)[0].offsetTop > branch_top) {
-      $(this).animate({ top: $(this)[0].offsetTop - row_height + "px" }, 'fast');
-    }
-  });
-  $('.row_container').animate({ height: $(".row_container").height() - row_height }, 'fast');
+    // 削除する行より下の行を上に動かす
+    elements = $('.drag-and-drop');
+    $.each(elements, function () {
+      if ($(this)[0].offsetTop > branch_top) {
+        $(this).animate({ top: $(this)[0].offsetTop - row_height + "px" }, 'fast');
+      }
+    });
+    $('.row_container').animate({ height: $(".row_container").height() - row_height }, 'fast');
 
-  // 画面のクリック有効範囲の調整
-  dropdown_click_full(false);
+    // 画面のクリック有効範囲の調整
+    dropdown_click_full(false);
+  }
 }
 function modal_reflect(e, elem) {
   e.preventDefault();
