@@ -139,7 +139,7 @@ $(document).on('turbolinks:load', function () {
   }
 
   // $('#make_head').on('click', function (e) {
-  $(document).on("click", "#make_head", function (e) {
+  $('#make_head').on('click', function (e) {
     e.preventDefault();
     var added_height = $(".row_container").height() + 30;
     var html = build_head(added_height);

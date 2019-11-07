@@ -1,20 +1,20 @@
 %nav.white.get_nav_height{role: "navigation"}
   .nav-wrapper.container
-    = link_to "シートタイトル大", root_path,id: 'logo-container', class:"brand-logo orange-text text-darken-4 hide-on-med-and-down"
+    = link_to "シートタイトル大", root_path,id: 'logo-container', class:"sub-header orange-text text-darken-4 hide-on-med-and-down"
     = link_to "シートタイトル中", root_path,id: 'logo-container', class:"orange-text text-darken-4 hide-on-large-only hide-on-small-only"
     = link_to "シートタイトル小", root_path,id: 'logo-container', class:"orange-text text-darken-4 hide-on-med-and-up"
     %ul.right.hide-on-med-and-down
       - if user_signed_in?
         %li
-          = link_to "保存する", "#", class: "black-text"
+          = link_to "保存", "#", class: "black-text"
         %li
-          = link_to "新しいシートを作る", "#", class: "black-text"
+          = link_to "新しいシート", "#", class: "black-text"
         %li
-          = link_to "タイトルを編集", "#", class: "black-text"
+          = link_to "タイトル編集", "#", class: "black-text"
         %li
-          = link_to "TOPへ戻る", root_path, class: "black-text"
+          = link_to "TOPへ", root_path, class: "black-text"
         %li
-          = link_to "マイページへ戻る", user_path(current_user.id), class: "black-text"
+          = link_to "マイページへ", user_path(current_user.id), class: "black-text"
     %ul#nav-mobile.sidenav
       -if user_signed_in?
         %li
