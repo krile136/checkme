@@ -1,9 +1,17 @@
-modal_num = 5;
+modal_num = 8;
+// 使われてるmodal_num
+// 1: 保存する時（確認用）
+// 2: 新しいシートを作るとき（確認用）
+// 3: タイトル編集
+// 4: 見出しの削除
+// 5: 見出しの編集
+// 6: 項目の削除
+// 7: 項目の編集
 
 $(document).on('turbolinks:load', function () {
 
   // 何かしらのページに移動した時にmodal_numをリセットする
-  modal_num = 5
+  modal_num = 8
 
   // 見出しの組み立て
   function build_head(added_height) {

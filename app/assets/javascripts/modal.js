@@ -22,16 +22,43 @@ $(document).on('turbolinks:load', function () {
     modal_update(e, this);
   })
 
-  // タイトルを編集ボタンを押した時
-  // sidenavとnavbarで共通のものを使用するため、隠してある
-  // モーダルをjsで起動するようにしている
-  $(".sidenav_modal_trigger").on("click", function (e) {
+  // 保存が押された時
+  $(".save_sheet").on("click", function (e) {
     e.preventDefault();
     // サイドバーを閉じる
     $('.sidenav').sidenav('close');
 
     // 表示するモーダルを取得
-    var title_modal = $("#modal0");
+    var title_modal = $("#modal1");
+
+    // 隠してたモーダルを起動する
+    $(title_modal).modal("open");
+  })
+
+  // 新しいシートがクリックされた時
+  $(".new_sheet").on("click", function (e) {
+    e.preventDefault();
+    // サイドバーを閉じる
+    $('.sidenav').sidenav('close');
+
+    // 表示するモーダルを取得
+    var title_modal = $("#modal2");
+
+    // 隠してたモーダルを起動する
+    $(title_modal).modal("open");
+  })
+
+
+  // タイトルを編集ボタンを押した時
+  // sidenavとnavbarで共通のものを使用するため、隠してある
+  // モーダルをjsで起動するようにしている
+  $(".edit_title").on("click", function (e) {
+    e.preventDefault();
+    // サイドバーを閉じる
+    $('.sidenav').sidenav('close');
+
+    // 表示するモーダルを取得
+    var title_modal = $("#modal3");
 
     // シートタイトルを取得、反映させる
     var sheet_title = $('#logo-container').text();
@@ -48,6 +75,8 @@ $(document).on('turbolinks:load', function () {
     var title = $('.show_sheet_title');
     var input_text = $(this).parent().parent().find('#autocomplete-input').val();
     title.text(input_text);
+    var input_field = $('#input_sheet_title');
+    input_field.val(input_text);
   })
 });
 
