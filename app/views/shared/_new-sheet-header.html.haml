@@ -1,8 +1,8 @@
 %nav.white.get_nav_height{role: "navigation"}
   .nav-wrapper.container
-    = link_to "シートタイトル大", root_path,id: 'logo-container', class:"sub-header orange-text text-darken-4 hide-on-med-and-down"
-    = link_to "シートタイトル中", root_path,id: 'logo-container', class:"orange-text text-darken-4 hide-on-large-only hide-on-small-only"
-    = link_to "シートタイトル小", root_path,id: 'logo-container', class:"orange-text text-darken-4 hide-on-med-and-up"
+    = link_to "シートタイトル", root_path,id: 'logo-container', class:"show_sheet_title sub-header orange-text text-darken-4 hide-on-med-and-down "
+    = link_to "シートタイトル", root_path,id: 'logo-container', class:"show_sheet_title orange-text text-darken-4 hide-on-large-only hide-on-small-only"
+    = link_to "シートタイトル", root_path,id: 'logo-container', class:"show_sheet_title orange-text text-darken-4 hide-on-med-and-up"
     %ul.right.hide-on-med-and-down
       - if user_signed_in?
         %li
@@ -10,7 +10,7 @@
         %li
           = link_to "新しいシート", "#", class: "black-text"
         %li
-          = link_to "タイトル編集", "#", class: "black-text"
+          = link_to "タイトル編集", "#", class: "black-text sidenav_modal_trigger"
         %li
           = link_to "TOP", root_path, class: "red-text"
         %li
@@ -26,7 +26,7 @@
             %i.material-icons.medium create
             新しいシートを作る
         %li
-          = link_to  "#", class: "black-text" do
+          = link_to "#", class: "black-text sidenav_modal_trigger" do
             %i.material-icons.medium find_in_page
             タイトルを編集する
         %li

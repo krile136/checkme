@@ -45,26 +45,6 @@ $(document).on('turbolinks:load', function () {
     elements[i].addEventListener("mousedown", mdown, { passive: false });
     elements[i].addEventListener("touchstart", mdown, { passive: false });
   }
-
-  // 削除ボタンが押されたとき、カードを削除する
-  $('.modal-delete').on('click', function (e) {
-    modal_delete(e, this);
-  });
-
-  // 編集ボタンが押されたとき、カードの中身のテキストをモーダル中のinputに反映させる
-  $('.back-btn--left').on('click', function (e) {
-    modal_reflect(e, this);
-  });
-
-  // モーダルウィンドウのキャンセルが押されたとき
-  $('.modal-cancel').on('click', function (e) {
-    modal_cancel(e);
-  });
-
-  // モーダルウィンドウの変更が押されたとき
-  $('.modal-change').on('click', function (e) {
-    modal_update(e, this);
-  })
 })
 
 //マウスが押された際の関数
@@ -293,46 +273,7 @@ function reset_classes() {
   });
 }
 
-// モーダル関係の関数
-function modal_cancel(e) {
-  e.preventDefault();
-}
 
-function modal_update(e, elem) {
-  e.preventDefault();
-  var parent = $(elem).parent().parent().parent();
-  var text_content = parent.find('#text-content');
-  var input_text = parent.find('#autocomplete-input').val();
-  text_content.text(input_text);
-}
-
-function modal_delete(e, elem) {
-  e.preventDefault();
-  var delete_branch = $(elem).parent().parent().parent();
-  var branch_top = delete_branch[0].offsetTop;
-  if (branch_top != 0) {
-    delete_branch.parent().remove();
-
-    // 削除する行より下の行を上に動かす
-    elements = $('.drag-and-drop');
-    $.each(elements, function () {
-      if ($(this)[0].offsetTop > branch_top) {
-        $(this).animate({ top: $(this)[0].offsetTop - row_height + "px" }, 'fast');
-      }
-    });
-    $('.row_container').animate({ height: $(".row_container").height() - row_height }, 'fast');
-
-    // 画面のクリック有効範囲の調整
-    dropdown_click_full(false);
-  }
-}
-function modal_reflect(e, elem) {
-  e.preventDefault();
-  var parent = $(elem).parent();
-  var text_content = parent.find('#text-content').text();
-  var input_field = parent.find('#autocomplete-input')
-  input_field.val(text_content);
-}
 // このコードはhttps://q-az.net/elements-drag-and-drop/
 // を元に開発されています
 
