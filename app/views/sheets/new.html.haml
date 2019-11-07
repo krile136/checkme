@@ -79,25 +79,27 @@
   .click_for_dropdown
 
   -# 保存をクリックした時のモーダル(#modal1)
-  %a.modal-trigger{:href => "#modal1"}
+  = link_to "", "#modal1", class: "modal_trigger"
   #modal1.modal
     .modal-content
       %h6 チェックシートを保存します。よろしいですか？
     .modal-footer
-      %a.modal-save.modal-close.waves-effect.waves-green.btn-flat{:href => root_path} 保存する
-      %a.modal-cancel.modal-close.waves-effect.waves-green.btn-flat.red-text{:href => "#!"} キャンセル
+      = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
+      -# = link_to "保存する", sheets_path, method: :POST, class: "modal-save modal-close waves-effect waves-green btn-flat"
+      = f.submit "保存する", class:"modal-save modal-close waves-effect waves-green btn-flat"
 
   -# 新しいシートをクリックした時のモーダル(#moddal2)
-  %a.modal-trigger{:href => "#modal2"}
+  = link_to "", "#modal2", class: "modal_trigger"
   #modal2.modal
     .modal-content
       %h6 今のシートを破棄して新しいシートを作ります。よろしいですか？
     .modal-footer
-      %a.modal-close.waves-effect.waves-green.btn-flat{:href => new_sheet_path} シートを新しく作る
-      %a.modal-cancel.modal-close.waves-effect.waves-green.btn-flat.red-text{:href => "#!"} キャンセル
+      = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
+      = link_to "シートを新しく作る", new_sheet_path, class: "modal-close waves-effect waves-green btn-flat"
 
   -# タイトル編集をクリックした時のモーダル(#modal3)
-  %a.modal-trigger{:href => "#modal3"}
+  -# %a.modal-trigger{:href => "#modal3"}
+  = link_to "","#modal3", class: "modal_trigger"
   #modal3.modal
     .modal-content
       .row
@@ -106,9 +108,12 @@
           %input#autocomplete-input.autocomplete{:type => "text"}/
           %label{:for => "autocomplete-input"}
     .modal-footer
-      %a.modal-cancel.modal-close.waves-effect.waves-green.btn-flat{:href => "#!"} キャンセル
-      %a.modal-title-update.modal-close.waves-effect.waves-green.btn-flat{:href => "#!"} 変更する
+      = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
+      = link_to "変更する", "#", class:"modal-title-update modal-close waves-effect waves-green btn-flat"
+
+
   = f.hidden_field :title, value: "シートタイトル",id:"input_sheet_title"
+  = f.hidden_field :pulling_number, value: "0"
 
 
 
