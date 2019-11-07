@@ -12,9 +12,9 @@
         %li
           = link_to "タイトル編集", "#", class: "black-text"
         %li
-          = link_to "TOPへ", root_path, class: "black-text"
+          = link_to "TOP", root_path, class: "red-text"
         %li
-          = link_to "マイページへ", user_path(current_user.id), class: "black-text"
+          = link_to "マイページ", user_path(current_user.id), class: "red-text"
     %ul#nav-mobile.sidenav
       -if user_signed_in?
         %li
