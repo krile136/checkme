@@ -14,11 +14,14 @@ $(document).on('turbolinks:load', function () {
   });
   $('.parallax').parallax();
   $('.dropdown-trigger').dropdown();
+  $('.modal').modal();
 });
 
 // ページが遷移する際に、sidenavをリセットする
 // リセットしないとsidenavが動かない
 $(document).on("turbolinks:before-cache", function () {
   $('.sidenav').sidenav('destroy');
+  $('.dropdown-trigger').dropdown('destroy');
+  $('.modal').modal('destroy');
 });
 

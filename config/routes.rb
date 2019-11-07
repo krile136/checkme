@@ -3,5 +3,5 @@ Rails.application.routes.draw do
   root 'sheets#index'
 
   resources :users, only: [:show, :edit, :update]
-
+  resources :sheets, only: [:new, :create, :edit, :update]
 end

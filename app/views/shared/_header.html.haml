@@ -6,11 +6,11 @@
         %li
           = link_to "マイページ", user_path(current_user.id), class: "black-text"
         %li
-          = link_to "シートを作成", new_user_session_path, class: "black-text"
+          = link_to "シートを作成", new_sheet_path, class: "black-text"
         %li
-          = link_to "シートを探す", new_user_session_path, class: "black-text"
+          = link_to "シートを探す", "#", class: "black-text"
         %li
-          = link_to "ログアウト", new_user_session_path, class: "red-text"
+          = link_to "ログアウト", "#", class: "red-text"
       - else
         %li
           = link_to "新規登録", new_user_registration_path, class: "black-text"
@@ -23,7 +23,7 @@
             %i.material-icons.medium person
             マイページ
         %li
-          = link_to "#", class: "black-text" do
+          = link_to new_sheet_path, class: "black-text" do
             %i.material-icons.medium create
             シートを作る
         %li
