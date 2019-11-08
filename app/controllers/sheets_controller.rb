@@ -6,7 +6,8 @@ class SheetsController < ApplicationController
   end
 
   def new
-
+    @sheet = Sheet.new
+    @sheet.items.build
   end
 
   def create
@@ -26,6 +27,8 @@ class SheetsController < ApplicationController
   end
 
   def sheet_params
-    params.permit(:title).merge(user_id: current_user.id).merge(pulling_number: 0)
+    params.require(:sheet).permit(:title,
+                  items_attributes:[:name, :is_head, :top])
+                  .merge(user_id: current_user.id).merge(pulling_number: 0)
   end
 end

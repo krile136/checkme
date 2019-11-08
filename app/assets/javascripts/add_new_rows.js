@@ -111,6 +111,10 @@ $(document).on('turbolinks:load', function () {
     return html;
   }
 
+  $(".row_add_button").on('click', function () {
+    reset_left_move()
+  })
+
 
   function add_col_html(html, added_height) {
     $('.row_container').height(added_height + 30);
@@ -153,6 +157,7 @@ $(document).on('turbolinks:load', function () {
     var html = build_head(added_height);
     add_col_html(html, added_height);
     dropdown_click_full(true);
+    set_input_field()
   });
 
   $('#make_check').on('click', function (e) {
@@ -161,5 +166,6 @@ $(document).on('turbolinks:load', function () {
     var html = build_check(added_height);
     add_col_html(html, added_height);
     dropdown_click_full(true);
+    set_input_field()
   });
 });

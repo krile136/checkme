@@ -55,16 +55,7 @@ function mdown(e) {
   elements = $('.drag-and-drop');
 
   // ボタンを押した時に、もし左に開いている行があれば右に戻す
-  $.each(elements, function () {
-    if ($(this)[0].style.left == (left_limit + 'px')) {
-      $(this).animate({ left: 0 + "px" }, 'fast');
-      var right = $(this).find(".back-btn--right");
-      var left = $(this).find(".back-btn--left");
-      $(right).animate({ right: right_default + "px" }, 'fast');
-      $(left).animate({ right: left_default + "px" }, 'fast');
-      $(this).animate({ zIndex: 1 }, 'fast');
-    }
-  });
+  reset_left_move(elements);
 
   // 親のカード情報を取得
   parent_card = $(this).parent().parent().parent().parent();
@@ -105,10 +96,12 @@ function mdown(e) {
     // ドラッグした行を動かす前に、他の行の上下の定義づけをする
     // 移動アニメーション中の時は定義づけをスキップする
     $.each(drag_off_list, function () {
-      if (drag.offsetTop <= this.offsetTop && this.offsetTop % row_height == 0) {
-        $(this).addClass(".drag_over");
-      } else {
-        $(this).addClass(".drag_under");
+      if (this.offsetTop % row_height == 0) {
+        if (drag.offsetTop <= this.offsetTop) {
+          $(this).addClass(".drag_over");
+        } else {
+          $(this).addClass(".drag_under");
+        }
       }
     });
 
@@ -253,26 +246,72 @@ function mup(e) {
   reset_classes();
 }
 
-// マウスを話したとき、しばらくクリックやタッチ操作を無効にする
+// マウスを離したとき、しばらくクリックやタッチ操作を無効にする
 function prevent_click_and_touch() {
   is_finish_motion = true;
   setTimeout(function () {
     is_finish_motion = false;
-  }, 500);
+
+    // 保存用のテキストフィールドを生成
+    set_input_field()
+
+  }, 300);
 }
 
-// クラス名のリセットを行う
-function reset_classes() {
-  //要素の取得
+// データ保存用のフィールド作成
+function set_input_field() {
+  // #items_branchより下のフィールドを削除
+  $('#items_branch').empty();
+
+  // 必要な情報を得てフィールドを作成、appendする
   elements = $('.drag-and-drop');
-  $.each(elements, function () {
-    $(this).removeClass(".drag_under");
-    $(this).removeClass(".drag_over");
-    $(this).removeClass("drag-on");
-    $(this).addClass("drag-off");
+  $.each(elements, function (index) {
+    reset_classes(this);
+    var name = $(this).find('#text-content').text();
+    var top = this.offsetTop;
+    var is_head = false;
+    if ($(this).hasClass('m10')) {
+      is_head = true;
+    }
+    var html = build_hidden_form(index, name, top, is_head)
+    $('#items_branch').append(html);
   });
 }
 
+// クラス名のリセットを行う
+function reset_classes(elem) {
+  $(elem).removeClass(".drag_under");
+  $(elem).removeClass(".drag_over");
+  $(elem).removeClass("drag-on");
+  $(elem).addClass("drag-off");
+}
+
+function reset_left_move(elem) {
+  if (!elem) {
+    elem = $('.drag-and-drop');
+  }
+  $.each(elem, function () {
+    if ($(this)[0].style.left == (left_limit + 'px')) {
+      $(this).animate({ left: 0 + "px" }, 'fast');
+      var right = $(this).find(".back-btn--right");
+      var left = $(this).find(".back-btn--left");
+      $(right).animate({ right: right_default + "px" }, 'fast');
+      $(left).animate({ right: left_default + "px" }, 'fast');
+      $(this).animate({ zIndex: 1 }, 'fast');
+    }
+  });
+}
+
+function build_hidden_form(i, name, top, is_head) {
+  var is_check_box = `<input type="checkbox" hidden="hidden" value="true" name="sheet[items_attributes][${i}][is_head]" id="sheet_items_attributes_${i}_is_head">`
+  if (is_head) {
+    is_check_box = `<input type="checkbox" hidden="hidden" value="true" checked="checked" name="sheet[items_attributes][${i}][is_head]" id="sheet_items_attributes_${i}_is_head">`
+  }
+  var html = `<input value="${name}" hidden="hidden" type="text" name="sheet[items_attributes][${i}][name]" id="sheet_items_attributes_${i}_name" >
+              <input value="${top}" hidden="hidden" type="text" name="sheet[items_attributes][${i}][top]" id="sheet_items_attributes_${i}_top">
+              ${is_check_box}`
+  return html;
+}
 
 // このコードはhttps://q-az.net/elements-drag-and-drop/
 // を元に開発されています

@@ -85,7 +85,6 @@
       %h6 チェックシートを保存します。よろしいですか？
     .modal-footer
       = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
-      -# = link_to "保存する", sheets_path, method: :POST, class: "modal-save modal-close waves-effect waves-green btn-flat"
       = f.submit "保存する", class:"modal-save modal-close waves-effect waves-green btn-flat"
 
   -# 新しいシートをクリックした時のモーダル(#moddal2)
@@ -98,7 +97,6 @@
       = link_to "シートを新しく作る", new_sheet_path, class: "modal-close waves-effect waves-green btn-flat"
 
   -# タイトル編集をクリックした時のモーダル(#modal3)
-  -# %a.modal-trigger{:href => "#modal3"}
   = link_to "","#modal3", class: "modal_trigger"
   #modal3.modal
     .modal-content
@@ -113,7 +111,16 @@
 
 
   = f.hidden_field :title, value: "シートタイトル",id:"input_sheet_title"
-  = f.hidden_field :pulling_number, value: "0"
+  #items_branch
+    -# = f.fields_for :items, Item.new do |i|
+    -#   = i.text_field :name, value: "項目1", hidden: true
+    -#   = i.text_field :top, value: 60
+    -#   = i.check_box :is_head, {checked: true}, true, false
+    -# = f.fields_for :items, Item.new do |i|
+    -#   = i.text_field :name, value: "項目2"
+    -#   = i.text_field :top, value: 120
+    -#   = i.check_box :is_head, {}, true, false
+
 
 
 
