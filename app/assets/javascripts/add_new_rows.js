@@ -1,9 +1,17 @@
-modal_num = 5;
+modal_num = 8;
+// 使われてるmodal_num
+// 1: 保存する時（確認用）
+// 2: 新しいシートを作るとき（確認用）
+// 3: タイトル編集
+// 4: 見出しの削除
+// 5: 見出しの編集
+// 6: 項目の削除
+// 7: 項目の編集
 
 $(document).on('turbolinks:load', function () {
 
   // 何かしらのページに移動した時にmodal_numをリセットする
-  modal_num = 5
+  modal_num = 8
 
   // 見出しの組み立て
   function build_head(added_height) {
@@ -103,6 +111,10 @@ $(document).on('turbolinks:load', function () {
     return html;
   }
 
+  $(".row_add_button").on('click', function () {
+    reset_left_move()
+  })
+
 
   function add_col_html(html, added_height) {
     $('.row_container').height(added_height + 30);
@@ -145,6 +157,7 @@ $(document).on('turbolinks:load', function () {
     var html = build_head(added_height);
     add_col_html(html, added_height);
     dropdown_click_full(true);
+    set_input_field()
   });
 
   $('#make_check').on('click', function (e) {
@@ -153,5 +166,6 @@ $(document).on('turbolinks:load', function () {
     var html = build_check(added_height);
     add_col_html(html, added_height);
     dropdown_click_full(true);
+    set_input_field()
   });
 });
