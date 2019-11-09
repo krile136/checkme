@@ -28,7 +28,7 @@ class UsersController < ApplicationController
     @week_sheets = Sheet.where(user_id: current_user.id).where(last_view: one_week..yesterday)
     @week_number = @week_sheets.length
 
-    @today_time = @today_sheets.map{|sheet| sheet.get_today_time(time_drift)}
+    @today_time = @today_sheets.map{|sheet| sheet.get_today_time(today)}
     @week_days = @week_sheets.map{|sheet| sheet.get_week_days(time_drift)}
     # binding.pry
   end
