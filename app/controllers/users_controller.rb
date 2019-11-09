@@ -6,22 +6,31 @@ class UsersController < ApplicationController
   end
 
   def show
+    # 時差を取得
+    location = "Asia/Tokyo"
+    time_drift = ActiveSupport::TimeZone.create(location).utc_offset
 
-    # 今の時間を取得（データベース用に修正）
+    # 以下の部分では、時差を考慮しなくても正しい期間で取得ができるよう
+    # 表示するときに、時差を加えて表示させる
+
+    # 今の時間を取得
     today = Time.now
 
-    # 昨日までの時間を取得（データベース用に修正）
+    # 昨日までの時間を計算
     one_day = 60 * 60 * 24
     yesterday = today - one_day
 
-    # １週間の期間を取得（データベース用に修正）
+    # １週間の期間を計算
     one_week = today - (one_day * 7)
     
-    @today_sheets = Sheet.where(user_id: current_user.id).where(last_view: yesterday..today)
-    @week_sheets = Sheet.where(last_view: one_week..yesterday)
+    @today_sheets = Sheet.where(user_id: current_user.id).where(last_view: yesterday..today).order("last_view DESC")
+    @today_number = @today_sheets.length
+    @week_sheets = Sheet.where(user_id: current_user.id).where(last_view: one_week..yesterday)
+    @week_number = @week_sheets.length
 
-    binding.pry
-
+    @today_time = @today_sheets.map{|sheet| sheet.get_today_time(time_drift)}
+    @week_days = @week_sheets.map{|sheet| sheet.get_week_days(time_drift)}
+    # binding.pry
   end
 
   private

@@ -115,6 +115,11 @@ function modal_delete(e, elem) {
 
     // 画面のクリック有効範囲の調整
     dropdown_click_full(false);
+
+    setTimeout(function () {
+      // 保存用のテキストフィールドを生成
+      set_input_field()
+    }, 300);
   }
 }
 
