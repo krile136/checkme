@@ -29,6 +29,6 @@ class SheetsController < ApplicationController
   def sheet_params
     params.require(:sheet).permit(:title,
                   items_attributes:[:name, :is_head, :top])
-                  .merge(user_id: current_user.id).merge(pulling_number: 0)
+                  .merge(user_id: current_user.id).merge(pulling_number: 0).merge(last_view: Time.now)
   end
 end
