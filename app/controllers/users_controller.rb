@@ -22,15 +22,20 @@ class UsersController < ApplicationController
 
     # １週間の期間を計算
     one_week = today - (one_day * 7)
+
+    # 一ヶ月の期間を計算
+    one_month = today - (one_day * 30)
     
     @today_sheets = Sheet.where(user_id: current_user.id).where(last_view: yesterday..today).order("last_view DESC")
     @today_number = @today_sheets.length
-    @week_sheets = Sheet.where(user_id: current_user.id).where(last_view: one_week..yesterday)
+    @week_sheets = Sheet.where(user_id: current_user.id).where(last_view: one_week..yesterday).order("last_view DESC")
     @week_number = @week_sheets.length
+    @month_sheets = Sheet.where(user_id: current_user.id).where(last_view: one_month..one_week).order("last_view DESC")
+    @month_number = @month_sheets.length
 
     @today_time = @today_sheets.map{|sheet| sheet.get_today_time(today)}
-    @week_days = @week_sheets.map{|sheet| sheet.get_week_days(time_drift)}
-    # binding.pry
+    @week_days = @week_sheets.map{|sheet| sheet.get_week_days(today)}
+    @month_days =  @month_sheets.map{|sheet| sheet.get_month_days(time_drift)}
   end
 
   private

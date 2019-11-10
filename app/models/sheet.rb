@@ -15,7 +15,12 @@ class Sheet < ApplicationRecord
     end
   end
 
-  def get_week_days(time_drift)
-    weeK_day = self.last_view.strftime("%Y/%m/%d")
+  def get_week_days(now_time)
+    time_diff = (now_time.to_i - self.last_view.to_i)/60/60/24
+    week_day = time_diff.floor.to_s + "日前"
+    
+  end
+  def get_month_days(time_diff)
+    month_day = self.last_view.strftime("%Y/%m/%d")
   end
 end
