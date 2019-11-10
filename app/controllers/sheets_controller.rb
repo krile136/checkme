@@ -20,6 +20,10 @@ class SheetsController < ApplicationController
     end
   end
 
+  def destroy
+
+  end
+
   private
 
   def move_to_index

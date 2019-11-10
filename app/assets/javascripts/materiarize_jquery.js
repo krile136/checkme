@@ -17,8 +17,8 @@ $(document).on('turbolinks:load', function () {
   $('.modal').modal();
 });
 
-// ページが遷移する際に、sidenavをリセットする
-// リセットしないとsidenavが動かない
+// ページが遷移する際に、諸々をリセット
+// 特にsidenavはリセットしないと動かない
 $(document).on("turbolinks:before-cache", function () {
   $('.sidenav').sidenav('destroy');
   $('.dropdown-trigger').dropdown('destroy');

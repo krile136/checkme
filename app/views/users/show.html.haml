@@ -16,7 +16,7 @@
       .col.s2.hide-on-small-only
         %h7 最終閲覧
     - @today_sheets.each_with_index do |sheet, i|
-      = render partial: 'shared/lists', locals: { title: sheet.title, time: @today_time, i: i, id_offset: 0}
+      = render partial: 'shared/lists', locals: { sheet: sheet, time: @today_time, i: i, id_offset: 0}
     %br/
   - if @week_number > 0
     .row
@@ -27,7 +27,7 @@
       .col.s2.hide-on-small-only
         %h7 最終閲覧
     - @week_sheets.each_with_index do |sheet, i|
-      = render partial: 'shared/lists', locals: { title: sheet.title, time: @week_days, i: i , id_offset: @today_number}
+      = render partial: 'shared/lists', locals: { sheet: sheet, time: @week_days, i: i , id_offset: @today_number}
     %br/
   - if @month_number > 0
     .row
@@ -38,143 +38,14 @@
       .col.s2.hide-on-small-only
         %h7 最終閲覧
     - @month_sheets.each_with_index do |sheet, i|
-      = render partial: 'shared/lists', locals: { title: sheet.title, time: @month_days, i: i , id_offset: @today_number + @month_number}
+      = render partial: 'shared/lists', locals: { sheet: sheet, time: @month_days, i: i , id_offset: @today_number + @month_number}
     %br/
-  -# .row.text-vert-center.sheet-index
-  -#   .col.s1.m1
-  -#     %i.material-icons.small.icon-vert-center description
-  -#   .col.s9.m5
-  -#     昨日の一枚目
-  -#     %i.material-icons.midium.icon-vert-center.icon-in-text supervisor_account
-  -#   .col.m3.hide-on-small-only.grey-text.darken-3
-  -#     自分
-  -#   .col.m2.hide-on-small-only.grey-text.darken-3
-  -#     2019/10/25
-  -#   .col.s1.m1.center
-  -#     = link_to "#", class: "dropdown-trigger btn-flat show_circle_btn","data-target": "dropdown3" do
-  -#       %i.material-icons.small.icon-vert-center.center more_vert
-  -#     %ul#dropdown3.dropdown-content
-  -#       %li
-  -#         = link_to "" do
-  -#           %i.material-icons text_fields
-  -#           名前を変更
-  -#       %li
-  -#         = link_to "" do
-  -#           %i.material-icons delete
-  -#           削除
-  -#       %li
-  -#         = link_to "" do
-  -#           %i.material-icons launch
-  -#           新しいタブで開く
-  -#       %li
-  -#         = link_to "" do
-  -#           %i.material-icons language
-  -#           公開する
-  -#       %li
-  -#         = link_to "" do
-  -#           %i.material-icons supervisor_account
-  -#           共有する
-  -# .row.text-vert-center.sheet-index
-  -#   .col.s1.m1
-  -#     %i.material-icons.small.icon-vert-center description
-  -#   .col.s9.m5
-  -#     一昨日の一枚目
-  -#   .col.m3.hide-on-small-only.grey-text.darken-3
-  -#     自分
-  -#   .col.m2.hide-on-small-only.grey-text.darken-3
-  -#     2019/10/24
-  -#   .col.s1.m1.center
-  -#     = link_to "#", class: "dropdown-trigger btn-flat show_circle_btn","data-target": "dropdown4" do
-  -#       %i.material-icons.small.icon-vert-center.center more_vert
-  -#     %ul#dropdown4.dropdown-content
-  -#       %li
-  -#         = link_to "" do
-  -#           %i.material-icons text_fields
-  -#           名前を変更
-  -#       %li
-  -#         = link_to "" do
-  -#           %i.material-icons delete
-  -#           削除
-  -#       %li
-  -#         = link_to "" do
-  -#           %i.material-icons launch
-  -#           新しいタブで開く
-  -#       %li
-  -#         = link_to "" do
-  -#           %i.material-icons language
-  -#           公開する
-  -#       %li
-  -#         = link_to "" do
-  -#           %i.material-icons supervisor_account
-  -#           共有する
-  -# %br/
-  -# .row
-  -#   .col.s6
-  -#     %h7 過去一ヶ月
-  -# .row.text-vert-center.sheet-index
-  -#   .col.s1.m1
-  -#     %i.material-icons.small.icon-vert-center description
-  -#   .col.s9.m5
-  -#     少し前のシート
-  -#   .col.m3.hide-on-small-only.grey-text.darken-3
-  -#     自分
-  -#   .col.m2.hide-on-small-only.grey-text.darken-3
-  -#     2019/10/15
-  -#   .col.s1.m1.center
-  -#     = link_to "#", class: "dropdown-trigger btn-flat show_circle_btn","data-target": "dropdown5" do
-  -#       %i.material-icons.small.icon-vert-center.center more_vert
-  -#     %ul#dropdown5.dropdown-content
-  -#       %li
-  -#         = link_to "" do
-  -#           %i.material-icons text_fields
-  -#           名前を変更
-  -#       %li
-  -#         = link_to "" do
-  -#           %i.material-icons delete
-  -#           削除
-  -#       %li
-  -#         = link_to "" do
-  -#           %i.material-icons launch
-  -#           新しいタブで開く
-  -#       %li
-  -#         = link_to "" do
-  -#           %i.material-icons language
-  -#           公開する
-  -#       %li
-  -#         = link_to "" do
-  -#           %i.material-icons supervisor_account
-  -#           共有する
-  -# .row.text-vert-center.sheet-index
-  -#   .col.s1.m1
-  -#     %i.material-icons.small.icon-vert-center description
-  -#   .col.s9.m5
-  -#     結構前のシート
-  -#   .col.m3.hide-on-small-only.grey-text.darken-3
-  -#     自分
-  -#   .col.m2.hide-on-small-only.grey-text.darken-3
-  -#     2019/10/10
-  -#   .col.s1.m1.center
-  -#     = link_to "#", class: "dropdown-trigger btn-flat show_circle_btn","data-target": "dropdown6" do
-  -#       %i.material-icons.small.icon-vert-center.center more_vert
-  -#     %ul#dropdown6.dropdown-content
-  -#       %li
-  -#         = link_to "" do
-  -#           %i.material-icons text_fields
-  -#           名前を変更
-  -#       %li
-  -#         = link_to "" do
-  -#           %i.material-icons delete
-  -#           削除
-  -#       %li
-  -#         = link_to "" do
-  -#           %i.material-icons launch
-  -#           新しいタブで開く
-  -#       %li
-  -#         = link_to "" do
-  -#           %i.material-icons language
-  -#           公開する
-  -#       %li
-  -#         = link_to "" do
-  -#           %i.material-icons supervisor_account
-  -#           共有する
 .click_for_dropdown
+
+= link_to "", "#modal1", class: "modal_trigger"
+#modal1.modal
+  .modal-content
+    %h6 チェックシートを削除します。よろしいですか？
+  .modal-footer
+    = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
+    = link_to "削除する", "#", method: :DELETE, class:"modal-save modal-close waves-effect waves-green btn-flat sheet_delete_link"

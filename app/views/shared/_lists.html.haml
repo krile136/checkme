@@ -2,7 +2,7 @@
   .col.s1.m1
     %i.material-icons.small.icon-vert-center description
   .col.s9.m5
-    = title
+    = sheet.title
   .col.m3.hide-on-small-only.grey-text.darken-3
     自分
   .col.m2.hide-on-small-only.grey-text.darken-3
@@ -20,7 +20,7 @@
           %i.material-icons edit
           編集
       %li
-        = link_to "" do
+        = link_to "", medhot: :DELETE, class: "sheet_delete_button",id: "#{sheet.id}" do
           %i.material-icons delete
           削除
       %li
