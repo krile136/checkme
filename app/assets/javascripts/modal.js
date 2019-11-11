@@ -1,4 +1,6 @@
 $(document).on('turbolinks:load', function () {
+
+  // --------------------------------------シート作成時のモーダル関係--------------------------------------
   // カードに付与するモーダル関連関数は、カード追加時にイベントを付与する必要があるため
   // タイトル用のモーダルとは別の記述になっている
 
@@ -78,6 +80,27 @@ $(document).on('turbolinks:load', function () {
     var input_field = $('#input_sheet_title');
     input_field.val(input_text);
   })
+
+  // --------------------------------------マイページのモーダル関係--------------------------------------
+  // 削除が押された時
+  $('.sheet_delete_button').on('click', function (e) {
+    e.preventDefault();
+    // ドロップダウンを閉じる
+    $('.dropdown_trigger').dropdown('close');
+
+    // 表示するモーダルを取得
+    var delete_modal = $("#modal1");
+
+    // 削除するためのURIを生成、モーダルのリンクに埋め込む
+    var page_url = $(location).attr('href');
+    var replaced_url = page_url.replace(/user.*$/, "sheets/") + $(this).attr('id');
+    delete_modal.find('.sheet_delete_link').attr('href', replaced_url)
+
+    // 隠してたモーダルを起動する
+    $(delete_modal).modal("open");
+  });
+
+
 });
 
 // モーダル関係の関数
