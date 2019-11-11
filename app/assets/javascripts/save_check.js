@@ -1,9 +1,16 @@
+var auto_save_timer;
 $(document).on('turbolinks:load', function () {
   $(".filled-in").on("click", function () {
-    setTimeout(function () {
+
+    // オートセーブのタイマーが起動済みときはリセットする
+    clearTimeout(auto_save_timer);
+
+    // オートセーブを起動する
+    auto_save_timer = setTimeout(function () {
       var check_form = $('#check_form')[0];
       var formData = new FormData(check_form);
       var url = $(check_form).attr('action')
+      M.toast({ html: '保存しています...', classes: 'rounded blue lighten-5 black-text', displayLength: 1000 });
       $.ajax({
         url: url,
         type: "PATCH",
@@ -13,11 +20,11 @@ $(document).on('turbolinks:load', function () {
         contentType: false
       })
         .done(function (data) {
-          alert('保存しました');
+          M.toast({ html: '保存が完了しました', classes: 'rounded blue lighten-5 black-text', displayLength: 1000 });
         })
         .fail(function () {
-          alert('登録エラー');
+          M.toast({ html: '保存に失敗しました', classes: 'rounded red lighten-4 black-text', displayLength: 1000 });
         })
-    }, 1000);
+    }, 1500);
   })
 })

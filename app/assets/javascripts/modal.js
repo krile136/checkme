@@ -85,6 +85,7 @@ $(document).on('turbolinks:load', function () {
   // 削除が押された時
   $('.sheet_delete_button').on('click', function (e) {
     e.preventDefault();
+
     // ドロップダウンを閉じる
     $('.dropdown_trigger').dropdown('close');
 
