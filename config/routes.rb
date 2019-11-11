@@ -4,4 +4,5 @@ Rails.application.routes.draw do
 
   resources :users, only: [:show, :edit, :update]
   resources :sheets, only: [:new, :create, :edit, :update, :destroy, :show]
+  resources :items, only: [:update]
 end
