@@ -1,0 +1,10 @@
+// マイページのシートの右の：マークの設定
+.show_circle_btn{
+  padding: 0;
+  border-radius: 50%;
+  width: 36px;
+}
+// マイページのシートの右の:マークにマウスを重ねた時、色を変える
+.user_show_hover:hover {
+  background: #b2dfdb;
+}

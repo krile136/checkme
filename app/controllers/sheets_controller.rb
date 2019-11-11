@@ -10,6 +10,10 @@ class SheetsController < ApplicationController
     @sheet.items.build
   end
 
+  def show 
+    @sheet = Sheet.find(params[:id])
+  end
+
   def create
     @sheet = Sheet.new(sheet_params)
     if @sheet.save
