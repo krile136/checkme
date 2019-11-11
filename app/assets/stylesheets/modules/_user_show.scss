@@ -6,5 +6,9 @@
 }
 // マイページのシートの右の:マークにマウスを重ねた時、色を変える
 .user_show_hover:hover {
-  background: #b2dfdb;
+  background-color: #b2dfdb;
+}
+
+.sheet-index:hover{
+  background-color: #e3f2fd;
 }

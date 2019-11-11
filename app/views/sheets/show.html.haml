@@ -1,1 +1,31 @@
 = render partial: 'shared/sheet_show_header', locals: {sheet: @sheet}
+.container#sheet-new
+  %br/
+  %br/
+  .row_container
+    - @item.each do |item|
+      - if item.is_head
+        .row
+          .col.s12.m10.offset-m1.drag-and-drop.drag-off{:style => "top:#{item.top}px"}
+            .card.green.lighten-5
+              .card-content.black-text
+                .card-text
+                  #text-content
+                    = item.name
+      - else
+        .row
+          .col.s11.offset-s1.m9.offset-m2.drag-and-drop.drag-off{:style => "top:#{item.top}px"}
+            .card.lime.lighten-5
+              .card-content.black-text
+                .card-text
+                  #text-content
+                    %p
+                      %label
+                        - if item.is_check
+                          %input.filled-in{:checked => "checked", :type => "checkbox"}/
+                        - else
+                          %input.filled-in{:type => "checkbox"}/
+                        %span.checkbox-text
+                          = item.name
+
+                    

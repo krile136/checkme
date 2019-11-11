@@ -12,6 +12,7 @@ class SheetsController < ApplicationController
 
   def show 
     @sheet = Sheet.find(params[:id])
+    @item = Item.where(sheet_id: @sheet.id).order('top ASC')
   end
 
   def create
