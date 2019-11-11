@@ -15,6 +15,53 @@
   box-shadow: 0 1px 0 0 #26a69a !important
 }
 
+$checkbox_color: #26a69a;
+
+[type="checkbox"].filled-in:not(:checked) + span:not(.lever):after {
+  height: 25px;
+  width: 25px;
+  background-color: transparent;
+  border: 2px solid #5a5a5a;
+  top: 0px;
+  z-index: 0;
+}
+
+[type="checkbox"].filled-in:checked + span:not(.lever):before {
+  top: 2px;
+  left: 3px;
+  width: 8px;
+  height: 13px;
+  border-top: 2px solid transparent;
+  border-left: 2px solid transparent;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  transform: rotateZ(37deg);
+  transform-origin: 100% 100%;
+}
+
+[type="checkbox"].filled-in:checked + span:not(.lever):after {
+  top: 0;
+  width: 25px;
+  height: 25px;
+  border: 2px solid $checkbox_color;
+  background-color: $checkbox_color;
+  z-index: 0;
+}
+
+[type="checkbox"].filled-in.tabbed:focus + span:not(.lever):after {
+  border-radius: 2px;
+  border-color: #5a5a5a;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+[type="checkbox"].filled-in.tabbed:checked:focus + span:not(.lever):after {
+  border-radius: 2px;
+  background-color: $checkbox_color;
+  border-color: $checkbox_color;
+  ;
+}
+
+
 // テキストを中央ぞろえ（縦）
 .text-vert-center{
   line-height: 33px;
@@ -38,17 +85,6 @@
   background-color: transparent;
 }
 
-// マイページのシートの右の：マークの設定
-.show_circle_btn{
-  padding: 0;
-  border-radius: 50%;
-  width: 36px;
-}
-// マイページのシートの右の:マークにマウスを重ねた時、色を変える
-.user_show_hover:hover {
-  background: #b2dfdb;
-}
-
 // dropdownの内容を変更
 .dropdown-content {
   background-color: #fff;
@@ -69,62 +105,4 @@
   display: block;
   line-height: 22px;
   padding: 14px 16px;
-}
-
-// sheet#newで使うカードのクラスを書き換える
-#sheet-new{
-  position: relative;
-  .row{
-    margin-bottom: 0;
-  }
-  .card{
-    margin: 0;
-    margin-bottom: 7px;
-    .card-content{
-      padding: 0;
-      height: 50px;
-      border-radius: 0 0 0 0;
-      #text-content{
-        width: calc(100% - 50px);
-        float: left;
-        display: block;
-      }
-      .card-text{
-        display: block;
-        line-height: 50px;
-        margin-left: 15px;
-      }
-      .card-button{
-        display: block;
-        float: right;
-        width: 50px;
-        height: 50px;
-        position: relative;
-      }
-      .card-icon-vert{
-        position: absolute;
-        top: 7px;
-        left: 15px;
-        // z-index: 3;
-      }
-
-    }
-  }
-  .row_container{
-    width: 100%;
-  }
-  .button_field{
-    width: 90%;
-  }
-  .row_add_button{
-    float: right;
-  }
-  .click_for_dropdown{
-    width: 100%;
-  }
-}
-
-#add_underline{
-  border-bottom: 1px solid #000000;
-  // box-shadow: 0 1px 0 0 #26a69a !important
 }

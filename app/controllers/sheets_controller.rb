@@ -10,6 +10,11 @@ class SheetsController < ApplicationController
     @sheet.items.build
   end
 
+  def show 
+    @sheet = Sheet.find(params[:id])
+    @item = Item.where(sheet_id: @sheet.id).order('top ASC')
+  end
+
   def create
     @sheet = Sheet.new(sheet_params)
     if @sheet.save
@@ -18,6 +23,11 @@ class SheetsController < ApplicationController
     else
       redicret_to new_sheet_path
     end
+  end
+
+  def update
+     @sheet = Sheet.find(params[:id]) 
+     @sheet.update(item_params)
   end
 
   def destroy
@@ -43,5 +53,8 @@ class SheetsController < ApplicationController
     params.require(:sheet).permit(:title,
                   items_attributes:[:name, :is_head, :top])
                   .merge(user_id: current_user.id).merge(pulling_number: 0).merge(last_view: Time.now)
+  end
+  def item_params
+    params.require(:sheet).permit(items_attributes:[:id, :is_check])
   end
 end

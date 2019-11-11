@@ -115,11 +115,11 @@
     = f.fields_for :items, Item.new do |i|
       = i.text_field :name, value: "見出し", hidden: true
       = i.text_field :top, value: 60, hidden: true
-      = i.check_box :is_head, {checked: true}, true, false
+      = i.check_box :is_head, {checked: true}, "true", "false"
     = f.fields_for :items, Item.new do |i|
       = i.text_field :name, value: "チェック項目", hidden: true
       = i.text_field :top, value: 120, hidden: true
-      = i.check_box :is_head, {}, true, false
+      = i.check_box :is_head, {}, "true", "false"
 
 
 
