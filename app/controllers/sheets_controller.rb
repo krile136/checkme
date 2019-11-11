@@ -21,7 +21,16 @@ class SheetsController < ApplicationController
   end
 
   def destroy
-
+    sheet = Sheet.find(params[:id])
+    if sheet.user_id == current_user.id
+      if sheet.destroy
+        redirect_to user_path(current_user)
+      else
+        redirect_to user_path(current_user)
+      end
+    else
+      redirect_to user_path(current_user)
+    end
   end
 
   private

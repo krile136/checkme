@@ -38,7 +38,7 @@
       .col.s2.hide-on-small-only
         %h7 最終閲覧
     - @month_sheets.each_with_index do |sheet, i|
-      = render partial: 'shared/lists', locals: { sheet: sheet, time: @month_days, i: i , id_offset: @today_number + @month_number}
+      = render partial: 'shared/lists', locals: { sheet: sheet, time: @month_days, i: i , id_offset: @today_number + @week_number}
     %br/
 .click_for_dropdown
 
