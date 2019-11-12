@@ -12,10 +12,6 @@
       = link_to "#", class: "dropdown-trigger btn-flat show_circle_btn user_show_hover","data-target": "dropdown#{i + id_offset}" do
         %i.material-icons.small.icon-vert-center.center more_vert
       %ul.dropdown-content{id: "dropdown#{i + id_offset}"}
-        %li
-          = link_to "" do
-            %i.material-icons text_fields
-            名前を変更
         %li 
           = link_to edit_sheet_path(sheet.id) do
             %i.material-icons edit
