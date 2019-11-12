@@ -11,7 +11,13 @@ modal_num = 8;
 $(document).on('turbolinks:load', function () {
 
   // 何かしらのページに移動した時にmodal_numをリセットする
-  modal_num = 8
+  modal_num = 8;
+
+  // 編集で飛んできた時、modal_numの初期値を更新する
+  refresh_num = $('.row_container').data("modal_num");
+  if (refresh_num) {
+    modal_num = refresh_num;
+  }
 
   // 見出しの組み立て
   function build_head(added_height) {
@@ -150,7 +156,6 @@ $(document).on('turbolinks:load', function () {
     modal_num += 2;
   }
 
-  // $('#make_head').on('click', function (e) {
   $('#make_head').on('click', function (e) {
     e.preventDefault();
     var added_height = $(".row_container").height() + 30;

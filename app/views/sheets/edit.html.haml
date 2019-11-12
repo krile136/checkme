@@ -1,0 +1,118 @@
+= form_with model: @sheet, url: sheet_path, method: :PATCH, id: 'sheet_form',local: true do |f|
+  = render partial: "shared/edit_sheet_header", locals: { sheet: @sheet }
+  .container#sheet-new
+    %br/
+    %br/
+    .row_container{"data-modal_num":"#{@item.length * 2 + 4}"}
+      - @item.each_with_index do |item, index|
+        - if item.is_head
+          .row
+            .col.s12.m10.offset-m1.drag-and-drop.drag-off{:style => "top:#{item.top}px", id: "#{item.id}"}
+              %a.show_circle_btn.btn.back-btn.back-btn--right.red.modal-trigger{:href => "#modal#{index*2 + 4}"}
+                %i.material-icons.small.card-icon-vert delete
+              .modal{ id: "modal#{index*2 + 4}" }
+                .modal-content
+                  %h6 このカードを削除しますか？
+                .modal-footer
+                  %a.modal-cancel.modal-close.waves-effect.waves-green.btn-flat{:href => "#!"} キャンセル
+                  %a.modal-delete.modal-close.waves-effect.waves-green.btn-flat{:href => "#!"} 削除する
+              %a.show_circle_btn.btn.back-btn.back-btn--left.blue.darken-1.modal-trigger{:href => "#modal#{index*2 + 5}"}
+                %i.material-icons.small.card-icon-vert edit
+              .modal{ id: "modal#{index*2 + 5}" }
+                .modal-content
+                  .row
+                    .input-field.col.s12
+                      %i.material-icons.prefix edit
+                      %input#autocomplete-input.autocomplete{:type => "text"}/
+                      %label{:for => "autocomplete-input"}
+                .modal-footer
+                  %a.modal-cancel.modal-close.waves-effect.waves-green.btn-flat{:href => "#!"} キャンセル
+                  %a.modal-change.modal-close.waves-effect.waves-green.btn-flat{:href => "#!"} 変更する
+              .card.green.lighten-5
+                .card-content.black-text
+                  .card-text
+                    #text-content
+                      = item.name
+                    %a.card-button.btn-flat.show_circle_btn.mouse_on_cursor_move
+                      %i.material-icons.small.card-icon-vert sort
+        - else
+          .row
+            .col.s11.offset-s1.m9.offset-m2.drag-and-drop.drag-off{:style => "top:#{item.top}px", id: "#{item.id}"}
+              .show_circle_btn.btn.back-btn.back-btn--right.red.modal-trigger{:href => "#modal#{index*2 + 4}"}
+                %i.material-icons.small.card-icon-vert delete
+              .modal{ id: "modal#{index*2 + 4}" }
+                .modal-content
+                  %h6 このカードを削除しますか？
+                .modal-footer
+                  %a.modal-cancel.modal-close.waves-effect.waves-green.btn-flat{:href => "#!"} キャンセル
+                  %a.modal-delete.modal-close.waves-effect.waves-green.btn-flat{:href => "#!"} 削除する
+              .show_circle_btn.btn.back-btn.back-btn--left.blue.darken-1.modal-trigger{:href => "#modal#{index*2 + 5}"}
+                %i.material-icons.small.card-icon-vert edit
+              .modal{ id: "modal#{index*2 + 5}" }
+                .modal-content
+                  .row
+                    .input-field.col.s12
+                      %i.material-icons.prefix edit
+                      %input#autocomplete-input.autocomplete{:type => "text"}/
+                      %label{:for => "autocomplete-input"}
+                .modal-footer
+                  %a.modal-cancel.modal-close.waves-effect.waves-green.btn-flat{:href => "#!"} キャンセル
+                  %a.modal-change.modal-close.waves-effect.waves-green.btn-flat{:href => "#!"} 変更する
+              .card.lime.lighten-5
+                .card-content.black-text
+                  .card-text
+                    #text-content
+                      = item.name
+                    %a.card-button.btn-flat.show_circle_btn.mouse_on_cursor_move
+                      %i.material-icons.small.card-icon-vert sort
+    .row.button_field
+      = link_to "#", class: "dropdown-trigger btn-floating row_add_button red","data-target": "dropdown1" do
+        %i.material-icons.small.icon-vert-center.center add
+      %ul#dropdown1.dropdown-content
+        %li
+          = link_to "",id: "make_head" do
+            %i.material-icons ballot
+            見出しを追加
+        %li
+          = link_to "", id: "make_check" do
+            %i.material-icons check_box
+            チェック項目を追加
+  .click_for_dropdown
+
+  -# 新しいシートをクリックした時のモーダル(#moddal2)
+  = link_to "", "#modal2", class: "modal_trigger"
+  #modal2.modal
+    .modal-content
+      %h6 今のシートを破棄して新しいシートを作ります。よろしいですか？
+    .modal-footer
+      = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
+      = link_to "シートを新しく作る", new_sheet_path, class: "modal-close waves-effect waves-green btn-flat"
+
+  -# タイトル編集をクリックした時のモーダル(#modal3)
+  = link_to "","#modal3", class: "modal_trigger"
+  #modal3.modal
+    .modal-content
+      .row
+        .input-field.col.s12
+          %i.material-icons.prefix edit
+          %input#autocomplete-input.autocomplete{:type => "text"}/
+          %label{:for => "autocomplete-input"}
+    .modal-footer
+      = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
+      = link_to "変更する", "#", class:"modal-title-update modal-close waves-effect waves-green btn-flat"
+
+  -# 更新用フィールド
+  = f.hidden_field :title, value: @sheet.title ,id:"input_sheet_title"
+  -# 行を削除するときの分岐点
+  #deleted_items
+  -# 行を追加するときの分岐点
+  #items_branch{hidden: true}
+    - @item.each_with_index do |item, index|
+      = f.fields_for :items, Item.new do |i|
+        = i.text_field :name, value: item.name
+        = i.text_field :top, value: item.top
+        = i.text_field :id, value: item.id
+        - if item.is_head
+          = i.check_box :is_head, {checked: true}, "true", "false"
+        - else
+          = i.check_box :is_head, {}, "true", "false"

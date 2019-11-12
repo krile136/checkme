@@ -18,16 +18,21 @@ class SheetsController < ApplicationController
   def create
     @sheet = Sheet.new(sheet_params)
     if @sheet.save
-      # redirect_to root_path, notice: '出品が完了しました'
-      redirect_to root_path
+      redirect_to user_path(current_user)
     else
       redicret_to new_sheet_path
     end
   end
 
+  def edit
+    @sheet = Sheet.find(params[:id])
+    @item = Item.where(sheet_id: @sheet.id).order('top ASC')
+  end
+
   def update
-     @sheet = Sheet.find(params[:id]) 
-     @sheet.update(item_params)
+    @sheet = Sheet.find(params[:id])
+    @sheet.save(update_params)
+    @sheet.update(update_params)
   end
 
   def destroy
@@ -43,6 +48,11 @@ class SheetsController < ApplicationController
     end
   end
 
+  def update_date
+    @sheet = Sheet.find(params[:id])
+    @sheet.update(data_update)
+  end
+
   private
 
   def move_to_index
@@ -54,7 +64,14 @@ class SheetsController < ApplicationController
                   items_attributes:[:name, :is_head, :top])
                   .merge(user_id: current_user.id).merge(pulling_number: 0).merge(last_view: Time.now)
   end
-  def item_params
-    params.require(:sheet).permit(items_attributes:[:id, :is_check])
+
+  def update_params
+    params.require(:sheet).permit(:title,
+                  items_attributes:[:id, :name, :is_head, :top, :_destroy])
+                  .merge(last_view: Time.now)
+  end
+
+  def data_update
+    params.require(:sheet).permit(:id).merge(last_view: Time.now)
   end
 end

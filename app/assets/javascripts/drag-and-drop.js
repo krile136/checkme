@@ -258,26 +258,6 @@ function prevent_click_and_touch() {
   }, 300);
 }
 
-// データ保存用のフィールド作成
-function set_input_field() {
-  // #items_branchより下のフィールドを削除
-  $('#items_branch').empty();
-
-  // 必要な情報を得てフィールドを作成、appendする
-  elements = $('.drag-and-drop');
-  $.each(elements, function (index) {
-    reset_classes(this);
-    var name = $(this).find('#text-content').text();
-    var top = this.offsetTop;
-    var is_head = false;
-    if ($(this).hasClass('m10')) {
-      is_head = true;
-    }
-    var html = build_hidden_form(index, name, top, is_head)
-    $('#items_branch').append(html);
-  });
-}
-
 // クラス名のリセットを行う
 function reset_classes(elem) {
   $(elem).removeClass(".drag_under");
@@ -286,6 +266,7 @@ function reset_classes(elem) {
   $(elem).addClass("drag-off");
 }
 
+// 左に動いていた行を右に戻す
 function reset_left_move(elem) {
   if (!elem) {
     elem = $('.drag-and-drop');
@@ -301,18 +282,6 @@ function reset_left_move(elem) {
     }
   });
 }
-
-function build_hidden_form(i, name, top, is_head) {
-  var is_check_box = `<input type="checkbox" hidden="hidden" value="true" name="sheet[items_attributes][${i}][is_head]" id="sheet_items_attributes_${i}_is_head">`
-  if (is_head) {
-    is_check_box = `<input type="checkbox" hidden="hidden" value="true" checked="checked" name="sheet[items_attributes][${i}][is_head]" id="sheet_items_attributes_${i}_is_head">`
-  }
-  var html = `<input value="${name}" hidden="hidden" type="text" name="sheet[items_attributes][${i}][name]" id="sheet_items_attributes_${i}_name" >
-              <input value="${top}" hidden="hidden" type="text" name="sheet[items_attributes][${i}][top]" id="sheet_items_attributes_${i}_top">
-              ${is_check_box}`
-  return html;
-}
-
 // このコードはhttps://q-az.net/elements-drag-and-drop/
 // を元に開発されています
 

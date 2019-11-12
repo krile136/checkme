@@ -1,5 +1,5 @@
-= form_with model: @sheet, url: sheet_path, method: :PATCH, id: 'check_form',local: true do |f|
-  = render partial: 'shared/sheet_show_header', locals: {sheet: @sheet}
+= form_with model: @sheet, url: item_path, method: :PATCH, id: 'check_form',local: true do |f|
+  = render partial: 'shared/show_sheet_header', locals: {sheet: @sheet}
   .container#sheet-new
     %br/
     %br/
@@ -31,11 +31,6 @@
                               = item.name
                         =i.text_field :id, value: item.id, hidden: true
 
--# .preloader-wrapper.small.active
--#   .spinner-layer.spinner-green-only
--#     .circle-clipper.left
--#       .circle
--#     .gap-patch
--#       .circle
--#     .circle-clipper.right
--#       .circle
+-# 閲覧更新用フォーム
+= form_with model: @sheet, url: update_date_sheet_path, method: :PATCH, id: 'update_date',local: true do |f|
+  = f.hidden_field :id, value: @sheet.id
