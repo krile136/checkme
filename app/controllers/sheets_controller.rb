@@ -13,8 +13,6 @@ class SheetsController < ApplicationController
   def show 
     @sheet = Sheet.find(params[:id])
     @item = Item.where(sheet_id: @sheet.id).order('top ASC')
-    # @sheet.update(data_update)
-    # binding.pry
   end
 
   def create

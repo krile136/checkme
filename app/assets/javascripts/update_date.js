@@ -1,5 +1,3 @@
-// var date_is_updated = false
-
 $(document).on('turbolinks:load', function () {
   var date_form = $('#update_date')[0];
   if (date_form) {

@@ -30,6 +30,7 @@
                             %span.checkbox-text
                               = item.name
                         =i.text_field :id, value: item.id, hidden: true
+
 -# 閲覧更新用フォーム
 = form_with model: @sheet, url: update_date_sheet_path, method: :PATCH, id: 'update_date',local: true do |f|
   = f.hidden_field :id, value: @sheet.id

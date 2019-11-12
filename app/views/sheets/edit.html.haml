@@ -101,8 +101,11 @@
       = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
       = link_to "変更する", "#", class:"modal-title-update modal-close waves-effect waves-green btn-flat"
 
+  -# 更新用フィールド
   = f.hidden_field :title, value: @sheet.title ,id:"input_sheet_title"
+  -# 行を削除するときの分岐点
   #deleted_items
+  -# 行を追加するときの分岐点
   #items_branch{hidden: true}
     - @item.each_with_index do |item, index|
       = f.fields_for :items, Item.new do |i|
