@@ -56,6 +56,7 @@ $(document).on('turbolinks:load', function () {
   // モーダルをjsで起動するようにしている
   $(".edit_title").on("click", function (e) {
     e.preventDefault();
+
     // サイドバーを閉じる
     $('.sidenav').sidenav('close');
 

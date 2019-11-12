@@ -18,8 +18,7 @@ class SheetsController < ApplicationController
   def create
     @sheet = Sheet.new(sheet_params)
     if @sheet.save
-      # redirect_to root_path, notice: '出品が完了しました'
-      redirect_to root_path
+      redirect_to user_path(current_user)
     else
       redicret_to new_sheet_path
     end
@@ -27,10 +26,12 @@ class SheetsController < ApplicationController
 
   def edit
     @sheet = Sheet.find(params[:id])
+    @item = Item.where(sheet_id: @sheet.id).order('top ASC')
   end
 
   def update
-
+    binding.pry
+    
   end
 
   def destroy
