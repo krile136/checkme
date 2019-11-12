@@ -26,8 +26,6 @@ class SheetsController < ApplicationController
   end
 
   def update
-     @sheet = Sheet.find(params[:id]) 
-     @sheet.update(item_params)
   end
 
   def destroy
@@ -53,8 +51,5 @@ class SheetsController < ApplicationController
     params.require(:sheet).permit(:title,
                   items_attributes:[:name, :is_head, :top])
                   .merge(user_id: current_user.id).merge(pulling_number: 0).merge(last_view: Time.now)
-  end
-  def item_params
-    params.require(:sheet).permit(items_attributes:[:id, :is_check])
   end
 end
