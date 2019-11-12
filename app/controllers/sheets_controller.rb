@@ -30,8 +30,10 @@ class SheetsController < ApplicationController
   end
 
   def update
-    binding.pry
-    
+    # binding.pry
+    @sheet = Sheet.find(params[:id])
+    @sheet.save(update_params)
+    @sheet.update(update_params)
   end
 
   def destroy
@@ -57,5 +59,10 @@ class SheetsController < ApplicationController
     params.require(:sheet).permit(:title,
                   items_attributes:[:name, :is_head, :top])
                   .merge(user_id: current_user.id).merge(pulling_number: 0).merge(last_view: Time.now)
+  end
+  def update_params
+    params.require(:sheet).permit(:title,
+                  items_attributes:[:id, :name, :is_head, :top, :_destroy])
+                  .merge(last_view: Time.now)
   end
 end

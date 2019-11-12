@@ -1,24 +1,24 @@
-= form_with model: @sheet, url: sheet_path, method: :PATCH, id: 'check_form',local: true do |f|
+= form_with model: @sheet, url: sheet_path, method: :PATCH, id: 'sheet_form',local: true do |f|
   = render partial: "shared/edit_sheet_header", locals: { sheet: @sheet }
   .container#sheet-new
     %br/
     %br/
-    .row_container
+    .row_container{"data-modal_num":"#{@item.length * 2 + 4}"}
       - @item.each_with_index do |item, index|
         - if item.is_head
           .row
-            .col.s12.m10.offset-m1.drag-and-drop.top-1.drag-off{:style => "top:#{item.top}px"}
-              %a.show_circle_btn.btn.back-btn.back-btn--right.red.modal-trigger{:href => "#modal#{index + 4}"}
+            .col.s12.m10.offset-m1.drag-and-drop.drag-off{:style => "top:#{item.top}px", id: "#{item.id}"}
+              %a.show_circle_btn.btn.back-btn.back-btn--right.red.modal-trigger{:href => "#modal#{index*2 + 4}"}
                 %i.material-icons.small.card-icon-vert delete
-              .modal{ id: "modal#{index + 4}" }
+              .modal{ id: "modal#{index*2 + 4}" }
                 .modal-content
                   %h6 このカードを削除しますか？
                 .modal-footer
                   %a.modal-cancel.modal-close.waves-effect.waves-green.btn-flat{:href => "#!"} キャンセル
                   %a.modal-delete.modal-close.waves-effect.waves-green.btn-flat{:href => "#!"} 削除する
-              %a.show_circle_btn.btn.back-btn.back-btn--left.blue.darken-1.modal-trigger{:href => "#modal#{index + 5}"}
+              %a.show_circle_btn.btn.back-btn.back-btn--left.blue.darken-1.modal-trigger{:href => "#modal#{index*2 + 5}"}
                 %i.material-icons.small.card-icon-vert edit
-              .modal{ id: "modal#{index + 5}" }
+              .modal{ id: "modal#{index*2 + 5}" }
                 .modal-content
                   .row
                     .input-field.col.s12
@@ -37,18 +37,18 @@
                       %i.material-icons.small.card-icon-vert sort
         - else
           .row
-            .col.s11.offset-s1.m9.offset-m2.drag-and-drop.top-2.drag-off{:style => "top:#{item.top}px"}
-              .show_circle_btn.btn.back-btn.back-btn--right.red.modal-trigger{:href => "#modal#{index + 6}"}
+            .col.s11.offset-s1.m9.offset-m2.drag-and-drop.drag-off{:style => "top:#{item.top}px", id: "#{item.id}"}
+              .show_circle_btn.btn.back-btn.back-btn--right.red.modal-trigger{:href => "#modal#{index*2 + 4}"}
                 %i.material-icons.small.card-icon-vert delete
-              .modal{ id: "modal#{index + 6}" }
+              .modal{ id: "modal#{index*2 + 4}" }
                 .modal-content
                   %h6 このカードを削除しますか？
                 .modal-footer
                   %a.modal-cancel.modal-close.waves-effect.waves-green.btn-flat{:href => "#!"} キャンセル
                   %a.modal-delete.modal-close.waves-effect.waves-green.btn-flat{:href => "#!"} 削除する
-              .show_circle_btn.btn.back-btn.back-btn--left.blue.darken-1.modal-trigger{:href => "#modal#{index + 7}"}
+              .show_circle_btn.btn.back-btn.back-btn--left.blue.darken-1.modal-trigger{:href => "#modal#{index*2 + 5}"}
                 %i.material-icons.small.card-icon-vert edit
-              .modal{ id: "modal#{index + 7}" }
+              .modal{ id: "modal#{index*2 + 5}" }
                 .modal-content
                   .row
                     .input-field.col.s12
@@ -101,11 +101,13 @@
       = link_to "変更する", "#", class:"modal-title-update modal-close waves-effect waves-green btn-flat"
 
   = f.hidden_field :title, value: @sheet.title ,id:"input_sheet_title"
+  #deleted_items
   #items_branch{hidden: true}
     - @item.each_with_index do |item, index|
       = f.fields_for :items, Item.new do |i|
-        = i.text_field :name, value: item.name, hidden: true
-        = i.text_field :top, value: item.top, hidden: true
+        = i.text_field :name, value: item.name
+        = i.text_field :top, value: item.top
+        = i.text_field :id, value: item.id
         - if item.is_head
           = i.check_box :is_head, {checked: true}, "true", "false"
         - else

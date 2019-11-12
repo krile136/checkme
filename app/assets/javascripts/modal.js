@@ -119,6 +119,7 @@ function modal_update(e, elem) {
   var text_content = parent.find('#text-content');
   var input_text = parent.find('#autocomplete-input').val();
   text_content.text(input_text);
+  set_input_field()
 }
 
 // 削除ボタンが押された時の確認メッセージ
@@ -127,6 +128,12 @@ function modal_delete(e, elem) {
   var delete_branch = $(elem).parent().parent().parent();
   var branch_top = delete_branch[0].offsetTop;
   if (branch_top != 0) {
+    // もし削除した行がidを持っていた場合
+    // 削除情報を生成してdeleted_branchにくっつける
+    if ($(delete_branch).attr("id")) {
+      set_delete_field($(delete_branch).attr("id"))
+    }
+
     delete_branch.parent().remove();
 
     // 削除する行より下の行を上に動かす
