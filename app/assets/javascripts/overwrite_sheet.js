@@ -17,15 +17,29 @@ $(document).on('turbolinks:load', function () {
       url: url,
       type: "PATCH",
       data: formData,
-      dataType: 'json',
       processData: false,
       contentType: false
     })
       .done(function (data) {
-        M.toast({ html: '保存が完了しました', classes: 'rounded blue lighten-5 black-text', displayLength: 1000 });
+
         // 削除用フォームをリセットする
         $('#deleted_items').empty();
         deleted_rows = 0;
+
+        // 新しく追加したアイテムにidを付与する
+        elements = $('.drag-and-drop');
+        $.each(elements, function () {
+          item_id = $(this).attr('id');
+          if (!item_id) {
+            var new_item = this;
+            $.each(data, function () {
+              if (new_item.offsetTop == this.top) {
+                $(new_item).attr('id', this.id);
+              };
+            });
+          };
+        });
+        M.toast({ html: '保存が完了しました', classes: 'rounded blue lighten-5 black-text', displayLength: 1000 });
       })
       .fail(function () {
         M.toast({ html: '保存に失敗しました', classes: 'rounded red lighten-4 black-text', displayLength: 1000 });
