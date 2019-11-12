@@ -102,6 +102,20 @@ $(document).on('turbolinks:load', function () {
     $(delete_modal).modal("open");
   });
 
+  // 共有が押された時
+  $('.sheet_share_button').on('click', function (e) {
+    e.preventDefault();
+
+    // ドロップダウンを閉じる
+    $('.dropdown_trigger').dropdown('close');
+
+    // 表示するモーダルを取得
+    var share_modal = $("#modal2");
+
+    // 隠してたモーダルを起動する
+    $(share_modal).modal("open");
+  });
+
 
 });
 

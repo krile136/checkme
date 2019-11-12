@@ -1,6 +1,6 @@
 var auto_save_timer;
 $(document).on('turbolinks:load', function () {
-  $(".filled-in").on("click", function () {
+  $(".update_check").on("click", function () {
 
     // オートセーブのタイマーが起動済みときはリセットする
     clearTimeout(auto_save_timer);

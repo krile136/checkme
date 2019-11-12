@@ -24,9 +24,9 @@
                         %p
                           %label
                             - if item.is_check
-                              = i.check_box :is_check,{checked: true,class: "filled-in"},"true","false"
+                              = i.check_box :is_check,{checked: true,class: "filled-in update_check"},"true","false"
                             - else
-                              = i.check_box :is_check,{class: "filled-in"},"true","false"
+                              = i.check_box :is_check,{class: "filled-in update_check"},"true","false"
                             %span.checkbox-text
                               = item.name
                         =i.text_field :id, value: item.id, hidden: true

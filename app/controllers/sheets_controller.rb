@@ -34,7 +34,6 @@ class SheetsController < ApplicationController
     @sheet.save(update_params)
     @sheet.update(update_params)
     @item = Item.where(sheet_id: @sheet.id).order('top ASC')
-    # binding.pry
     render json: @item
   end
 

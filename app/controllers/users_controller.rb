@@ -2,7 +2,12 @@ class UsersController < ApplicationController
   before_action :move_to_index
 
   def index
-    
+    @users = User.where('name LIKE(?)',"%#{params[:keyword]}%")
+    # binding.pry
+    if params[:keyword] == ""
+      @users = []
+    end
+    render json:@users
   end
 
   def show
