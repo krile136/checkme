@@ -13,6 +13,8 @@ class SheetsController < ApplicationController
   def show 
     @sheet = Sheet.find(params[:id])
     @item = Item.where(sheet_id: @sheet.id).order('top ASC')
+    # @sheet.update(data_update)
+    # binding.pry
   end
 
   def create
@@ -30,7 +32,6 @@ class SheetsController < ApplicationController
   end
 
   def update
-    # binding.pry
     @sheet = Sheet.find(params[:id])
     @sheet.save(update_params)
     @sheet.update(update_params)
@@ -49,6 +50,11 @@ class SheetsController < ApplicationController
     end
   end
 
+  def update_date
+    @sheet = Sheet.find(params[:id])
+    @sheet.update(data_update)
+  end
+
   private
 
   def move_to_index
@@ -60,9 +66,14 @@ class SheetsController < ApplicationController
                   items_attributes:[:name, :is_head, :top])
                   .merge(user_id: current_user.id).merge(pulling_number: 0).merge(last_view: Time.now)
   end
+
   def update_params
     params.require(:sheet).permit(:title,
                   items_attributes:[:id, :name, :is_head, :top, :_destroy])
                   .merge(last_view: Time.now)
+  end
+
+  def data_update
+    params.require(:sheet).permit(:id).merge(last_view: Time.now)
   end
 end
