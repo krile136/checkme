@@ -14,8 +14,12 @@
             = form_with model: @user, url: user_registration_path, id: 'new_user', class: 'new_user',local: true do |f|
               .form-inputs.row
                 .input-field.col.s12
+                  %i.material-icons.prefix person
+                  = f.text_field :name, required: true
+                  = f.label :name
+                .input-field.col.s12
                   %i.material-icons.prefix email
-                  = f.email_field :email, autofocus: true, required: true
+                  = f.email_field :email, required: true
                   = f.label :email
                 .input-field.col.s12
                   %i.material-icons.prefix lock
