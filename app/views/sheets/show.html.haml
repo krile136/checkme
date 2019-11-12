@@ -1,5 +1,5 @@
 = form_with model: @sheet, url: item_path, method: :PATCH, id: 'check_form',local: true do |f|
-  = render partial: 'shared/sheet_show_header', locals: {sheet: @sheet}
+  = render partial: 'shared/show_sheet_header', locals: {sheet: @sheet}
   .container#sheet-new
     %br/
     %br/

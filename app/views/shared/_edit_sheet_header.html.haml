@@ -1,0 +1,44 @@
+%nav.white.get_nav_height{role: "navigation"}
+  .nav-wrapper.container
+    = link_to sheet.title, "#",id: 'logo-container', class:"show_sheet_title sub-header orange-text text-darken-4 hide-on-med-and-down "
+    = link_to sheet.title, "#",id: 'logo-container', class:"show_sheet_title orange-text text-darken-4 hide-on-large-only hide-on-small-only"
+    = link_to sheet.title, "#",id: 'logo-container', class:"show_sheet_title orange-text text-darken-4 hide-on-med-and-up"
+    %ul.right.hide-on-med-and-down
+      - if user_signed_in?
+        %li
+          = link_to "保存する", "#", class: "black-text update_sheet"
+        %li
+          = link_to "新しいシート", "#", class: "black-text new_sheet"
+        %li
+          = link_to "TOP", root_path, class: "red-text"
+        %li
+          = link_to "マイページ", user_path(current_user.id), class: "red-text"
+    %ul#nav-mobile.sidenav
+      -if user_signed_in?
+        %li
+          = link_to "#", class: "black-text update_sheet" do
+            %i.material-icons.medium person
+            保存する
+        %li
+          = link_to "#", class: "black-text new_sheet" do
+            %i.material-icons.medium create
+            新しいシートを作る
+        %li
+          = link_to root_path, class: "red-text" do
+            %i.material-icons.medium exit_to_app
+            トップへ戻る
+        %li
+          = link_to user_path(current_user.id), class: "red-text" do
+            %i.material-icons.medium exit_to_app
+            マイページへ戻る
+      -else
+        %li
+          = link_to new_user_registration_path, class: "black-text" do
+            %i.material-icons.medium how_to_reg
+            新規登録
+        %li
+          = link_to new_user_session_path, class: "black-text" do
+            %i.material-icons.medium directions_run
+            ログイン
+    = link_to "#",class: "sidenav-trigger right","data-target": "nav-mobile" do
+      %i.material-icons.black-text menu

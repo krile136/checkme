@@ -25,7 +25,12 @@ class SheetsController < ApplicationController
     end
   end
 
+  def edit
+    @sheet = Sheet.find(params[:id])
+  end
+
   def update
+
   end
 
   def destroy
