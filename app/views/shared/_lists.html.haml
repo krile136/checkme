@@ -4,6 +4,8 @@
       %i.material-icons.small.icon-vert-center description
     .col.s9.m5
       = sheet.title
+      - if sheet.cooperate_requests.length > 0
+        (承認待ち)
     .col.m3.hide-on-small-only.grey-text.darken-3
       自分
     .col.m2.hide-on-small-only.grey-text.darken-3
@@ -29,6 +31,11 @@
             %i.material-icons language
             公開する
         %li
-          = link_to "" ,class: "sheet_share_button",id: "#{sheet.id}" do
-            %i.material-icons supervisor_account
-            共有する
+          - if sheet.cooperate_requests.length > 0
+            = link_to "" do
+              %i.material-icons supervisor_account
+              共有のキャンセル
+          - else
+            = link_to "" ,class: "sheet_share_button",id: "#{sheet.id}" do
+              %i.material-icons supervisor_account
+              共有する

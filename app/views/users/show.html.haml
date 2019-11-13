@@ -9,6 +9,16 @@
             %i.material-icons.prefix find_in_page
             %input#autocomplete-input.autocomplete{:type => "text"}/
             %label{:for => "autocomplete-input"} Search
+    - if @requests.length > 0
+      .row
+        .col.s6
+          %h7 共有リクエスト
+        .col.s3.hide-on-small-only
+          %h7 作成者
+        .col.s2.hide-on-small-only
+          %h7 最終閲覧
+      - @requests.each_with_index do |request, i|
+        = render partial: 'shared/request_lists', locals: { request: request, time: @requests_time, i:i ,id_offset: 0}
     - if @today_number > 0 
       .row
         .col.s6
@@ -18,7 +28,7 @@
         .col.s2.hide-on-small-only
           %h7 最終閲覧
       - @today_sheets.each_with_index do |sheet, i|
-        = render partial: 'shared/lists', locals: { sheet: sheet, time: @today_time, i: i, id_offset: 0}
+        = render partial: 'shared/lists', locals: { sheet: sheet, time: @today_time, i: i, id_offset: @requests_number}
       %br/
     - if @week_number > 0
       .row
@@ -29,7 +39,7 @@
         .col.s2.hide-on-small-only
           %h7 最終閲覧
       - @week_sheets.each_with_index do |sheet, i|
-        = render partial: 'shared/lists', locals: { sheet: sheet, time: @week_days, i: i , id_offset: @today_number}
+        = render partial: 'shared/lists', locals: { sheet: sheet, time: @week_days, i: i , id_offset: @requests_number + @today_number}
       %br/
     - if @month_number > 0
       .row
@@ -40,7 +50,7 @@
         .col.s2.hide-on-small-only
           %h7 最終閲覧
       - @month_sheets.each_with_index do |sheet, i|
-        = render partial: 'shared/lists', locals: { sheet: sheet, time: @month_days, i: i , id_offset: @today_number + @week_number}
+        = render partial: 'shared/lists', locals: { sheet: sheet, time: @month_days, i: i , id_offset: @requests_number + @today_number + @week_number}
       %br/
   .click_for_dropdown
 
@@ -78,12 +88,8 @@
       #user_name_branch
     .modal-footer
       = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
-      = f.submit "共有する", class:"modal-save modal-close waves-effect waves-green btn-flat sheet_cooperate_link"
+      = f.submit "共有する", class:"modal-save modal-close waves-effect waves-green btn-flat sheet_cooperate_btn"
 
   -# cooperate_request用のhidden_field
   = f.hidden_field :sheet_id, value: "", class:"sheet_cooperate_link"
   #cooperate_branch
-    =f.hidden_field :request_id, value:"1"
-
-  -# = f.check_box :request_id, {checked: true, class: "filled-in"}, "true", "false"
-  -# = f.check_box :request_id, {class: "filled-in"}, "true", "false"

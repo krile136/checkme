@@ -153,7 +153,7 @@ $(document).on('turbolinks:load', function () {
   });
 
   // リクエストを送信した時、cooperate_requestテーブルへ非同期でデータを保存する
-  $('.sheet_cooperate_link').on('click', function (e) {
+  $('.sheet_cooperate_btn').on('click', function (e) {
     e.preventDefault();
     var cooperate_form = $('#cooperate_form')[0];
     var formData = new FormData(cooperate_form);

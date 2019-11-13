@@ -41,6 +41,10 @@ class UsersController < ApplicationController
     @today_time = @today_sheets.map{|sheet| sheet.get_today_time(today)}
     @week_days = @week_sheets.map{|sheet| sheet.get_week_days(today)}
     @month_days =  @month_sheets.map{|sheet| sheet.get_month_days(time_drift)}
+
+    @requests = CooperateRequest.where(request_id: current_user.id).includes(:user).includes(:sheet)
+    @requests_number = @requests.length
+    @requests_time = @requests.map{|request| request.sheet.get_request_last_view(today)}
   end
 
   private
