@@ -78,10 +78,12 @@
       #user_name_branch
     .modal-footer
       = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
-      = link_to "共有する", "#", class:"modal-save modal-close waves-effect waves-green btn-flat sheet_delete_link"
+      = f.submit "共有する", class:"modal-save modal-close waves-effect waves-green btn-flat sheet_delete_link"
 
   -# cooperate_request用のhidden_field
   = f.hidden_field :sheet_id, value: "", class:"sheet_cooperate_link"
   #cooperate_branch
-    -# = f.check_box :request_id, {checked: true, class: "filled-in cooperate_check"}, "true", "false"
-    -# = f.check_box :request_id, {class: "filled-in cooperate_check"}, "true", "false"
+    =f.hidden_field :request_id, value:"1"
+
+  -# = f.check_box :request_id, {checked: true, class: "filled-in"}, "true", "false"
+  -# = f.check_box :request_id, {class: "filled-in"}, "true", "false"
