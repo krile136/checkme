@@ -61,7 +61,6 @@ $(document).on('turbolinks:load', function () {
         var move_user = $(this).parent().parent().parent().find(".appended_user_name");
         var user_name = move_user.text();
         var user_id = $(this).attr('id')
-        console.log(user_id);
         appendUserToAddedTree(user_name, user_id);
         $('.filled-in').on('click', function () {
           add_to_cooperate_branch();
@@ -153,5 +152,27 @@ $(document).on('turbolinks:load', function () {
     }, 500);
   });
 
+  // リクエストを送信した時、cooperate_requestテーブルへ非同期でデータを保存する
+  $('.sheet_cooperate_link').on('click', function (e) {
+    e.preventDefault();
+    var cooperate_form = $('#cooperate_form')[0];
+    var formData = new FormData(cooperate_form);
+    var url = $(cooperate_form).attr('action');
+    M.toast({ html: 'リクエストを送信しています...', classes: 'rounded blue lighten-5 black-text', displayLength: 2000 });
+    $.ajax({
+      url: url,
+      type: "POST",
+      data: formData,
+      dataType: 'json',
+      processData: false,
+      contentType: false
+    })
+      .done(function (data) {
+        M.toast({ html: 'リクエスト送信が完了しました', classes: 'rounded blue lighten-5 black-text', displayLength: 2000 });
+      })
+      .fail(function () {
+        M.toast({ html: 'リクエスト送信に失敗しました', classes: 'rounded red lighten-4 black-text', displayLength: 2000 });
+      })
+  })
 
 });

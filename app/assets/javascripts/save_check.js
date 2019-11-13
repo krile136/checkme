@@ -19,7 +19,7 @@ $(document).on('turbolinks:load', function () {
         processData: false,
         contentType: false
       })
-        .done(function (data) {
+        .done(function () {
           M.toast({ html: '保存が完了しました', classes: 'rounded blue lighten-5 black-text', displayLength: 1000 });
         })
         .fail(function () {

@@ -3,7 +3,7 @@ class UsersController < ApplicationController
 
   def index
     @users = User.where('name LIKE(?)',"%#{params[:keyword]}%")
-    # binding.pry
+    @requests = CooperateRequest.where(user_id: current_user.id)
     if params[:keyword] == ""
       @users = []
     end

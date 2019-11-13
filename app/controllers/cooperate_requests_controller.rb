@@ -8,7 +8,6 @@ class CooperateRequestsController < ApplicationController
       cooperate_request.request_id = id
       cooperate_request.save
     end
-    
   end
 
   private
