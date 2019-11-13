@@ -4,6 +4,8 @@ class Sheet < ApplicationRecord
   has_many :items, dependent: :destroy
   accepts_nested_attributes_for :items, allow_destroy: true
 
+  has_many :cooperate_requests, dependent: :destroy
+
   def get_today_time(now_time)
     time_diff = (now_time - self.last_view)/60/60
     return_time = 0

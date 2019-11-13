@@ -3,4 +3,5 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :sheets, dependent: :destroy
+  has_many :cooperate_requests, dependent: :destroy
 end

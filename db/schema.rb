@@ -17,10 +17,11 @@ ActiveRecord::Schema.define(version: 2019_11_13_032947) do
 
   create_table "cooperate_requests", force: :cascade do |t|
     t.integer "request_id", null: false
-    t.integer "sheet_id", null: false
+    t.bigint "sheet_id", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["sheet_id"], name: "index_cooperate_requests_on_sheet_id"
     t.index ["user_id"], name: "index_cooperate_requests_on_user_id"
   end
 
@@ -62,6 +63,7 @@ ActiveRecord::Schema.define(version: 2019_11_13_032947) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "cooperate_requests", "sheets"
   add_foreign_key "cooperate_requests", "users"
   add_foreign_key "items", "sheets"
   add_foreign_key "sheets", "users"
