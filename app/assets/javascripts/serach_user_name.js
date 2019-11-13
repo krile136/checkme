@@ -49,7 +49,7 @@ $(document).on('turbolinks:load', function () {
 
 
   function appendRequestIDToCooperateTree(id) {
-    var html = `<input value="${id}" type="hidden" name="request_id" id="request_id">`
+    var html = `<input value="${id}" type="hidden" name="request_id[]" id="request_id">`
     cooperate_list.append(html);
   }
 
