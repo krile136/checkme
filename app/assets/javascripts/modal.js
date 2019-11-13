@@ -106,11 +106,19 @@ $(document).on('turbolinks:load', function () {
   $('.sheet_share_button').on('click', function (e) {
     e.preventDefault();
 
+    // 検索結果およびユーザー追加ブランチの中身をリセットする
+    $('#added_user_branch').empty();
+    $('#user_name_branch').empty();
+
     // ドロップダウンを閉じる
     $('.dropdown_trigger').dropdown('close');
 
     // 表示するモーダルを取得
     var share_modal = $("#modal2");
+
+    // 共有するシートIDを取得、ページ内のフォームに埋め込む
+    var sheet_id = $(this).attr('id')
+    $('.sheet_cooperate_link').val(sheet_id);
 
     // 隠してたモーダルを起動する
     $(share_modal).modal("open");

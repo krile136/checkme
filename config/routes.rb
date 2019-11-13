@@ -8,6 +8,6 @@ Rails.application.routes.draw do
         patch :update_date
     end
   end
-
   resources :items, only: [:update]
+  resources :cooperate_requests, only: [:create]
 end

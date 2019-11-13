@@ -1,87 +1,87 @@
-= render "shared/header"
-.current_id{id: "#{current_user.id}"}
-.container
-  .row
-    .col.s12.m6.offset-m3
+= form_with model: @cooperate_request, url:cooperate_requests_path, method: :POST,id: "cooperate_form", local: true do |f|
+  = render "shared/header"
+  .current_id{id: "#{current_user.id}"}
+  .container
+    .row
+      .col.s12.m6.offset-m3
+        .row
+          .input-field.col.s12
+            %i.material-icons.prefix find_in_page
+            %input#autocomplete-input.autocomplete{:type => "text"}/
+            %label{:for => "autocomplete-input"} Search
+    - if @today_number > 0 
       .row
-        .input-field.col.s12
-          %i.material-icons.prefix find_in_page
-          %input#autocomplete-input.autocomplete{:type => "text"}/
-          %label{:for => "autocomplete-input"} Search
-  - if @today_number > 0 
-    .row
-      .col.s6
-        %h7 24時間以内
-      .col.s3.hide-on-small-only
-        %h7 作成者
-      .col.s2.hide-on-small-only
-        %h7 最終閲覧
-    - @today_sheets.each_with_index do |sheet, i|
-      = render partial: 'shared/lists', locals: { sheet: sheet, time: @today_time, i: i, id_offset: 0}
-    %br/
-  - if @week_number > 0
-    .row
-      .col.s6
-        %h7 過去１週間
-      .col.s3.hide-on-small-only
-        %h7 作成者
-      .col.s2.hide-on-small-only
-        %h7 最終閲覧
-    - @week_sheets.each_with_index do |sheet, i|
-      = render partial: 'shared/lists', locals: { sheet: sheet, time: @week_days, i: i , id_offset: @today_number}
-    %br/
-  - if @month_number > 0
-    .row
-      .col.s6
-        %h7 １週間以上前
-      .col.s3.hide-on-small-only
-        %h7 作成者
-      .col.s2.hide-on-small-only
-        %h7 最終閲覧
-    - @month_sheets.each_with_index do |sheet, i|
-      = render partial: 'shared/lists', locals: { sheet: sheet, time: @month_days, i: i , id_offset: @today_number + @week_number}
-    %br/
-.click_for_dropdown
-
--# 削除用モーダル
-= link_to "", "#modal1", class: "modal_trigger"
-#modal1.modal
-  .modal-content
-    %h6 チェックシートを削除します。よろしいですか？
-  .modal-footer
-    = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
-    = link_to "削除する", "#", method: :DELETE, class:"modal-save modal-close waves-effect waves-green btn-flat sheet_delete_link"
-
--# 共有用モーダル
-= link_to "", "#modal2", class: "modal_trigger"
-#modal2.modal
-  .modal-content
-    %h6 共有するユーザー名を検索
-    .row
-      .input-field.col.s11
-        %i.material-icons.prefix person
-        %input#autocomplete-input.autocomplete.input_user_name{:type => "text"}/
-        %label{:for => "autocomplete-input"}
-      .input-field.col.s1
-        .spinner-hidden{hidden: true}
-          .preloader-wrapper.small.active
-            .spinner-layer.spinner-green-only
-              .circle-clipper.left
-                .circle
-              .gap-patch
-                .circle
-              .circle-clipper.right
-                .circle
-    #added_use_branch
-    #user_name_branch
+        .col.s6
+          %h7 24時間以内
+        .col.s3.hide-on-small-only
+          %h7 作成者
+        .col.s2.hide-on-small-only
+          %h7 最終閲覧
+      - @today_sheets.each_with_index do |sheet, i|
+        = render partial: 'shared/lists', locals: { sheet: sheet, time: @today_time, i: i, id_offset: 0}
+      %br/
+    - if @week_number > 0
       .row
-        .col.s1.m1
-          %label
-            %input{:type => "checkbox", class: "filled-in"}/
-            %span
-        .col.s9.m10.offset-s1
-          aaa
-          .divider
-  .modal-footer
-    = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
-    = link_to "共有する", "#", class:"modal-save modal-close waves-effect waves-green btn-flat sheet_delete_link"
+        .col.s6
+          %h7 過去１週間
+        .col.s3.hide-on-small-only
+          %h7 作成者
+        .col.s2.hide-on-small-only
+          %h7 最終閲覧
+      - @week_sheets.each_with_index do |sheet, i|
+        = render partial: 'shared/lists', locals: { sheet: sheet, time: @week_days, i: i , id_offset: @today_number}
+      %br/
+    - if @month_number > 0
+      .row
+        .col.s6
+          %h7 １週間以上前
+        .col.s3.hide-on-small-only
+          %h7 作成者
+        .col.s2.hide-on-small-only
+          %h7 最終閲覧
+      - @month_sheets.each_with_index do |sheet, i|
+        = render partial: 'shared/lists', locals: { sheet: sheet, time: @month_days, i: i , id_offset: @today_number + @week_number}
+      %br/
+  .click_for_dropdown
+
+  -# 削除用モーダル
+  = link_to "", "#modal1", class: "modal_trigger"
+  #modal1.modal
+    .modal-content
+      %h6 チェックシートを削除します。よろしいですか？
+    .modal-footer
+      = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
+      = link_to "削除する", "#", method: :DELETE, class:"modal-save modal-close waves-effect waves-green btn-flat sheet_delete_link"
+
+  -# 共有用モーダル
+  = link_to "", "#modal2", class: "modal_trigger"
+  #modal2.modal
+    .modal-content
+      %h6 共有するユーザー名を検索
+      .row
+        .input-field.col.s11
+          %i.material-icons.prefix person
+          %input#autocomplete-input.autocomplete.input_user_name{:type => "text"}/
+          %label{:for => "autocomplete-input"}
+        .input-field.col.s1
+          .spinner-hidden{hidden: true}
+            .preloader-wrapper.small.active
+              .spinner-layer.spinner-green-only
+                .circle-clipper.left
+                  .circle
+                .gap-patch
+                  .circle
+                .circle-clipper.right
+                  .circle
+      
+      #added_user_branch
+      #user_name_branch
+    .modal-footer
+      = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
+      = link_to "共有する", "#", class:"modal-save modal-close waves-effect waves-green btn-flat sheet_delete_link"
+
+  -# cooperate_request用のhidden_field
+  = f.hidden_field :sheet_id, value: "", class:"sheet_cooperate_link"
+  #cooperate_branch
+    -# = f.check_box :request_id, {checked: true, class: "filled-in cooperate_check"}, "true", "false"
+    -# = f.check_box :request_id, {class: "filled-in cooperate_check"}, "true", "false"
