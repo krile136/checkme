@@ -61,7 +61,7 @@
       %h6 チェックシートを削除します。よろしいですか？
     .modal-footer
       = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
-      = link_to "削除する", "#", method: :DELETE, class:"modal-save modal-close waves-effect waves-green btn-flat sheet_delete_link"
+      = link_to "削除する", "#", method: :DELETE, class:"modal-close waves-effect waves-green btn-flat sheet_delete_link"
 
   -# 共有用モーダル
   = link_to "", "#modal2", class: "modal_trigger"
@@ -83,12 +83,20 @@
                   .circle
                 .circle-clipper.right
                   .circle
-      
       #added_user_branch
       #user_name_branch
     .modal-footer
       = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
-      = f.submit "共有する", class:"modal-save modal-close waves-effect waves-green btn-flat sheet_cooperate_btn"
+      = f.submit "共有する", class:"modal-close waves-effect waves-green btn-flat sheet_cooperate_btn"
+
+  -# 共有リクエストキャンセル用モーダル
+  = link_to "", "#modal3", class: "modal_trigger"
+  #modal3.modal
+    .modal-content
+      %h6 共有リクエストを取り下げます。よろしいですか？
+    .modal-footer
+      = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
+      = link_to "取り下げる", "#", method: :DELETE, class:"modal-close waves-effect waves-green btn-flat request_cancel_link"
 
   -# cooperate_request用のhidden_field
   = f.hidden_field :sheet_id, value: "", class:"sheet_cooperate_link"

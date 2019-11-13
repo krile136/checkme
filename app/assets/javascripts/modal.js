@@ -103,7 +103,7 @@ $(document).on('turbolinks:load', function () {
   });
 
   // 共有が押された時
-  $('.sheet_share_button').on('click', function (e) {
+  $('.sheet_share_btn').on('click', function (e) {
     e.preventDefault();
 
     // 検索結果およびユーザー追加ブランチの中身をリセットする
@@ -124,10 +124,14 @@ $(document).on('turbolinks:load', function () {
     $(share_modal).modal("open");
   });
 
+  // 共有の取り下げが押された時
+  $('.request_cancel_btn').on('click', function (e) {
+    modal_cooperate(e, this)
+  });
 
 });
 
-// モーダル関係の関数
+// 以下は非同期通信で新たにイベントを付与するため、別に記述されている
 
 // キャンセルが押された時
 function modal_cancel(e) {
@@ -184,4 +188,22 @@ function modal_reflect(e, elem) {
   var text_content = parent.find('#text-content').text();
   var input_field = parent.find('#autocomplete-input')
   input_field.val(text_content);
+}
+
+function modal_cooperate(e, elem) {
+  e.preventDefault();
+
+  // ドロップダウンを閉じる
+  $('.dropdown_trigger').dropdown('close');
+
+  // 表示するモーダルを取得
+  var cancel_modal = $("#modal3");
+
+  // 削除するためのURIを生成、モーダルのリンクに埋め込む
+  var page_url = $(location).attr('href');
+  var replaced_url = page_url.replace(/user.*$/, "cooperate_requests/") + $(elem).attr('id');
+  cancel_modal.find('.request_cancel_link').attr('href', replaced_url)
+
+  // 隠してたモーダルを起動する
+  $(cancel_modal).modal("open");
 }
