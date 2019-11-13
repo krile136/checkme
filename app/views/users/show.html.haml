@@ -74,17 +74,14 @@
                 .circle
     #added_use_branch
     #user_name_branch
-      -# .row
-      -#   .col.s1
-      -#     %label
-      -#       %input{:type => "checkbox", class: "filled-in"}/
-      -#       %span
-      -#   .col.s10
-      -#     aaa
-      -#     .divider
-      -# .row
-      -#   .col.s10.offset-s1.m10.offset-m1
-      -#     一致するユーザーはいません
+      .row
+        .col.s1.m1
+          %label
+            %input{:type => "checkbox", class: "filled-in"}/
+            %span
+        .col.s9.m10.offset-s1
+          aaa
+          .divider
   .modal-footer
     = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
     = link_to "共有する", "#", class:"modal-save modal-close waves-effect waves-green btn-flat sheet_delete_link"

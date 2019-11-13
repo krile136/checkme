@@ -1,0 +1,2 @@
+class CooperateRequest < ApplicationRecord
+end

@@ -5,13 +5,13 @@ $(document).on('turbolinks:load', function () {
 
   function appendUser(user) {
     var html = `<div class="row">
-                  <div class="col s1">
+                  <div class="col s1 m1">
                     <label>
                       <input class="filled-in" type="checkbox">
                       <span></span>
                     </label>
                   </div>
-                  <div class="col s10">
+                  <div class="col s9 offset-s1 m10">
                     ${user.name}
                     <div class="divider"></div>
                   </div>
@@ -44,7 +44,6 @@ $(document).on('turbolinks:load', function () {
         dataType: 'json'
       })
         .done(function (users) {
-          console.log(users);
           $("#user_name_branch").empty();
           var current_id = $(".current_id").attr('id');
           if (users.length != 0) {
