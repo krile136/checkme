@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resources :cooperate_requests, only: [:create, :destroy] do
     member do
       delete :reject
+      patch :accept
     end
   end
 end

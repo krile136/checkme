@@ -117,6 +117,11 @@ $(document).on('turbolinks:load', function () {
     modal_reject(e, this);
   })
 
+  // 共有の承認が押された時
+  $('.request_accept_btn').on('click', function (e) {
+    modal_accept(e, this);
+  })
+
 });
 
 // 以下は非同期通信で新たにイベントを付与するため、別に記述されている
@@ -236,4 +241,24 @@ function modal_reject(e, elem) {
 
   // 隠してたモーダルを起動する
   $(reject_modal).modal("open");
+}
+
+function modal_accept(e, elem) {
+  e.preventDefault();
+
+  // ドロップダウンを閉じる
+  $('.dropdown_trigger').dropdown('close');
+
+  // 表示するモーダルを取得
+  var accept_modal = $("#modal5");
+
+  // 承認するリクエストIDを取得、ページ内のフォームに埋め込む
+  // 右のリンクを生成する /cooperate_requests/:id/accept
+  // methodはshow.html.haml側にすでにPATCHが用意されている
+  var page_url = $(location).attr('href');
+  var replaced_url = page_url.replace(/user.*$/, "cooperate_requests/") + $(elem).attr('id') + '/accept';
+  accept_modal.find('.request_accept_link').attr('href', replaced_url)
+
+  // 隠してたモーダルを起動する
+  $(accept_modal).modal("open");
 }

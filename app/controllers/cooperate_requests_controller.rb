@@ -26,9 +26,26 @@ class CooperateRequestsController < ApplicationController
     redirect_to user_path(current_user)
   end
 
+  def accept
+    request = CooperateRequest.find(params[:id])
+
+    prms = params.merge(user_id: current_user.id).merge(sheet_id: request.sheet.id)
+    accept_params = prms.permit(:user_id, :sheet_id)
+    user_sheet = UserSheet.new(accept_params)
+
+    request.destroy
+    user_sheet.save 
+    
+    redirect_to user_path(current_user)
+  end
+
   private
 
   def request_params
     params.permit(:sheet_id, request_id: []).merge(user_id: current_user.id)
+  end
+
+  def user_sheet_params
+    params.permit(:authenticity_token).merge(user_id: current_user.id);
   end
 end

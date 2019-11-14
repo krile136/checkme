@@ -49,6 +49,7 @@ class UsersController < ApplicationController
     @requests = CooperateRequest.where(request_id: current_user.id).includes(:user).includes(:sheet)
     @requests_number = @requests.length
     @requests_time = @requests.map{|request| request.sheet.get_request_last_view(today)}
+    binding.pry
   end
 
   private

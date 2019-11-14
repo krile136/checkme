@@ -13,7 +13,7 @@
         %i.material-icons.small.icon-vert-center.center more_vert
       %ul.dropdown-content{id: "dropdown#{i + id_offset}"}
         %li 
-          = link_to "" do
+          = link_to "" , class: "request_accept_btn", id: "#{request.id}" do
             %i.material-icons person_add
             承認
         %li
