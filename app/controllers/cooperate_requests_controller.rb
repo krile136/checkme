@@ -13,11 +13,11 @@ class CooperateRequestsController < ApplicationController
 
   def destroy
     request = CooperateRequest.find(params[:id])
-    destroy_requests = CooperateRequest.where(sheet_id: request.sheet_id).where(user_id: request.user_id)
-    destroy_requests.each do |destroy_request|
+    @destroy_requests = CooperateRequest.where(sheet_id: request.sheet_id).where(user_id: request.user_id)
+    @destroy_requests.each do |destroy_request|
       destroy_request.destroy
     end
-    redirect_to user_path(current_user)
+    render json: @destroy_requests
   end
 
   private

@@ -104,29 +104,12 @@ $(document).on('turbolinks:load', function () {
 
   // 共有が押された時
   $('.sheet_share_btn').on('click', function (e) {
-    e.preventDefault();
-
-    // 検索結果およびユーザー追加ブランチの中身をリセットする
-    $('#added_user_branch').empty();
-    $('#user_name_branch').empty();
-
-    // ドロップダウンを閉じる
-    $('.dropdown_trigger').dropdown('close');
-
-    // 表示するモーダルを取得
-    var share_modal = $("#modal2");
-
-    // 共有するシートIDを取得、ページ内のフォームに埋め込む
-    var sheet_id = $(this).attr('id')
-    $('.sheet_cooperate_link').val(sheet_id);
-
-    // 隠してたモーダルを起動する
-    $(share_modal).modal("open");
+    modal_send_request(e, this);
   });
 
   // 共有の取り下げが押された時
   $('.request_cancel_btn').on('click', function (e) {
-    modal_cooperate(e, this)
+    modal_cooperate(e, this);
   });
 
 });
@@ -203,7 +186,29 @@ function modal_cooperate(e, elem) {
   var page_url = $(location).attr('href');
   var replaced_url = page_url.replace(/user.*$/, "cooperate_requests/") + $(elem).attr('id');
   cancel_modal.find('.request_cancel_link').attr('href', replaced_url)
+  cancel_modal.find('.request_cancel_link').attr('id', $(elem).attr('id'))
 
   // 隠してたモーダルを起動する
   $(cancel_modal).modal("open");
+}
+
+function modal_send_request(e, elem) {
+  e.preventDefault();
+
+  // 検索結果およびユーザー追加ブランチの中身をリセットする
+  $('#added_user_branch').empty();
+  $('#user_name_branch').empty();
+
+  // ドロップダウンを閉じる
+  $('.dropdown_trigger').dropdown('close');
+
+  // 表示するモーダルを取得
+  var share_modal = $("#modal2");
+
+  // 共有するシートIDを取得、ページ内のフォームに埋め込む
+  var sheet_id = $(elem).attr('id')
+  $('.sheet_cooperate_link').val(sheet_id);
+
+  // 隠してたモーダルを起動する
+  $(share_modal).modal("open");
 }
