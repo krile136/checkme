@@ -39,12 +39,8 @@ class SheetsController < ApplicationController
 
   def destroy
     sheet = Sheet.find(params[:id])
-    if sheet.user_id == current_user.id
-      if sheet.destroy
-        redirect_to user_path(current_user)
-      else
-        redirect_to user_path(current_user)
-      end
+    if sheet.destroy
+      redirect_to user_path(current_user)
     else
       redirect_to user_path(current_user)
     end
@@ -64,7 +60,7 @@ class SheetsController < ApplicationController
   def sheet_params
     params.require(:sheet).permit(:title,
                   items_attributes:[:name, :is_head, :top])
-                  .merge(user_id: current_user.id).merge(pulling_number: 0).merge(last_view: Time.now)
+                  .merge(user_ids: [current_user.id]).merge(pulling_number: 0).merge(last_view: Time.now)
   end
 
   def update_params

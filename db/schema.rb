@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_13_032947) do
+ActiveRecord::Schema.define(version: 2019_11_14_032200) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,11 +43,18 @@ ActiveRecord::Schema.define(version: 2019_11_13_032947) do
     t.boolean "is_secret", default: false, null: false
     t.boolean "is_pulled", default: false, null: false
     t.integer "pulling_number"
-    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "last_view"
-    t.index ["user_id"], name: "index_sheets_on_user_id"
+  end
+
+  create_table "user_sheets", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "sheet_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sheet_id"], name: "index_user_sheets_on_sheet_id"
+    t.index ["user_id"], name: "index_user_sheets_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -66,5 +73,6 @@ ActiveRecord::Schema.define(version: 2019_11_13_032947) do
   add_foreign_key "cooperate_requests", "sheets"
   add_foreign_key "cooperate_requests", "users"
   add_foreign_key "items", "sheets"
-  add_foreign_key "sheets", "users"
+  add_foreign_key "user_sheets", "sheets"
+  add_foreign_key "user_sheets", "users"
 end
