@@ -31,7 +31,7 @@
             %i.material-icons.medium find_in_page
             シートを探す
         %li
-          = link_to destroy_user_session_path, class: "red-text" do
+          = link_to destroy_user_session_path, method: :delete, class: "red-text" do
             %i.material-icons.medium exit_to_app
             ログアウト
       -else
