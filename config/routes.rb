@@ -3,9 +3,12 @@ Rails.application.routes.draw do
   root 'sheets#index'
 
   resources :users, only: [:index, :show, :edit, :update]
-  resources :sheets, only: [:new, :create, :edit, :update, :destroy, :show] do
+  resources :sheets, only: [:index, :new, :create, :edit, :update, :destroy, :show] do
     member do
-        patch :update_date
+      patch :update_date
+    end
+    collection do
+      get :get_check
     end
   end
   resources :items, only: [:update]

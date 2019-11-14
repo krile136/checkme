@@ -51,6 +51,11 @@ class SheetsController < ApplicationController
     @sheet.update(data_update)
   end
 
+  def get_check
+    @item = Item.where(sheet_id: params[:sheet_id]).where(is_head: "false").order('top ASC')
+    render json: @item
+  end
+
   private
 
   def move_to_index
