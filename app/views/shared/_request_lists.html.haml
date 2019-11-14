@@ -1,0 +1,22 @@
+.row.text-vert-center.sheet-index
+  = link_to "" do
+    .col.s1.m1
+      %i.material-icons.small.icon-vert-center description
+    .col.s9.m5
+      = request.sheet.title
+    .col.m3.hide-on-small-only.grey-text.darken-3
+      = request.user.name
+    .col.m2.hide-on-small-only.grey-text.darken-3
+      = time[i]
+    .col.s1.m1.center
+      = link_to "#", class: "dropdown-trigger btn-flat show_circle_btn user_show_hover","data-target": "dropdown#{i + id_offset}" do
+        %i.material-icons.small.icon-vert-center.center more_vert
+      %ul.dropdown-content{id: "dropdown#{i + id_offset}"}
+        %li 
+          = link_to "" , class: "request_accept_btn", id: "#{request.id}" do
+            %i.material-icons person_add
+            承認
+        %li
+          = link_to "" , class: "request_reject_btn", id: "#{request.id}" do
+            %i.material-icons block
+            拒否

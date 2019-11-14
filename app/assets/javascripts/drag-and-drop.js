@@ -14,9 +14,6 @@ var drag_row_top;
 // ドラッグ&ドロップイベントを付与するための配列
 var elemtents;
 
-// 移動が終了したあとのモーションが終わるためのフラグ
-var is_finish_motion = false;
-
 // 親のカード情報を保存するための変数
 var parent_card;
 
@@ -51,6 +48,9 @@ $(document).on('turbolinks:load', function () {
 function mdown(e) {
   e.preventDefault();
 
+  // ドラッグされている要素を取得
+  drag_on = $('.drag-on')[0];
+
   //要素の取得
   elements = $('.drag-and-drop');
 
@@ -60,14 +60,14 @@ function mdown(e) {
   // 親のカード情報を取得
   parent_card = $(this).parent().parent().parent().parent();
 
-  if (!is_finish_motion && parent_card[0].style.left != (left_limit + "px")) {
+  // ドラッグされている要素がなく、カードが左に寄っていない時に実行
+  if (!drag_on && parent_card[0].style.left != (left_limit + "px")) {
 
     // ドラッグ情報を更新
     parent_card.removeClass("drag-off");
     parent_card.addClass("drag-on");
 
     // 空いている行の初期値を設定
-    // drag_row_top = this.offsetTop;
     drag_row_top = parent_card[0].offsetTop;
 
     // 一番正面に持ってくる
@@ -108,6 +108,7 @@ function mdown(e) {
     //ムーブイベントにコールバック
     document.body.addEventListener("mousemove", mmove, false);
     document.body.addEventListener("touchmove", mmove, false);
+
   }
 }
 
@@ -242,19 +243,13 @@ function mup(e) {
   document.body.removeEventListener("touchmove", mmove, false);
   drag.removeEventListener("touchend", mup, false);
 
-  prevent_click_and_touch();
   reset_classes();
-}
 
-// マウスを離したとき、しばらくクリックやタッチ操作を無効にする
-function prevent_click_and_touch() {
-  is_finish_motion = true;
+  $('body').css('pointer-events', 'none');
   setTimeout(function () {
-    is_finish_motion = false;
-
     // 保存用のテキストフィールドを生成
     set_input_field()
-
+    $('body').css('pointer-events', 'auto');
   }, 300);
 }
 

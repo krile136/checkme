@@ -1,6 +1,6 @@
 = form_with model: @sheet, url: item_path, method: :PATCH, id: 'check_form',local: true do |f|
   = render partial: 'shared/show_sheet_header', locals: {sheet: @sheet}
-  .container#sheet-new
+  .container#sheet-new.auto_check{"data-sheet_id": @sheet.id}
     %br/
     %br/
     .row_container
@@ -24,13 +24,13 @@
                         %p
                           %label
                             - if item.is_check
-                              = i.check_box :is_check,{checked: true,class: "filled-in"},"true","false"
+                              = i.check_box :is_check,{checked: true,class: "filled-in update_check"},"true","false"
                             - else
-                              = i.check_box :is_check,{class: "filled-in"},"true","false"
+                              = i.check_box :is_check,{class: "filled-in update_check"},"true","false"
                             %span.checkbox-text
                               = item.name
                         =i.text_field :id, value: item.id, hidden: true
 
--# 閲覧更新用フォーム
+-# 閲覧時間更新用フォーム
 = form_with model: @sheet, url: update_date_sheet_path, method: :PATCH, id: 'update_date',local: true do |f|
   = f.hidden_field :id, value: @sheet.id

@@ -33,16 +33,14 @@ class SheetsController < ApplicationController
     @sheet = Sheet.find(params[:id])
     @sheet.save(update_params)
     @sheet.update(update_params)
+    @item = Item.where(sheet_id: @sheet.id).order('top ASC')
+    render json: @item
   end
 
   def destroy
     sheet = Sheet.find(params[:id])
-    if sheet.user_id == current_user.id
-      if sheet.destroy
-        redirect_to user_path(current_user)
-      else
-        redirect_to user_path(current_user)
-      end
+    if sheet.destroy
+      redirect_to user_path(current_user)
     else
       redirect_to user_path(current_user)
     end
@@ -51,6 +49,11 @@ class SheetsController < ApplicationController
   def update_date
     @sheet = Sheet.find(params[:id])
     @sheet.update(data_update)
+  end
+
+  def get_check
+    @item = Item.where(sheet_id: params[:sheet_id]).where(is_head: "false").order('top ASC')
+    render json: @item
   end
 
   private
@@ -62,7 +65,7 @@ class SheetsController < ApplicationController
   def sheet_params
     params.require(:sheet).permit(:title,
                   items_attributes:[:name, :is_head, :top])
-                  .merge(user_id: current_user.id).merge(pulling_number: 0).merge(last_view: Time.now)
+                  .merge(user_ids: [current_user.id]).merge(pulling_number: 0).merge(last_view: Time.now).merge(author: current_user.name)
   end
 
   def update_params

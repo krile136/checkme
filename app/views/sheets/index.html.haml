@@ -11,7 +11,10 @@
           %br/
           共有しよう
       .row.center
-        = link_to "さぁ、始めよう", "#", class: "btn-large waves-effect waves-light teal lighten-1", id: "download-botton"
+        - if user_signed_in?
+          = link_to "さぁ、始めよう", user_path(current_user.id), class: "btn-large waves-effect waves-light teal lighten-1", id: "download-botton"
+        - else
+          = link_to "さぁ、始めよう", new_user_registration_path, class: "btn-large waves-effect waves-light teal lighten-1", id: "download-botton"
       %br/
       %br/
   .parallax

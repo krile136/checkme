@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_08_055539) do
+ActiveRecord::Schema.define(version: 2019_11_14_055800) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "cooperate_requests", force: :cascade do |t|
+    t.integer "request_id", null: false
+    t.bigint "sheet_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sheet_id"], name: "index_cooperate_requests_on_sheet_id"
+    t.index ["user_id"], name: "index_cooperate_requests_on_user_id"
+  end
 
   create_table "items", force: :cascade do |t|
     t.string "name"
@@ -33,11 +43,19 @@ ActiveRecord::Schema.define(version: 2019_11_08_055539) do
     t.boolean "is_secret", default: false, null: false
     t.boolean "is_pulled", default: false, null: false
     t.integer "pulling_number"
-    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "last_view"
-    t.index ["user_id"], name: "index_sheets_on_user_id"
+    t.string "author"
+  end
+
+  create_table "user_sheets", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "sheet_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sheet_id"], name: "index_user_sheets_on_sheet_id"
+    t.index ["user_id"], name: "index_user_sheets_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -48,10 +66,14 @@ ActiveRecord::Schema.define(version: 2019_11_08_055539) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "cooperate_requests", "sheets"
+  add_foreign_key "cooperate_requests", "users"
   add_foreign_key "items", "sheets"
-  add_foreign_key "sheets", "users"
+  add_foreign_key "user_sheets", "sheets"
+  add_foreign_key "user_sheets", "users"
 end

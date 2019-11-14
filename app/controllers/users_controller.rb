@@ -2,7 +2,12 @@ class UsersController < ApplicationController
   before_action :move_to_index
 
   def index
-    
+    @users = User.where('name LIKE(?)',"%#{params[:keyword]}%")
+    @requests = CooperateRequest.where(user_id: current_user.id)
+    if params[:keyword] == ""
+      @users = []
+    end
+    render json:@users
   end
 
   def show
@@ -26,16 +31,24 @@ class UsersController < ApplicationController
     # 一ヶ月の期間を計算
     one_month = today - (one_day * 30)
     
-    @today_sheets = Sheet.where(user_id: current_user.id).where(last_view: yesterday..today).order("last_view DESC")
+    @user_sheets = Sheet.includes(:users).where(users: { id: params[:id] })
+
+    @today_sheets = @user_sheets.where(last_view: yesterday..today).order("last_view DESC")
     @today_number = @today_sheets.length
-    @week_sheets = Sheet.where(user_id: current_user.id).where(last_view: one_week..yesterday).order("last_view DESC")
+
+    @week_sheets = @user_sheets.where(last_view: one_week..yesterday).order("last_view DESC")
     @week_number = @week_sheets.length
-    @month_sheets = Sheet.where(user_id: current_user.id).where(last_view: one_month..one_week).order("last_view DESC")
+
+    @month_sheets = @user_sheets.where(last_view: one_month..one_week).order("last_view DESC")
     @month_number = @month_sheets.length
 
     @today_time = @today_sheets.map{|sheet| sheet.get_today_time(today)}
     @week_days = @week_sheets.map{|sheet| sheet.get_week_days(today)}
     @month_days =  @month_sheets.map{|sheet| sheet.get_month_days(time_drift)}
+
+    @requests = CooperateRequest.where(request_id: current_user.id).includes(:user).includes(:sheet)
+    @requests_number = @requests.length
+    @requests_time = @requests.map{|request| request.sheet.get_request_last_view(today)}
   end
 
   private

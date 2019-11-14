@@ -1,0 +1,5 @@
+class AddAuthouToSheets < ActiveRecord::Migration[5.2]
+  def change
+    add_column :sheets, :author, :string
+  end
+end
