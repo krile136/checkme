@@ -18,7 +18,7 @@ var check_reload = function () {
         })
       })
       .fail(function () {
-
+        M.toast({ html: '自動更新に失敗しました', classes: 'rounded red lighten-4 black-text', displayLength: 1000 });
       })
   }
 }
