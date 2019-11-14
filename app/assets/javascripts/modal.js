@@ -112,6 +112,11 @@ $(document).on('turbolinks:load', function () {
     modal_cooperate(e, this);
   });
 
+  // 共有の拒否が押された時
+  $('.request_reject_btn').on('click', function (e) {
+    modal_reject(e, this);
+  })
+
 });
 
 // 以下は非同期通信で新たにイベントを付与するため、別に記述されている
@@ -211,4 +216,24 @@ function modal_send_request(e, elem) {
 
   // 隠してたモーダルを起動する
   $(share_modal).modal("open");
+}
+
+function modal_reject(e, elem) {
+  e.preventDefault();
+
+  // ドロップダウンを閉じる
+  $('.dropdown_trigger').dropdown('close');
+
+  // 表示するモーダルを取得
+  var reject_modal = $("#modal4");
+
+  // 拒否するリクエストIDを取得、ページ内のフォームに埋め込む
+  // 右のリンクを生成する /cooperate_requests/:id/reject
+  // methodはshow.html.haml側にすでにDELETEが用意されている
+  var page_url = $(location).attr('href');
+  var replaced_url = page_url.replace(/user.*$/, "cooperate_requests/") + $(elem).attr('id') + '/reject';
+  reject_modal.find('.request_reject_link').attr('href', replaced_url)
+
+  // 隠してたモーダルを起動する
+  $(reject_modal).modal("open");
 }

@@ -250,5 +250,4 @@ $(document).on('turbolinks:load', function () {
         M.toast({ html: 'リクエストの取り下げに失敗しました', classes: 'rounded red lighten-4 black-text', displayLength: 2000 });
       })
   })
-
 });

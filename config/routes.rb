@@ -9,5 +9,9 @@ Rails.application.routes.draw do
     end
   end
   resources :items, only: [:update]
-  resources :cooperate_requests, only: [:create, :destroy]
+  resources :cooperate_requests, only: [:create, :destroy] do
+    member do
+      delete :reject
+    end
+  end
 end

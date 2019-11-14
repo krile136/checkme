@@ -98,6 +98,15 @@
       = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
       = link_to "取り下げる", "#", method: :DELETE, class:"modal-close waves-effect waves-green btn-flat request_cancel_link"
 
+  -# 共有リクエスト拒否用モーダル
+  = link_to "", "#modal4", class: "modal_trigger"
+  #modal4.modal
+    .modal-content
+      %h6 共有リクエストを拒否します。よろしいですか？
+    .modal-footer
+      = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
+      = link_to "拒否する", "#", method: :DELETE, class:"modal-close waves-effect waves-green btn-flat request_reject_link"
+
   -# cooperate_request用のhidden_field
   = f.hidden_field :sheet_id, value: "", class:"sheet_cooperate_link"
   #cooperate_branch

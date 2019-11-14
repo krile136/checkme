@@ -20,6 +20,12 @@ class CooperateRequestsController < ApplicationController
     render json: @destroy_requests
   end
 
+  def reject
+    request = CooperateRequest.find(params[:id])
+    request.destroy
+    redirect_to user_path(current_user)
+  end
+
   private
 
   def request_params
