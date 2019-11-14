@@ -60,7 +60,7 @@ class SheetsController < ApplicationController
   def sheet_params
     params.require(:sheet).permit(:title,
                   items_attributes:[:name, :is_head, :top])
-                  .merge(user_ids: [current_user.id]).merge(pulling_number: 0).merge(last_view: Time.now)
+                  .merge(user_ids: [current_user.id]).merge(pulling_number: 0).merge(last_view: Time.now).merge(author: current_user.name)
   end
 
   def update_params

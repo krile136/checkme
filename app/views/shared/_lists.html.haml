@@ -9,7 +9,10 @@
         - if sheet.cooperate_requests.length > 0
           (承認待ち)
     .col.m3.hide-on-small-only.grey-text.darken-3
-      自分
+      - if sheet.author == current_user.name
+        自分
+      - else
+        =sheet.author
     .col.m2.hide-on-small-only.grey-text.darken-3
       = time[i]
     .col.s1.m1.center
