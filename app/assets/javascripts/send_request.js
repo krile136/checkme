@@ -1,5 +1,6 @@
 var search_name_timer;
 var added_user_list = [];
+var cooperate_user_list = [];
 $(document).on('turbolinks:load', function () {
 
   var user_list = $('#user_name_branch');
@@ -145,9 +146,10 @@ $(document).on('turbolinks:load', function () {
           var current_id = $(".current_id").attr('id');
           if (users.length != 0) {
             users.forEach(function (user) {
-              // user.nameと一致するデータがadded_user_listになく、自分以外のユーザーであれば追加する
+              // 自分以外のユーザーかつ、user.nameと一致するデータがadded_user_listとcooperate_listになければ追加する
               var index = added_user_list.findIndex(item => item === user.name)
-              if (user.id != current_id && index == -1) {
+              var coop_index = cooperate_user_list.findIndex(item => item === user.name)
+              if (user.id != current_id && index == -1 && coop_index == -1) {
                 appendUser(user);
               };
             });

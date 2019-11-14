@@ -205,6 +205,15 @@ function modal_cooperate(e, elem) {
 function modal_send_request(e, elem) {
   e.preventDefault();
 
+  // cooperate_listを初期化
+  cooperate_user_list = [];
+
+  // cooperate_listに、すでに共有化しているユーザーのリストを挿入する
+  var coop_user_branch = $(elem).parent().parent().find('.name_list');
+  $.each(coop_user_branch, function () {
+    cooperate_user_list.push($(this).data('name'))
+  })
+
   // 検索結果およびユーザー追加ブランチの中身をリセットする
   $('#added_user_branch').empty();
   $('#user_name_branch').empty();

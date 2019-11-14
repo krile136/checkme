@@ -29,12 +29,26 @@ class CooperateRequestsController < ApplicationController
   def accept
     request = CooperateRequest.find(params[:id])
 
-    prms = params.merge(user_id: current_user.id).merge(sheet_id: request.sheet.id)
-    accept_params = prms.permit(:user_id, :sheet_id)
+    # 保存用のデータをparamsにmergeしておく
+    merged_params = params.merge(user_id: current_user.id).merge(sheet_id: request.sheet.id).merge(is_cooperate: 'true')
+
+    # 中間テーブル保存用のインスタンスを生成
+    accept_params = merged_params.permit(:user_id, :sheet_id)
     user_sheet = UserSheet.new(accept_params)
 
+    # sheetテーブルのis_cooperateをtrueにするインスタンスを生成
+    accept_sheet = Sheet.find(request.sheet.id)
+    coop_params = merged_params.permit(:is_cooperate)
+
+    # 対象のリクエストを削除
     request.destroy
-    user_sheet.save 
+
+    # 中間テーブルを保存
+    user_sheet.save
+
+    # sheetテーブルのis_cooperateをtrueにする
+    accept_sheet.save(coop_params)
+    accept_sheet.update(coop_params)
     
     redirect_to user_path(current_user)
   end
