@@ -5,10 +5,22 @@
     .row
       .col.s12.m6.offset-m3
         .row
-          .input-field.col.s12
+          .input-field.col.s10
             %i.material-icons.prefix find_in_page
             %input#autocomplete-input.autocomplete{:type => "text"}/
             %label{:for => "autocomplete-input"} Search
+          .col.s2.center.search_field_height
+            = link_to "#", class: "dropdown-trigger btn-flat show_circle_btn user_show_hover","data-target": "dropdown#0" do
+              %i.material-icons.icon-vert-center.middle autorenew
+            %ul.dropdown-content{id: "dropdown#0"}
+              %li 
+                = link_to "" do
+                  %i.material-icons find_in_page
+                  マイページ内検索
+              %li
+                = link_to "" do
+                  %i.material-icons language
+                  公開シートを検索
     - if @requests.length > 0
       .row
         .col.s6
@@ -18,7 +30,7 @@
         .col.s2.hide-on-small-only
           %h7 最終閲覧
       - @requests.each_with_index do |request, i|
-        = render partial: 'shared/request_lists', locals: { request: request, time: @requests_time, i:i ,id_offset: 0}
+        = render partial: 'shared/request_lists', locals: { request: request, time: @requests_time, i:i ,id_offset: 1}
     - if @today_number > 0 
       .row
         .col.s6
@@ -28,7 +40,7 @@
         .col.s2.hide-on-small-only
           %h7 最終閲覧
       - @today_sheets.each_with_index do |sheet, i|
-        = render partial: 'shared/lists', locals: { sheet: sheet, time: @today_time, i: i, id_offset: @requests_number}
+        = render partial: 'shared/lists', locals: { sheet: sheet, time: @today_time, i: i, id_offset: 1 + @requests_number}
       %br/
     - if @week_number > 0
       .row
@@ -39,7 +51,7 @@
         .col.s2.hide-on-small-only
           %h7 最終閲覧
       - @week_sheets.each_with_index do |sheet, i|
-        = render partial: 'shared/lists', locals: { sheet: sheet, time: @week_days, i: i , id_offset: @requests_number + @today_number}
+        = render partial: 'shared/lists', locals: { sheet: sheet, time: @week_days, i: i , id_offset: 1 + @requests_number + @today_number}
       %br/
     - if @month_number > 0
       .row
@@ -50,7 +62,7 @@
         .col.s2.hide-on-small-only
           %h7 最終閲覧
       - @month_sheets.each_with_index do |sheet, i|
-        = render partial: 'shared/lists', locals: { sheet: sheet, time: @month_days, i: i , id_offset: @requests_number + @today_number + @week_number}
+        = render partial: 'shared/lists', locals: { sheet: sheet, time: @month_days, i: i , id_offset: 1 + @requests_number + @today_number + @week_number}
       %br/
   .click_for_dropdown
 
