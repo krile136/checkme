@@ -60,7 +60,7 @@ $(document).on('turbolinks:load', function () {
       // ユーザーのシートを隠して、検索結果表示を表示する準備を行う
       $('#display_searched_sheets').css("display", "block");
       $('#display_sheets').css('display', 'none');
-
+      console.log(url);
       $.ajax({
         type: 'GET',
         url: url,
@@ -68,12 +68,9 @@ $(document).on('turbolinks:load', function () {
         dataType: 'json'
       })
         .done(function (sheets) {
+          console.log(sheets);
           if (sheets.length > 0) {
             $.each(sheets, function (index, sheet) {
-              current_user_name = $('.current_user').data("name");
-              if (sheet.author == current_user_name) {
-                sheet.author = '自分';
-              }
               appendSearchedSheet(index, sheet);
             })
             // プレビューイベントの付与
