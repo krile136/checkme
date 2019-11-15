@@ -10,4 +10,5 @@ json.array! @sheets do |sheet|
   json.pulling_number sheet.pulling_number
   json.last_view sheet.get_request_last_view(today)
   json.author "自分"
+  json.requests sheet.cooperate_requests
 end

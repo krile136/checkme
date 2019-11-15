@@ -7,10 +7,9 @@
         %i.material-icons.small.icon-vert-center supervisor_account
       .title
         = sheet.title
-      .has_request{id: "request_sheet_#{sheet.id}"}
+      .has_request{class: "request_sheet_#{sheet.id}"}
         - if sheet.cooperate_requests.length > 0
           (承認待ち)
-      
     .col.m3.hide-on-small-only.grey-text.darken-3
       - if sheet.author == current_user.name
         自分

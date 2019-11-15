@@ -85,21 +85,7 @@ $(document).on('turbolinks:load', function () {
   // --------------------------------------マイページのモーダル関係--------------------------------------
   // 削除が押された時
   $('.sheet_delete_button').on('click', function (e) {
-    e.preventDefault();
-
-    // ドロップダウンを閉じる
-    $('.dropdown_trigger').dropdown('close');
-
-    // 表示するモーダルを取得
-    var delete_modal = $("#modal1");
-
-    // 削除するためのURIを生成、モーダルのリンクに埋め込む
-    var page_url = $(location).attr('href');
-    var replaced_url = page_url.replace(/user.*$/, "sheets/") + $(this).attr('id');
-    delete_modal.find('.sheet_delete_link').attr('href', replaced_url)
-
-    // 隠してたモーダルを起動する
-    $(delete_modal).modal("open");
+    modal_delete_sheet(e, this);
   });
 
   // 共有が押された時
@@ -223,6 +209,24 @@ function modal_reflect(e, elem) {
   var text_content = parent.find('#text-content').text();
   var input_field = parent.find('#autocomplete-input')
   input_field.val(text_content);
+}
+
+function modal_delete_sheet(e, elem) {
+  e.preventDefault();
+
+  // ドロップダウンを閉じる
+  $('.dropdown_trigger').dropdown('close');
+
+  // 表示するモーダルを取得
+  var delete_modal = $("#modal1");
+
+  // 削除するためのURIを生成、モーダルのリンクに埋め込む
+  var page_url = $(location).attr('href');
+  var replaced_url = page_url.replace(/user.*$/, "sheets/") + $(elem).attr('id');
+  delete_modal.find('.sheet_delete_link').attr('href', replaced_url)
+
+  // 隠してたモーダルを起動する
+  $(delete_modal).modal("open");
 }
 
 function modal_cooperate(e, elem) {

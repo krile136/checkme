@@ -5,7 +5,7 @@ class Api::SheetsController < ApplicationController
   end
 
   def mypage
-    user_sheets = Sheet.includes(:users).where(users: { id: current_user.id })
+    user_sheets = Sheet.includes(:users).includes(:cooperate_requests).where(users: { id: current_user.id })
     @sheets = user_sheets.where('title LIKE(?)',"%#{params[:keyword]}%").order('last_view DESC')
   end
 
