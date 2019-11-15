@@ -143,7 +143,7 @@ $(document).on('turbolinks:load', function () {
           // 検索結果のブランチをリセットする
           $("#user_name_branch").empty();
 
-          var current_id = $(".current_id").attr('id');
+          var current_id = $(".current_user").attr('id');
           if (users.length != 0) {
             users.forEach(function (user) {
               // 自分以外のユーザーかつ、user.nameと一致するデータがadded_user_listとcooperate_listになければ追加する

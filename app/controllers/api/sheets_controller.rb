@@ -5,13 +5,12 @@ class Api::SheetsController < ApplicationController
   end
 
   def mypage
-    # @user_sheets = Sheet.includes(:users).where(users: { id: current_user.id })
-    binding.pry
+    @user_sheets = Sheet.includes(:users).where(users: { id: current_user.id })
+    @sheets = @user_sheets.where('title LIKE(?)',"%#{params[:keyword]}%").order('last_view DESC')
   end
 
   def public
-    # @user_sheets = Sheet.includes(:users).where(users: { id: current_user.id })
-    binding.pry
+    @sheets = Sheet.includes(:users).where('title LIKE(?)',"%#{params[:keyword]}%").where(is_public: false).order('last_view DESC')
   end
 
 end

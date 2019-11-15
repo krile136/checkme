@@ -1,7 +1,7 @@
 .wrapper
   = form_with model: @cooperate_request, url:cooperate_requests_path, method: :POST,id: "cooperate_form", local: true do |f|
     = render "shared/header"
-    .current_id{id: "#{current_user.id}"}
+    .current_user{id: "#{current_user.id}","data-name": "#{current_user.name}"}
     .container
       .row
         .col.s12.m6.offset-m3
@@ -22,6 +22,15 @@
                   = link_to "", id: "find_in_public" do
                     %i.material-icons language
                     公開シートを検索
+      #display_searched_sheets{'hidden': 'true'}
+        .row
+          .col.s6
+            %h7 シート名
+          .col.s3.hide-on-small-only
+            %h7 作成者
+          .col.s2.hide-on-small-only
+            %h7 最終閲覧
+        #searched_sheets_branch
       #display_sheets
         - if @requests.length > 0
           .row
