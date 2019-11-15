@@ -125,7 +125,12 @@ $(document).on('turbolinks:load', function () {
   // 公開の建設予定地
 
   // シート検索結果もしくは共有リクエストがきているシートをクリックされた時
+  // ajax用
   $('.sheet_preview_btn').on('click', function (e) {
+    modal_preview(e, this);
+  })
+  // リクエスト用
+  $('.sheet_preview_btn_fixed').on('click', function (e) {
     modal_preview(e, this);
   })
 
