@@ -13,11 +13,13 @@ $(document).on('turbolinks:load', function () {
 
     var request_command = `<a class="sheet_share_btn" id="${sheet.id}" href=""><i class="material-icons">supervisor_account</i>共有する</a></li>`
     var request_msg = "";
-    if (sheet.requests.length > 0) {
-      request_msg = "(承認待ち)";
-      request_command = `<a class="request_cancel_btn" id="${sheet.requests[0].id}" href="">
+    if (is_mypage) {
+      if (sheet.requests.length > 0) {
+        request_msg = "(承認待ち)";
+        request_command = `<a class="request_cancel_btn" id="${sheet.requests[0].id}" href="">
                             <i class="material-icons">supervisor_account</i>共有の取り下げ
                           </a>`
+      }
     }
     var goto_sheet_page = `<a href="/sheets/${sheet.id}">`
     if (!is_mypage) {
@@ -37,10 +39,6 @@ $(document).on('turbolinks:load', function () {
                       <div hidden="" id="user_list_branch" tabindex="0">
                         <div class="name_list" data-name="krile"></div>
                       </div>`
-    }
-    var request_msg = "";
-    if (sheet.requests.length > 0) {
-      request_msg = "(承認待ち)";
     }
     var html = `<div class="row text-vert-center sheet-index">
                   ${goto_sheet_page}
@@ -67,6 +65,8 @@ $(document).on('turbolinks:load', function () {
                 </div>`
 
     searched_sheets_branch.append(html)
+
+    // それぞれのイベントを付与する
     // 削除が押された時
     $('.sheet_delete_button').on('click', function (e) {
       modal_delete_sheet(e, this);

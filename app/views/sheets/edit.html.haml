@@ -80,8 +80,8 @@
               チェック項目を追加
 
     -# 新しいシートをクリックした時のモーダル(#moddal2)
-    = link_to "", "#modal2", class: "modal_trigger"
-    #modal2.modal
+    = link_to "", "#new_modal", class: "modal_trigger"
+    #new_modal.modal
       .modal-content
         %h6 今のシートを破棄して新しいシートを作ります。よろしいですか？
       .modal-footer
@@ -89,8 +89,8 @@
         = link_to "シートを新しく作る", new_sheet_path, class: "modal-close waves-effect waves-green btn-flat"
 
     -# タイトル編集をクリックした時のモーダル(#modal3)
-    = link_to "","#modal3", class: "modal_trigger"
-    #modal3.modal
+    = link_to "","#title_modal", class: "modal_trigger"
+    #title_modal.modal
       .modal-content
         .row
           .input-field.col.s12

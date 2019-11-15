@@ -16,7 +16,7 @@ $(document).on('turbolinks:load', function () {
 
   // モーダルウィンドウのキャンセルが押されたとき
   $('.modal-cancel').on('click', function (e) {
-    modal_cancel(e);
+    modal_close(e);
   });
 
   // モーダルウィンドウの変更が押されたとき
@@ -31,10 +31,10 @@ $(document).on('turbolinks:load', function () {
     $('.sidenav').sidenav('close');
 
     // 表示するモーダルを取得
-    var title_modal = $("#modal1");
+    var save_modal = $("#save_modal");
 
     // 隠してたモーダルを起動する
-    $(title_modal).modal("open");
+    $(save_modal).modal("open");
   })
 
   // 新しいシートがクリックされた時
@@ -44,10 +44,10 @@ $(document).on('turbolinks:load', function () {
     $('.sidenav').sidenav('close');
 
     // 表示するモーダルを取得
-    var title_modal = $("#modal2");
+    var new_modal = $("#new_modal");
 
     // 隠してたモーダルを起動する
-    $(title_modal).modal("open");
+    $(new_modal).modal("open");
   })
 
 
@@ -61,7 +61,7 @@ $(document).on('turbolinks:load', function () {
     $('.sidenav').sidenav('close');
 
     // 表示するモーダルを取得
-    var title_modal = $("#modal3");
+    var title_modal = $("#title_modal");
 
     // シートタイトルを取得、反映させる
     var sheet_title = $('#logo-container').text();
@@ -155,7 +155,7 @@ function getItemHTML(item) {
 // 以下は非同期通信で新たにイベントを付与するため、別に記述されている
 
 // キャンセルが押された時
-function modal_cancel(e) {
+function modal_close(e) {
   e.preventDefault();
 }
 
@@ -218,7 +218,7 @@ function modal_delete_sheet(e, elem) {
   $('.dropdown_trigger').dropdown('close');
 
   // 表示するモーダルを取得
-  var delete_modal = $("#modal1");
+  var delete_modal = $("#delete_modal");
 
   // 削除するためのURIを生成、モーダルのリンクに埋め込む
   var page_url = $(location).attr('href');
@@ -229,14 +229,14 @@ function modal_delete_sheet(e, elem) {
   $(delete_modal).modal("open");
 }
 
-function modal_cooperate(e, elem) {
+function modal_cancel(e, elem) {
   e.preventDefault();
 
   // ドロップダウンを閉じる
   $('.dropdown_trigger').dropdown('close');
 
   // 表示するモーダルを取得
-  var cancel_modal = $("#modal3");
+  var cancel_modal = $("#cancel_modal");
 
   // 削除するためのURIを生成、モーダルのリンクに埋め込む
   var page_url = $(location).attr('href');
@@ -271,14 +271,14 @@ function modal_send_request(e, elem) {
   $('.dropdown_trigger').dropdown('close');
 
   // 表示するモーダルを取得
-  var share_modal = $("#modal2");
+  var cooperate_modal = $("#cooperate_modal");
 
   // 共有するシートIDを取得、ページ内のフォームに埋め込む
   var sheet_id = $(elem).attr('id')
   $('.sheet_cooperate_link').val(sheet_id);
 
   // 隠してたモーダルを起動する
-  $(share_modal).modal("open");
+  $(cooperate_modal).modal("open");
 }
 
 function modal_reject(e, elem) {
@@ -288,7 +288,7 @@ function modal_reject(e, elem) {
   $('.dropdown_trigger').dropdown('close');
 
   // 表示するモーダルを取得
-  var reject_modal = $("#modal4");
+  var reject_modal = $("#reject_modal");
 
   // 拒否するリクエストIDを取得、ページ内のフォームに埋め込む
   // 右のリンクを生成する /cooperate_requests/:id/reject
@@ -308,7 +308,7 @@ function modal_accept(e, elem) {
   $('.dropdown_trigger').dropdown('close');
 
   // 表示するモーダルを取得
-  var accept_modal = $("#modal5");
+  var accept_modal = $("#accept_modal");
 
   // 承認するリクエストIDを取得、ページ内のフォームに埋め込む
   // 右のリンクを生成する /cooperate_requests/:id/accept
@@ -333,7 +333,7 @@ function modal_preview(e, elem) {
   $('.dropdown_trigger').dropdown('close');
 
   // 表示するモーダルを取得
-  var preview_modal = $("#modal7");
+  var preview_modal = $("#preview_modal");
 
   // プレビュー内容をリセットする
   var items_branch = $(preview_modal).find('.modal-content');
