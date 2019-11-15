@@ -39,6 +39,55 @@ $(document).on('turbolinks:load', function () {
 
     searched_sheets_branch.append(html)
   }
+
+  function sheet_search_with_asynchronous_communiation() {
+    // 検索結果をリセット
+    searched_sheets_branch.empty()
+
+    // 検索フォームの文字を取得
+    var input = $(".sheet_search_form").val();
+
+    // apiのurlを取得
+    var url = $('.sheet_search_form').data("url")
+
+    // 入力フォームの文字を元に非同期通信でシート検索を行う
+    if (input != "") {
+      // ユーザーのシートを隠して、検索結果表示を表示する準備を行う
+      $('#display_searched_sheets').css("display", "block");
+      $('#display_sheets').css('display', 'none');
+
+      $.ajax({
+        type: 'GET',
+        url: url,
+        data: { keyword: input },
+        dataType: 'json'
+      })
+        .done(function (sheets) {
+          if (sheets.length > 0) {
+            $.each(sheets, function (index, sheet) {
+              current_user_name = $('.current_user').data("name");
+              if (sheet.author == current_user_name) {
+                sheet.author = '自分';
+              }
+              appendSearchedSheet(index, sheet);
+            })
+            // ドロップダウンのイベントを付与
+            $('.dropdown-trigger').dropdown();
+          } else {
+            searched_sheets_branch.append(getErrMsgToHTML("一致するシートがありません"));
+            // }
+            // $('.spinner-hidden').css("display", "none");
+          }
+        })
+        .fail(function () {
+          M.toast({ html: '検索に失敗しました', classes: 'rounded red lighten-4 black-text', displayLength: 5000 });
+        });
+    } else {
+      // 検索フォームに何も入力されていない時、ユーザーのシートを表示させる
+      $('#display_searched_sheets').css('display', 'none');
+      $('#display_sheets').css('display', 'block');
+    }
+  }
   // マイシート検索が押された時
   $('#find_in_mypage').on('click', function (e) {
     e.preventDefault();
@@ -52,8 +101,8 @@ $(document).on('turbolinks:load', function () {
     // シート検索apiへのURLを書き換える
     $('.sheet_search_form').data("url", "/api/sheets/mypage")
 
-    // 検索結果をリセット
-    searched_sheets_branch.empty()
+    // 検索結果をリセットし、現在入力されている内容で検索
+    sheet_search_with_asynchronous_communiation()
   })
 
   // 公開シートを検索が押された時
@@ -69,9 +118,8 @@ $(document).on('turbolinks:load', function () {
     // シート検索apiへのURLを書き換える
     $('.sheet_search_form').data("url", "/api/sheets/public")
 
-    // 検索結果をリセット
-    searched_sheets_branch.empty()
-
+    // 検索結果をリセットし、現在入力されている内容で検索
+    sheet_search_with_asynchronous_communiation()
   })
 
   $('.sheet_search_form').on('keyup', function () {
@@ -81,54 +129,7 @@ $(document).on('turbolinks:load', function () {
 
     // シートの検索を、入力されてから0.5秒後に非同期通信で行う
     search_sheets_timer = setTimeout(function () {
-
-      // 検索結果をリセット
-      searched_sheets_branch.empty()
-
-      // 検索フォームの文字を取得
-      var input = $(".sheet_search_form").val();
-
-      // apiのurlを取得
-      var url = $('.sheet_search_form').data("url")
-
-      // 入力フォームの文字を元に非同期通信でシート検索を行う
-      if (input != "") {
-        // ユーザーのシートを隠して、検索結果表示を表示する準備を行う
-        $('#display_searched_sheets').css("display", "block");
-        $('#display_sheets').css('display', 'none');
-
-        $.ajax({
-          type: 'GET',
-          url: url,
-          data: { keyword: input },
-          dataType: 'json'
-        })
-          .done(function (sheets) {
-            console.log(sheets);
-            if (sheets.length > 0) {
-              $.each(sheets, function (index, sheet) {
-                current_user_name = $('.current_user').data("name");
-                if (sheet.author == current_user_name) {
-                  sheet.author = '自分';
-                }
-                appendSearchedSheet(index, sheet);
-              })
-              // ドロップダウンのイベントを付与
-              $('.dropdown-trigger').dropdown();
-            } else {
-              //   appendErrMsgToHTML("一致するメンバーはいません")
-              // }
-              // $('.spinner-hidden').css("display", "none");
-            }
-          })
-          .fail(function () {
-            M.toast({ html: '検索に失敗しました', classes: 'rounded red lighten-4 black-text', displayLength: 5000 });
-          });
-      } else {
-        // 検索フォームに何も入力されていない時、ユーザーのシートを表示させる
-        $('#display_searched_sheets').css('display', 'none');
-        $('#display_sheets').css('display', 'block');
-      }
+      sheet_search_with_asynchronous_communiation()
     }, 500);
   });
 });
