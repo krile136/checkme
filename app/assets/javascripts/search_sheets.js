@@ -1,4 +1,5 @@
 var search_sheets_timer;
+var is_mypage = true;
 
 $(document).on('turbolinks:load', function () {
 
@@ -9,8 +10,12 @@ $(document).on('turbolinks:load', function () {
     if (sheet.is_cooperate) {
       coop_icon = `<i class="material-icons small icon-vert-center">supervisor_account</i>`
     }
+    var goto_sheet_page = `<a href="/sheets/${sheet.id}">`
+    if (!is_mypage) {
+      goto_sheet_page = `<a href="#" class="sheet_preview_btn" data-sheet_id=${sheet.id}>`
+    }
     var html = `<div class="row text-vert-center sheet-index">
-                  <a href="#" class="sheet_preview_btn" data-sheet_id=${sheet.id}>
+                  ${goto_sheet_page}
                     <div class="col s1 m1">
                       <i class="material-icons small icon-vert-center">description</i>
                     </div>
@@ -22,7 +27,7 @@ $(document).on('turbolinks:load', function () {
                     <div class="col m2 hide-on-small-only grey-text darken-3">${sheet.last_view}</div>
                   </a>
                   <div class="col s1 m1 center">
-                    <a href="#" class="sheet_preview_btn" data-sheet_id=${sheet.id}></a>
+                    ${goto_sheet_page}
                     <a class="dropdown-trigger btn-flat show_circle_btn user_show_hover" data-target="dropdown_searched_${i}" href="#">
                       <i class="material-icons small icon-vert-center center">more_vert</i>
                     </a>
@@ -94,6 +99,9 @@ $(document).on('turbolinks:load', function () {
   $('#find_in_mypage').on('click', function (e) {
     e.preventDefault();
 
+    // マイページ検索フラグをオンにする
+    is_mypage = true;
+
     // ドロップダウンを閉じる
     $('.dropdown_trigger').dropdown('close');
 
@@ -110,6 +118,9 @@ $(document).on('turbolinks:load', function () {
   // 公開シートを検索が押された時
   $('#find_in_public').on('click', function (e) {
     e.preventDefault();
+
+    // マイページ検索フラグをオフにする
+    is_mypage = false;
 
     // ドロップダウンを閉じる
     $('.dropdown_trigger').dropdown('close');
