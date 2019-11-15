@@ -1,134 +1,135 @@
-= form_with model: @cooperate_request, url:cooperate_requests_path, method: :POST,id: "cooperate_form", local: true do |f|
-  = render "shared/header"
-  .current_id{id: "#{current_user.id}"}
-  .container
-    .row
-      .col.s12.m6.offset-m3
+.wrapper
+  = form_with model: @cooperate_request, url:cooperate_requests_path, method: :POST,id: "cooperate_form", local: true do |f|
+    = render "shared/header"
+    .current_id{id: "#{current_user.id}"}
+    .container
+      .row
+        .col.s12.m6.offset-m3
+          .row
+            .input-field.col.s10
+              %i#search_icon.material-icons.prefix find_in_page
+              %input#autocomplete-input.autocomplete.sheet_search_form{:type => "text","data-url": "/api/sheets/mypage"}
+              %label{:for => "autocomplete-input"} Search
+            .col.s2.center.search_field_height
+              = link_to "#", class: "dropdown-trigger btn-flat show_circle_btn user_show_hover","data-target": "dropdown#0" do
+                %i.material-icons.icon-vert-center.middle autorenew
+              %ul.dropdown-content{id: "dropdown#0"}
+                %li 
+                  = link_to "", id: "find_in_mypage" do
+                    %i.material-icons find_in_page
+                    マイシートを検索
+                %li
+                  = link_to "", id: "find_in_public" do
+                    %i.material-icons language
+                    公開シートを検索
+      #display_sheets
+        - if @requests.length > 0
+          .row
+            .col.s6
+              %h7 共有リクエスト
+            .col.s3.hide-on-small-only
+              %h7 作成者
+            .col.s2.hide-on-small-only
+              %h7 最終閲覧
+          - @requests.each_with_index do |request, i|
+            = render partial: 'shared/request_lists', locals: { request: request, time: @requests_time, i:i ,id_offset: 1}
+        - if @today_number > 0 
+          .row
+            .col.s6
+              %h7 24時間以内
+            .col.s3.hide-on-small-only
+              %h7 作成者
+            .col.s2.hide-on-small-only
+              %h7 最終閲覧
+          - @today_sheets.each_with_index do |sheet, i|
+            = render partial: 'shared/lists', locals: { sheet: sheet, time: @today_time, i: i, id_offset: 1 + @requests_number}
+          %br/
+        - if @week_number > 0
+          .row
+            .col.s6
+              %h7 過去１週間
+            .col.s3.hide-on-small-only
+              %h7 作成者
+            .col.s2.hide-on-small-only
+              %h7 最終閲覧
+          - @week_sheets.each_with_index do |sheet, i|
+            = render partial: 'shared/lists', locals: { sheet: sheet, time: @week_days, i: i , id_offset: 1 + @requests_number + @today_number}
+          %br/
+        - if @month_number > 0
+          .row
+            .col.s6
+              %h7 １週間以上前
+            .col.s3.hide-on-small-only
+              %h7 作成者
+            .col.s2.hide-on-small-only
+              %h7 最終閲覧
+          - @month_sheets.each_with_index do |sheet, i|
+            = render partial: 'shared/lists', locals: { sheet: sheet, time: @month_days, i: i , id_offset: 1 + @requests_number + @today_number + @week_number}
+          %br/
+
+    -# 削除用モーダル
+    = link_to "", "#modal1", class: "modal_trigger"
+    #modal1.modal
+      .modal-content
+        %h6 チェックシートを削除します。よろしいですか？
+      .modal-footer
+        = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
+        = link_to "削除する", "#", method: :DELETE, class:"modal-close waves-effect waves-green btn-flat sheet_delete_link"
+
+    -# 共有用モーダル
+    = link_to "", "#modal2", class: "modal_trigger"
+    #modal2.modal
+      .modal-content
+        %h6 共有するユーザー名を検索
         .row
-          .input-field.col.s10
-            %i.material-icons.prefix find_in_page
-            %input#autocomplete-input.autocomplete{:type => "text"}/
-            %label{:for => "autocomplete-input"} Search
-          .col.s2.center.search_field_height
-            = link_to "#", class: "dropdown-trigger btn-flat show_circle_btn user_show_hover","data-target": "dropdown#0" do
-              %i.material-icons.icon-vert-center.middle autorenew
-            %ul.dropdown-content{id: "dropdown#0"}
-              %li 
-                = link_to "" do
-                  %i.material-icons find_in_page
-                  マイページ内検索
-              %li
-                = link_to "" do
-                  %i.material-icons language
-                  公開シートを検索
-    - if @requests.length > 0
-      .row
-        .col.s6
-          %h7 共有リクエスト
-        .col.s3.hide-on-small-only
-          %h7 作成者
-        .col.s2.hide-on-small-only
-          %h7 最終閲覧
-      - @requests.each_with_index do |request, i|
-        = render partial: 'shared/request_lists', locals: { request: request, time: @requests_time, i:i ,id_offset: 1}
-    - if @today_number > 0 
-      .row
-        .col.s6
-          %h7 24時間以内
-        .col.s3.hide-on-small-only
-          %h7 作成者
-        .col.s2.hide-on-small-only
-          %h7 最終閲覧
-      - @today_sheets.each_with_index do |sheet, i|
-        = render partial: 'shared/lists', locals: { sheet: sheet, time: @today_time, i: i, id_offset: 1 + @requests_number}
-      %br/
-    - if @week_number > 0
-      .row
-        .col.s6
-          %h7 過去１週間
-        .col.s3.hide-on-small-only
-          %h7 作成者
-        .col.s2.hide-on-small-only
-          %h7 最終閲覧
-      - @week_sheets.each_with_index do |sheet, i|
-        = render partial: 'shared/lists', locals: { sheet: sheet, time: @week_days, i: i , id_offset: 1 + @requests_number + @today_number}
-      %br/
-    - if @month_number > 0
-      .row
-        .col.s6
-          %h7 １週間以上前
-        .col.s3.hide-on-small-only
-          %h7 作成者
-        .col.s2.hide-on-small-only
-          %h7 最終閲覧
-      - @month_sheets.each_with_index do |sheet, i|
-        = render partial: 'shared/lists', locals: { sheet: sheet, time: @month_days, i: i , id_offset: 1 + @requests_number + @today_number + @week_number}
-      %br/
-  .click_for_dropdown
+          .input-field.col.s11
+            %i.material-icons.prefix person
+            %input#autocomplete-input.autocomplete.input_user_name{:type => "text"}/
+            %label{:for => "autocomplete-input"}
+          .input-field.col.s1
+            .spinner-hidden{hidden: true}
+              .preloader-wrapper.small.active
+                .spinner-layer.spinner-green-only
+                  .circle-clipper.left
+                    .circle
+                  .gap-patch
+                    .circle
+                  .circle-clipper.right
+                    .circle
+        #added_user_branch
+        #user_name_branch
+      .modal-footer
+        = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
+        = f.submit "共有する", class:"modal-close waves-effect waves-green btn-flat sheet_cooperate_btn"
 
-  -# 削除用モーダル
-  = link_to "", "#modal1", class: "modal_trigger"
-  #modal1.modal
-    .modal-content
-      %h6 チェックシートを削除します。よろしいですか？
-    .modal-footer
-      = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
-      = link_to "削除する", "#", method: :DELETE, class:"modal-close waves-effect waves-green btn-flat sheet_delete_link"
+    -# 共有リクエストキャンセル用モーダル
+    = link_to "", "#modal3", class: "modal_trigger"
+    #modal3.modal
+      .modal-content
+        %h6 共有リクエストを取り下げます。よろしいですか？
+      .modal-footer
+        = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
+        = link_to "取り下げる", "#", method: :DELETE, class:"modal-close waves-effect waves-green btn-flat request_cancel_link"
 
-  -# 共有用モーダル
-  = link_to "", "#modal2", class: "modal_trigger"
-  #modal2.modal
-    .modal-content
-      %h6 共有するユーザー名を検索
-      .row
-        .input-field.col.s11
-          %i.material-icons.prefix person
-          %input#autocomplete-input.autocomplete.input_user_name{:type => "text"}/
-          %label{:for => "autocomplete-input"}
-        .input-field.col.s1
-          .spinner-hidden{hidden: true}
-            .preloader-wrapper.small.active
-              .spinner-layer.spinner-green-only
-                .circle-clipper.left
-                  .circle
-                .gap-patch
-                  .circle
-                .circle-clipper.right
-                  .circle
-      #added_user_branch
-      #user_name_branch
-    .modal-footer
-      = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
-      = f.submit "共有する", class:"modal-close waves-effect waves-green btn-flat sheet_cooperate_btn"
+    -# 共有リクエスト拒否用モーダル
+    = link_to "", "#modal4", class: "modal_trigger"
+    #modal4.modal
+      .modal-content
+        %h6 共有リクエストを拒否します。よろしいですか？
+      .modal-footer
+        = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
+        = link_to "拒否する", "#", method: :DELETE, class:"modal-close waves-effect waves-green btn-flat request_reject_link"
 
-  -# 共有リクエストキャンセル用モーダル
-  = link_to "", "#modal3", class: "modal_trigger"
-  #modal3.modal
-    .modal-content
-      %h6 共有リクエストを取り下げます。よろしいですか？
-    .modal-footer
-      = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
-      = link_to "取り下げる", "#", method: :DELETE, class:"modal-close waves-effect waves-green btn-flat request_cancel_link"
-
-  -# 共有リクエスト拒否用モーダル
-  = link_to "", "#modal4", class: "modal_trigger"
-  #modal4.modal
-    .modal-content
-      %h6 共有リクエストを拒否します。よろしいですか？
-    .modal-footer
-      = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
-      = link_to "拒否する", "#", method: :DELETE, class:"modal-close waves-effect waves-green btn-flat request_reject_link"
-
-  -# 共有リクエスト承認用モーダル
-  = link_to "", "#modal5", class: "modal_trigger"
-  #modal5.modal
-    .modal-content
-      %h6 共有リクエストを承認します。よろしいですか？
-    .modal-footer
-      = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
-      = link_to "承認する", "#", method: :PATCH, class:"modal-close waves-effect waves-green btn-flat request_accept_link"
+    -# 共有リクエスト承認用モーダル
+    = link_to "", "#modal5", class: "modal_trigger"
+    #modal5.modal
+      .modal-content
+        %h6 共有リクエストを承認します。よろしいですか？
+      .modal-footer
+        = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
+        = link_to "承認する", "#", method: :PATCH, class:"modal-close waves-effect waves-green btn-flat request_accept_link"
 
 
-  -# cooperate_request用のhidden_field
-  = f.hidden_field :sheet_id, value: "", class:"sheet_cooperate_link"
-  #cooperate_branch
+    -# cooperate_request用のhidden_field
+    = f.hidden_field :sheet_id, value: "", class:"sheet_cooperate_link"
+    #cooperate_branch

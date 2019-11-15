@@ -18,4 +18,12 @@ Rails.application.routes.draw do
       patch :accept
     end
   end
+  namespace :api do
+    resources :sheets, only: :index, defaults: { format: 'json' } do
+      collection do
+        get :mypage
+        get :public
+      end
+    end
+  end
 end
