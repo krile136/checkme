@@ -10,7 +10,7 @@ class Api::SheetsController < ApplicationController
   end
 
   def public
-    @sheets = Sheet.includes(:users).where('title LIKE(?)',"%#{params[:keyword]}%").where(is_public: false).order('last_view DESC')
+    @sheets = Sheet.includes(:users).where('title LIKE(?)',"%#{params[:keyword]}%").where(is_public: true).order('last_view DESC')
   end
 
 end
