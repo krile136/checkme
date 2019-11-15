@@ -122,7 +122,49 @@ $(document).on('turbolinks:load', function () {
     modal_accept(e, this);
   })
 
+  // 公開の建設予定地
+
+  // シート検索結果もしくは共有リクエストがきているシートをクリックされた時
+  // ajax用
+  $('.sheet_preview_btn').on('click', function (e) {
+    modal_preview(e, this);
+  })
+  // リクエスト用
+  $('.sheet_preview_btn_fixed').on('click', function (e) {
+    modal_preview(e, this);
+  })
+
 });
+
+// プレビュー組み立て用
+function getHeadHTML(item) {
+  var html = `<div class="row">
+                <div class="col s12" style="top:${item.top - 30}px">
+                  <div class="card green lighten-5">
+                    <div class="card-content black-text">
+                      <div class="card-text">
+                        <div id="text-content">${item.name}</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>`
+  return html
+}
+function getItemHTML(item) {
+  var html = `<div class="row">
+                <div class="col s11 offset-s1" style="top:${item.top - 30}px">
+                  <div class="card lime lighten-5">
+                    <div class="card-content black-text">
+                      <div class="card-text">
+                        <div id="text-content">${item.name}</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>`
+  return html
+}
 
 // 以下は非同期通信で新たにイベントを付与するため、別に記述されている
 
@@ -273,4 +315,50 @@ function modal_accept(e, elem) {
 
   // 隠してたモーダルを起動する
   $(accept_modal).modal("open");
+}
+
+
+
+
+
+
+function modal_preview(e, elem) {
+  e.preventDefault();
+
+  // ドロップダウンを閉じる
+  $('.dropdown_trigger').dropdown('close');
+
+  // 表示するモーダルを取得
+  var preview_modal = $("#modal7");
+
+  // プレビュー内容をリセットする
+  var items_branch = $(preview_modal).find('.modal-content');
+  $(items_branch).empty()
+
+  // 非同期通信でプレビューする内容を取得して反映させる
+  var sheet_id = $(elem).data('sheet_id');
+  var url = "/items/" + sheet_id
+
+  $.ajax({
+    type: 'GET',
+    url: url,
+    dataType: 'json'
+  })
+    .done(function (items) {
+      if (items.length > 0) {
+        $.each(items, function (i, item) {
+          if (item.is_head) {
+            $(items_branch).append(getHeadHTML(item))
+          } else {
+            $(items_branch).append(getItemHTML(item))
+          }
+        })
+      }
+    })
+    .fail(function () {
+      M.toast({ html: '検索に失敗しました', classes: 'rounded red lighten-4 black-text', displayLength: 5000 });
+    });
+
+  // 隠してたモーダルを起動する
+  $(preview_modal).modal("open");
 }

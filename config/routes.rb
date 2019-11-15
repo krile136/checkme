@@ -11,7 +11,7 @@ Rails.application.routes.draw do
       get :get_check
     end
   end
-  resources :items, only: [:update]
+  resources :items, only: [:update, :show]
   resources :cooperate_requests, only: [:create, :destroy] do
     member do
       delete :reject
