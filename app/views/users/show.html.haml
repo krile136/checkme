@@ -138,6 +138,30 @@
         = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
         = link_to "承認する", "#", method: :PATCH, class:"modal-close waves-effect waves-green btn-flat request_accept_link"
 
+    -# 公開用モーダル建設予定地
+
+
+    -# プレビュー用モーダル
+    = link_to "", "#modal7", class: "modal_trigger"
+    #modal7.modal
+      #sheet-new.modal-content
+        .row
+          .col.s12{:style => "top:30px"}
+            .card.green.lighten-5
+              .card-content.black-text
+                .card-text
+                  #text-content
+                    見出し
+        .row
+          .col.s11.offset-s1{:style => "top:90px"}
+            .card.lime.lighten-5
+              .card-content.black-text
+                .card-text
+                  #text-content
+                    項目
+      .modal-footer.preview_footer
+        = link_to "閉じる", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
+
 
     -# cooperate_request用のhidden_field
     = f.hidden_field :sheet_id, value: "", class:"sheet_cooperate_link"

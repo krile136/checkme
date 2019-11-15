@@ -10,7 +10,7 @@ $(document).on('turbolinks:load', function () {
       coop_icon = `<i class="material-icons small icon-vert-center">supervisor_account</i>`
     }
     var html = `<div class="row text-vert-center sheet-index">
-                  <a href="/sheets/${sheet.id}">
+                  <a href="#" class="sheet_preview_btn" data-sheet_id=${sheet.id}>
                     <div class="col s1 m1">
                       <i class="material-icons small icon-vert-center">description</i>
                     </div>
@@ -22,7 +22,7 @@ $(document).on('turbolinks:load', function () {
                     <div class="col m2 hide-on-small-only grey-text darken-3">${sheet.last_view}</div>
                   </a>
                   <div class="col s1 m1 center">
-                    <a href="/sheets/${sheet.id}"></a>
+                    <a href="#" class="sheet_preview_btn" data-sheet_id=${sheet.id}></a>
                     <a class="dropdown-trigger btn-flat show_circle_btn user_show_hover" data-target="dropdown_searched_${i}" href="#">
                       <i class="material-icons small icon-vert-center center">more_vert</i>
                     </a>
@@ -71,12 +71,14 @@ $(document).on('turbolinks:load', function () {
               }
               appendSearchedSheet(index, sheet);
             })
+            // プレビューイベントの付与
+            $('.sheet_preview_btn').on('click', function (e) {
+              modal_preview(e, this);
+            })
             // ドロップダウンのイベントを付与
             $('.dropdown-trigger').dropdown();
           } else {
             searched_sheets_branch.append(getErrMsgToHTML("一致するシートがありません"));
-            // }
-            // $('.spinner-hidden').css("display", "none");
           }
         })
         .fail(function () {

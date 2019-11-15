@@ -122,7 +122,48 @@ $(document).on('turbolinks:load', function () {
     modal_accept(e, this);
   })
 
+  // 公開の建設予定地
+
+  // シート検索結果もしくは共有リクエストがきているシートをクリックされた時
+  $('.sheet_preview_btn').on('click', function (e) {
+    modal_preview(e, this);
+  })
+
 });
+
+// プレビュー組み立て用
+function getHeadHTML() {
+  var html = `<div class="row">
+<div class="col s12" style="top:30px">
+<div class="card green lighten-5">
+<div class="card-content black-text">
+<div class="card-text">
+<div id="text-content">
+見出し
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>`
+  return html
+}
+function getItemHTML() {
+  var html = `<div class="row">
+<div class="col s11 offset-s1" style="top:90px">
+<div class="card lime lighten-5">
+<div class="card-content black-text">
+<div class="card-text">
+<div id="text-content">
+項目
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>`
+  return html
+}
 
 // 以下は非同期通信で新たにイベントを付与するため、別に記述されている
 
@@ -273,4 +314,57 @@ function modal_accept(e, elem) {
 
   // 隠してたモーダルを起動する
   $(accept_modal).modal("open");
+}
+
+
+
+
+
+
+function modal_preview(e, elem) {
+  e.preventDefault();
+
+  // ドロップダウンを閉じる
+  $('.dropdown_trigger').dropdown('close');
+
+  // 表示するモーダルを取得
+  var preview_modal = $("#modal7");
+
+  // プレビュー内容をリセットする
+  $(preview_modal).find('.modal-content').empty()
+
+  // 非同期通信でプレビューする内容を取得して反映させる
+  var sheet_id = $(elem).data('sheet_id');
+
+  $.ajax({
+    type: 'GET',
+    url: "/items/",
+    data: { keyword: sheet_id },
+    dataType: 'json'
+  })
+    .done(function (sheets) {
+      if (sheets.length > 0) {
+        $.each(sheets, function (index, sheet) {
+          current_user_name = $('.current_user').data("name");
+          if (sheet.author == current_user_name) {
+            sheet.author = '自分';
+          }
+          appendSearchedSheet(index, sheet);
+        })
+        // プレビューイベントの付与
+        $('.sheet_preview_btn').on('click', function (e) {
+          modal_preview(e, this);
+        })
+        // ドロップダウンのイベントを付与
+        $('.dropdown-trigger').dropdown();
+      } else {
+        searched_sheets_branch.append(getErrMsgToHTML("一致するシートがありません"));
+      }
+    })
+    .fail(function () {
+      M.toast({ html: '検索に失敗しました', classes: 'rounded red lighten-4 black-text', displayLength: 5000 });
+    });
+
+  // 隠してたモーダルを起動する
+  $(preview_modal).modal("open");
 }
