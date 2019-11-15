@@ -34,7 +34,7 @@
             %i.material-icons launch
             新しいタブで開く
         %li
-          = link_to "" do
+          = link_to "", class: "sheet_public_btn", id: "#{sheet.id}" do
             %i.material-icons language
             公開する
         %li{class: "cooperate_select_branch_#{sheet.id}"}

@@ -108,7 +108,10 @@ $(document).on('turbolinks:load', function () {
     modal_accept(e, this);
   })
 
-  // 公開の建設予定地
+  // 公開するが押された時
+  $('.sheet_public_btn').on('click', function (e) {
+    modal_public(e, this);
+  })
 
   // シート検索結果もしくは共有リクエストがきているシートをクリックされた時
   // ajax用
@@ -321,7 +324,18 @@ function modal_accept(e, elem) {
   $(accept_modal).modal("open");
 }
 
+function modal_public(e, elem) {
+  e.preventDefault();
 
+  // ドロップダウンを閉じる
+  $('.dropdown_trigger').dropdown('close');
+
+  // 表示するモーダルを取得
+  var accept_modal = $("#public_modal");
+
+  // 隠してたモーダルを起動する
+  $(accept_modal).modal("open");
+}
 
 
 

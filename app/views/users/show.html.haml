@@ -138,7 +138,14 @@
         = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
         = link_to "承認する", "#", method: :PATCH, class:"modal-close waves-effect waves-green btn-flat request_accept_link"
 
-    -# 公開用モーダル建設予定地
+    -# 公開用モーダル
+    = link_to "", "#public_modal", class: "modal_trigger"
+    #public_modal.modal
+      .modal-content
+        %h6 シートを公開しますか？
+      .modal-footer
+        = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
+        = link_to "公開する", "#", method: :PATCH, class:"modal-close waves-effect waves-green btn-flat sheet_public_link"
 
 
     -# プレビュー用モーダル

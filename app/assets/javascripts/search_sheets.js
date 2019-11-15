@@ -33,7 +33,7 @@ $(document).on('turbolinks:load', function () {
                       <li tabindex="0">
                         <a target="_blank" href="/sheets/${sheet.id}"><i class="material-icons">launch</i>新しいタブで開く</a></li>
                       <li tabindex="0">
-                        <a href=""><i class="material-icons">language</i>公開する</a></li>
+                        <a class="sheet_public_btn" id="${sheet.id}" href=""><i class="material-icons">language</i>公開する</a></li>
                       <li class="cooperate_select_branch_${sheet.id}" tabindex="0">
                         ${request_command}
                       <div hidden="" id="user_list_branch" tabindex="0">
@@ -91,6 +91,11 @@ $(document).on('turbolinks:load', function () {
     $('.request_accept_btn').on('click', function (e) {
       modal_accept(e, this);
     })
+
+    // 公開するが押された時
+    $('.sheet_public_btn').on('click', function (e) {
+      modal_public(e, this);
+    })
   }
 
   function sheet_search_with_asynchronous_communiation() {
@@ -108,7 +113,6 @@ $(document).on('turbolinks:load', function () {
       // ユーザーのシートを隠して、検索結果表示を表示する準備を行う
       $('#display_searched_sheets').css("display", "block");
       $('#display_sheets').css('display', 'none');
-      console.log(url);
       $.ajax({
         type: 'GET',
         url: url,
@@ -116,7 +120,6 @@ $(document).on('turbolinks:load', function () {
         dataType: 'json'
       })
         .done(function (sheets) {
-          console.log(sheets);
           if (sheets.length > 0) {
             $.each(sheets, function (index, sheet) {
               appendSearchedSheet(index, sheet);
