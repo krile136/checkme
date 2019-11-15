@@ -214,9 +214,12 @@ function modal_send_request(e, elem) {
     cooperate_user_list.push($(this).data('name'))
   })
 
-  // 検索結果およびユーザー追加ブランチの中身をリセットする
+  // 検索結果、ユーザー追加ブランチの中身、入力フォームをリセットし、メッセージをセットする
   $('#added_user_branch').empty();
-  $('#user_name_branch').empty();
+  user_list = $('#user_name_branch');
+  user_list.empty();
+  user_list.append(getErrMsgToHTML("検索するユーザー名を入力してください"));
+  $(".input_user_name").val("")
 
   // ドロップダウンを閉じる
   $('.dropdown_trigger').dropdown('close');

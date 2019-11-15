@@ -1,6 +1,15 @@
 var search_name_timer;
 var added_user_list = [];
 var cooperate_user_list = [];
+
+// search_sheet.jsでも使っているのでグローバル化しておく
+function getErrMsgToHTML(msg) {
+  var html = `<div class="row">
+                  <div class="col s12 center">${msg}</div>
+                </div>`
+  return html
+}
+
 $(document).on('turbolinks:load', function () {
 
   var user_list = $('#user_name_branch');
@@ -18,15 +27,6 @@ $(document).on('turbolinks:load', function () {
                   <div class="col s9 offset-s1 m10">
                     <div class="appended_user_name">${user.name}</div>
                     <div class="divider"></div>
-                  </div>
-                </div>`
-    user_list.append(html);
-  }
-
-  function appendErrMsgToHTML() {
-    var html = `<div class="row">
-                  <div class="col s10 offset-s1 m10 offset-m1">
-                    一致するメンバーはいません
                   </div>
                 </div>`
     user_list.append(html);
@@ -129,43 +129,50 @@ $(document).on('turbolinks:load', function () {
 
       // 入力フォームの文字を元に非同期通信でユーザー検索を行う
       var input = $(".input_user_name").val();
-      $.ajax({
-        type: 'GET',
-        url: '/users',
-        data: { keyword: input },
-        dataType: 'json'
-      })
-        .done(function (users) {
-
-          // added_branchの移動操作をする
-          move_to_added_branch();
-
-          // 検索結果のブランチをリセットする
-          $("#user_name_branch").empty();
-
-          var current_id = $(".current_id").attr('id');
-          if (users.length != 0) {
-            users.forEach(function (user) {
-              // 自分以外のユーザーかつ、user.nameと一致するデータがadded_user_listとcooperate_listになければ追加する
-              var index = added_user_list.findIndex(item => item === user.name)
-              var coop_index = cooperate_user_list.findIndex(item => item === user.name)
-              if (user.id != current_id && index == -1 && coop_index == -1) {
-                appendUser(user);
-              };
-            });
-            // クリックした時にcooperate_branchに追加したり削除するイベントを付与
-            $('.filled-in').on('click', function () {
-              add_to_cooperate_branch();
-            })
-          }
-          else {
-            appendErrMsgToHTML("一致するメンバーはいません")
-          }
-          $('.spinner-hidden').css("display", "none");
+      if (input != "") {
+        $.ajax({
+          type: 'GET',
+          url: '/users',
+          data: { keyword: input },
+          dataType: 'json'
         })
-        .fail(function () {
-          M.toast({ html: '検索に失敗しました', classes: 'rounded red lighten-4 black-text', displayLength: 5000 });
-        })
+          .done(function (users) {
+
+            // added_branchの移動操作をする
+            move_to_added_branch();
+
+            // 検索結果のブランチをリセットする
+            $("#user_name_branch").empty();
+
+            var current_id = $(".current_user").attr('id');
+            if (users.length > 0) {
+              users.forEach(function (user) {
+                // 自分以外のユーザーかつ、user.nameと一致するデータがadded_user_listとcooperate_listになければ追加する
+                var index = added_user_list.findIndex(item => item === user.name)
+                var coop_index = cooperate_user_list.findIndex(item => item === user.name)
+                if (user.id != current_id && index == -1 && coop_index == -1) {
+                  appendUser(user);
+                };
+              });
+              // クリックした時にcooperate_branchに追加したり削除するイベントを付与
+              $('.filled-in').on('click', function () {
+                add_to_cooperate_branch();
+              })
+            }
+            else {
+              user_list.append(getErrMsgToHTML("一致するメンバーはいません"));
+            }
+            $('.spinner-hidden').css("display", "none");
+          })
+          .fail(function () {
+            M.toast({ html: '検索に失敗しました', classes: 'rounded red lighten-4 black-text', displayLength: 5000 });
+          })
+      } else {
+        // フォームに何も入力されていない時
+        $("#user_name_branch").empty();
+        user_list.append(getErrMsgToHTML("検索するユーザー名を入力してください"));
+        $('.spinner-hidden').css("display", "none");
+      }
     }, 500);
   });
 

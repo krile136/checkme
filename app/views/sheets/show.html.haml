@@ -1,36 +1,37 @@
-= form_with model: @sheet, url: item_path, method: :PATCH, id: 'check_form',local: true do |f|
-  = render partial: 'shared/show_sheet_header', locals: {sheet: @sheet}
-  .container#sheet-new.auto_check{"data-sheet_id": @sheet.id}
-    %br/
-    %br/
-    .row_container
-      - @item.each do |item|
-        - if item.is_head
-          .row
-            .col.s12.m10.offset-m1.drag-and-drop.drag-off{:style => "top:#{item.top}px"}
-              .card.green.lighten-5
-                .card-content.black-text
-                  .card-text
-                    #text-content
-                      = item.name
-        - else
-          = f.fields_for :items, Item.new do |i|
+.wrapper
+  = form_with model: @sheet, url: item_path, method: :PATCH, id: 'check_form',local: true do |f|
+    = render partial: 'shared/show_sheet_header', locals: {sheet: @sheet}
+    .container#sheet-new.auto_check{"data-sheet_id": @sheet.id}
+      %br/
+      %br/
+      .row_container
+        - @item.each do |item|
+          - if item.is_head
             .row
-              .col.s11.offset-s1.m9.offset-m2.drag-and-drop.drag-off{:style => "top:#{item.top}px"}
-                .card.lime.lighten-5
+              .col.s12.m10.offset-m1.drag-and-drop.drag-off{:style => "top:#{item.top}px"}
+                .card.green.lighten-5
                   .card-content.black-text
                     .card-text
                       #text-content
-                        %p
-                          %label
-                            - if item.is_check
-                              = i.check_box :is_check,{checked: true,class: "filled-in update_check"},"true","false"
-                            - else
-                              = i.check_box :is_check,{class: "filled-in update_check"},"true","false"
-                            %span.checkbox-text
-                              = item.name
-                        =i.text_field :id, value: item.id, hidden: true
+                        = item.name
+          - else
+            = f.fields_for :items, Item.new do |i|
+              .row
+                .col.s11.offset-s1.m9.offset-m2.drag-and-drop.drag-off{:style => "top:#{item.top}px"}
+                  .card.lime.lighten-5
+                    .card-content.black-text
+                      .card-text
+                        #text-content
+                          %p
+                            %label
+                              - if item.is_check
+                                = i.check_box :is_check,{checked: true,class: "filled-in update_check"},"true","false"
+                              - else
+                                = i.check_box :is_check,{class: "filled-in update_check"},"true","false"
+                              %span.checkbox-text
+                                = item.name
+                          =i.text_field :id, value: item.id, hidden: true
 
--# 閲覧時間更新用フォーム
-= form_with model: @sheet, url: update_date_sheet_path, method: :PATCH, id: 'update_date',local: true do |f|
-  = f.hidden_field :id, value: @sheet.id
+  -# 閲覧時間更新用フォーム
+  = form_with model: @sheet, url: update_date_sheet_path, method: :PATCH, id: 'update_date',local: true do |f|
+    = f.hidden_field :id, value: @sheet.id

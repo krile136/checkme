@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_14_055800) do
+ActiveRecord::Schema.define(version: 2019_11_15_065806) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 2019_11_14_055800) do
 
   create_table "sheets", force: :cascade do |t|
     t.string "title"
-    t.boolean "is_public", default: false, null: false
+    t.boolean "is_public", default: true, null: false
     t.boolean "is_cooperate", default: false, null: false
     t.boolean "is_secret", default: false, null: false
     t.boolean "is_pulled", default: false, null: false
