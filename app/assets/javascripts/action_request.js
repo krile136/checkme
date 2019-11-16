@@ -1,3 +1,19 @@
+function appendRequestCancelmsg(id) {
+  var html = `<a class="request_cancel_btn" id="${id}" href="">
+                  <i class="material-icons">supervisor_account</i>共有の取り下げ
+                </a>`
+
+  return html
+}
+
+function appendSendRequestmsg(sheet_id) {
+  var html = `<a class="sheet_share_btn" id="${sheet_id}" href="">
+                  <i class="material-icons">supervisor_account</i>共有する
+                </a>`
+  return html
+}
+
+
 $(document).on('turbolinks:load', function () {
 
   // リクエストを送信した時、cooperate_requestテーブルへ非同期でデータを保存する

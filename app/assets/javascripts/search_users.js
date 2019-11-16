@@ -47,23 +47,6 @@ $(document).on('turbolinks:load', function () {
                 </div>`
     added_list.append(html);
   }
-
-  function appendRequestCancelmsg(id) {
-    var html = `<a class="request_cancel_btn" id="${id}" href="">
-                  <i class="material-icons">supervisor_account</i>共有の取り下げ
-                </a>`
-
-    return html
-  }
-
-  function appendSendRequestmsg(sheet_id) {
-    var html = `<a class="sheet_share_btn" id="${sheet_id}" href="">
-                  <i class="material-icons">supervisor_account</i>共有する
-                </a>`
-    return html
-  }
-
-
   function appendRequestIDToCooperateTree(id) {
     var html = `<input value="${id}" type="hidden" name="request_id[]" id="request_id">`
     cooperate_list.append(html);
@@ -169,6 +152,10 @@ $(document).on('turbolinks:load', function () {
           })
       } else {
         // フォームに何も入力されていない時
+
+        // added_branchの移動操作をする
+        move_to_added_branch();
+
         $("#user_name_branch").empty();
         user_list.append(getErrMsgToHTML("検索するユーザー名を入力してください"));
         $('.spinner-hidden').css("display", "none");

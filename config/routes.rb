@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :sheets, only: [:index, :new, :create, :edit, :update, :destroy, :show] do
     member do
       patch :update_date
+      patch :set_public
     end
     collection do
       get :get_check

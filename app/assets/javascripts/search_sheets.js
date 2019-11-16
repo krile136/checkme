@@ -79,7 +79,7 @@ $(document).on('turbolinks:load', function () {
 
     // 共有の取り下げが押された時
     $('.request_cancel_btn').on('click', function (e) {
-      modal_cooperate(e, this);
+      modal_cancel(e, this);
     });
 
     // 共有の拒否が押された時

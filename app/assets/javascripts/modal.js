@@ -95,7 +95,7 @@ $(document).on('turbolinks:load', function () {
 
   // 共有の取り下げが押された時
   $('.request_cancel_btn').on('click', function (e) {
-    modal_cooperate(e, this);
+    modal_cancel(e, this);
   });
 
   // 共有の拒否が押された時
@@ -268,6 +268,8 @@ function modal_send_request(e, elem) {
   user_list = $('#user_name_branch');
   user_list.empty();
   user_list.append(getErrMsgToHTML("検索するユーザー名を入力してください"));
+  $('#added_user_branch').empty();
+  $('#cooperate_branch').empty();
   $(".input_user_name").val("")
 
   // ドロップダウンを閉じる
@@ -331,10 +333,16 @@ function modal_public(e, elem) {
   $('.dropdown_trigger').dropdown('close');
 
   // 表示するモーダルを取得
-  var accept_modal = $("#public_modal");
+  var public_modal = $("#public_modal");
 
+  // 公開するシートIDを取得して、モーダル内のリンクに埋め込む
+  var sheet_id = $(elem).attr('id');
+  var replaced_url = "/sheets/" + sheet_id + "/set_public"
+  public_modal.find('.sheet_public_link').attr("href", replaced_url);
+  console.log(sheet_id);
+  console.log(replaced_url);
   // 隠してたモーダルを起動する
-  $(accept_modal).modal("open");
+  $(public_modal).modal("open");
 }
 
 
