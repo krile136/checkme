@@ -153,6 +153,7 @@ $(document).on('turbolinks:load', function () {
         .done(function (sheets) {
           if (sheets.length > 0) {
             $.each(sheets, function (index, sheet) {
+
               appendSearchedSheet(index, sheet);
             })
             // プレビューイベントの付与
