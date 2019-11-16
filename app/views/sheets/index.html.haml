@@ -4,21 +4,25 @@
     .container
       %br/
       %br/
-      %h1.header.center.teal-text.text-lighten-2 CheckMe！
-      .row.center
-        %h5.header.col.s12.light.white-text
-          チェックシートを作って
-          %br/
-          共有しよう
-      .row.center
-        - if user_signed_in?
-          = link_to "さぁ、始めよう", user_path(current_user.id), class: "btn-large waves-effect waves-light teal lighten-1", id: "download-botton"
-        - else
-          = link_to "さぁ、始めよう", new_user_registration_path, class: "btn-large waves-effect waves-light teal lighten-1", id: "download-botton"
+      %br/
+      .container.col.s6.m6
+        .row
+          .col.s12.offset-m3.m6.center
+            %h1 CheckMe！
+        .row.center
+          %h5.header.col.s12.offset-m3.m6.light.black-text.shadow-text
+            チェックシートを作って
+            %br/
+            共有しよう
+        .row.center
+          - if user_signed_in?
+            = link_to "さぁ、始めよう", user_path(current_user.id), class: "btn-large waves-effect waves-light teal lighten-1", id: "download-botton"
+          - else
+            = link_to "さぁ、始めよう", new_user_registration_path, class: "btn-large waves-effect waves-light teal lighten-1", id: "download-botton"
       %br/
       %br/
   .parallax
-    = image_tag "background1.jpg"
+    = image_tag "checksheet.jpg", class: "blur"
 .container
   .section
     / Icon Section

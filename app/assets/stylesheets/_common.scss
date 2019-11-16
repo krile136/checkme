@@ -10,3 +10,27 @@ a {
 .wrapper{
   min-height: 100vh;
 }
+
+.blur{
+  -ms-filter: blur(3px);
+  filter: blur(3px);
+}
+
+.top_background{
+  position: absolute;
+  width: 50%;
+  height: 70%;
+  background-color: #FFFFFF;
+  opacity: 0.4;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  border-radius: 10px;
+  z-index: 0;
+}
+
+.shadow-text{
+  text-shadow:2px 2px 5px #000000;
+}
