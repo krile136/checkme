@@ -83,6 +83,8 @@ $(document).on('turbolinks:load', function () {
   })
 
   // --------------------------------------マイページのモーダル関係--------------------------------------
+
+  set_mypage_modals(this);
   // 削除が押された時
   $('.sheet_delete_button').on('click', function (e) {
     modal_delete_sheet(e, this);
@@ -113,11 +115,17 @@ $(document).on('turbolinks:load', function () {
     modal_public(e, this);
   })
 
+  // 公開をやめるが押された時
+  $('.sheet_not_public_btn').on('click', function (e) {
+    modal_public_cancel(e, this);
+  });
+
   // シート検索結果もしくは共有リクエストがきているシートをクリックされた時
   // ajax用
   $('.sheet_preview_btn').on('click', function (e) {
     modal_preview(e, this);
   })
+
   // リクエスト用
   $('.sheet_preview_btn_fixed').on('click', function (e) {
     modal_preview(e, this);
@@ -203,6 +211,10 @@ function modal_delete(e, elem) {
       set_input_field()
     }, 300);
   }
+}
+
+function set_mypage_modals(elem) {
+
 }
 
 // モーダルを開いた時、カードの内容を入力フォームに反映させる
@@ -339,13 +351,28 @@ function modal_public(e, elem) {
   var sheet_id = $(elem).attr('id');
   var replaced_url = "/sheets/" + sheet_id + "/set_public"
   public_modal.find('.sheet_public_link').attr("href", replaced_url);
-  console.log(sheet_id);
-  console.log(replaced_url);
+
   // 隠してたモーダルを起動する
   $(public_modal).modal("open");
 }
 
+function modal_public_cancel(e, elem) {
+  e.preventDefault();
 
+  // ドロップダウンを閉じる
+  $('.dropdown_trigger').dropdown('close');
+
+  // 表示するモーダルを取得
+  var public_cancel_modal = $("#public_cancel_modal");
+
+  // 公開キャンセルをするシートIDを取得して、モーダル内のリンクに埋め込む
+  var sheet_id = $(elem).attr('id');
+  var replaced_url = "/sheets/" + sheet_id + "/cancel_public"
+  public_cancel_modal.find('.sheet_public_cancel_link').attr("href", replaced_url);
+
+  // 隠してたモーダルを起動する
+  $(public_cancel_modal).modal("open");
+}
 
 
 function modal_preview(e, elem) {

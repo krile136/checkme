@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     member do
       patch :update_date
       patch :set_public
+      patch :cancel_public
     end
     collection do
       get :get_check

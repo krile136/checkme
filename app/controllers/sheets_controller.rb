@@ -59,7 +59,13 @@ class SheetsController < ApplicationController
   def set_public
     @sheet = Sheet.find(params[:id])
     @sheet.update(public_update(true))
-    # binding.pry
+    render json: @sheet
+  end
+
+  def cancel_public
+    @sheet = Sheet.find(params[:id])
+    @sheet.update(public_update(false))
+    render json: @sheet
   end
 
   private

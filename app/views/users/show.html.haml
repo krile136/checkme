@@ -12,7 +12,7 @@
               %label{:for => "autocomplete-input"} Search
             .col.s2.center.search_field_height
               = link_to "#", class: "dropdown-trigger btn-flat show_circle_btn user_show_hover","data-target": "dropdown#0" do
-                %i.material-icons.icon-vert-center.middle autorenew
+                %i.material-icons.icon-vert-center.middle find_replace
               %ul.dropdown-content{id: "dropdown#0"}
                 %li 
                   = link_to "", id: "find_in_mypage" do
@@ -146,6 +146,15 @@
       .modal-footer
         = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
         = link_to "公開する", "#", method: :PATCH, class:"modal-close waves-effect waves-green btn-flat sheet_public_link"
+
+    -# 公開キャンセル用モーダル
+    = link_to "", "#public_cancel_modal", class: "modal_trigger"
+    #public_cancel_modal.modal
+      .modal-content
+        %h6 シートの公開をやめますか？
+      .modal-footer
+        = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
+        = link_to "公開をやめる", "#", method: :PATCH, class:"modal-close waves-effect waves-green btn-flat sheet_public_cancel_link"
 
 
     -# プレビュー用モーダル

@@ -6,11 +6,25 @@ $(document).on('turbolinks:load', function () {
   var searched_sheets_branch = $('#searched_sheets_branch')
 
   function appendSearchedSheet(i, sheet) {
+    // 共有アイコン
     var coop_icon = "";
     if (sheet.is_cooperate) {
       coop_icon = `<i class="material-icons small icon-vert-center">supervisor_account</i>`
     }
 
+    // 公開アイコンとコマンド
+    var public_command = `<a class="sheet_public_btn" id="${sheet.id}" href="">
+                            <i class="material-icons">language</i>公開する
+                          </a>`
+    var public_icon = "";
+    if (sheet.is_public) {
+      public_icon = `<i class="material-icons small icon-vert-center">language</i>`
+      public_command = `<a class="sheet_not_public_btn" id="${sheet.id}" href="">
+                          <i class="material-icons">language</i>公開をやめる
+                        </a>`
+    }
+
+    // 共有リクエストメッセージとコマンド
     var request_command = `<a class="sheet_share_btn" id="${sheet.id}" href=""><i class="material-icons">supervisor_account</i>共有する</a></li>`
     var request_msg = "";
     if (is_mypage) {
@@ -21,6 +35,8 @@ $(document).on('turbolinks:load', function () {
                           </a>`
       }
     }
+
+    // マイページ検索と公開検索とで、ドロップダウンリストを変更する
     var goto_sheet_page = `<a href="/sheets/${sheet.id}">`
     if (!is_mypage) {
       goto_sheet_page = `<a href="#" class="sheet_preview_btn" data-sheet_id=${sheet.id}>`
@@ -33,19 +49,22 @@ $(document).on('turbolinks:load', function () {
                       <li tabindex="0">
                         <a target="_blank" href="/sheets/${sheet.id}"><i class="material-icons">launch</i>新しいタブで開く</a></li>
                       <li tabindex="0">
-                        <a class="sheet_public_btn" id="${sheet.id}" href=""><i class="material-icons">language</i>公開する</a></li>
+                        ${public_command}
                       <li class="cooperate_select_branch_${sheet.id}" tabindex="0">
                         ${request_command}
                       <div hidden="" id="user_list_branch" tabindex="0">
                         <div class="name_list" data-name="krile"></div>
                       </div>`
     }
+
+    // HTMLの組み立て
     var html = `<div class="row text-vert-center sheet-index">
                   ${goto_sheet_page}
                     <div class="col s1 m1">
                       <i class="material-icons small icon-vert-center">description</i>
                     </div>
                     <div class="col s9 m5 f-container">
+                      <div class="public_icon" id="public_sheet_${sheet.id}">${public_icon}</div>
                       ${coop_icon}
                       <div class="title">${sheet.title}</div>
                       <div class="has_request request_sheet_${sheet.id}">${request_msg}</div>
@@ -96,6 +115,11 @@ $(document).on('turbolinks:load', function () {
     $('.sheet_public_btn').on('click', function (e) {
       modal_public(e, this);
     })
+
+    // 公開をやめるが押された時
+    $('.share_not_public_btn').on('click', function (e) {
+      modal_public_cancel(e, this);
+    });
   }
 
   function sheet_search_with_asynchronous_communiation() {
