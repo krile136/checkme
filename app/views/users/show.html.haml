@@ -111,6 +111,10 @@
         = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
         = f.submit "共有する", class:"modal-close waves-effect waves-green btn-flat sheet_cooperate_btn"
 
+    -# cooperate_request用のhidden_field
+    = f.hidden_field :sheet_id, value: "", class:"sheet_cooperate_link"
+    #cooperate_branch
+
     -# 共有リクエストキャンセル用モーダル
     = link_to "", "#cancel_modal", class: "modal_trigger"
     #cancel_modal.modal
@@ -156,10 +160,28 @@
         = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
         = link_to "公開をやめる", "#", method: :PATCH, class:"modal-close waves-effect waves-green btn-flat sheet_public_cancel_link"
 
+    -# プル用モーダル
+    = link_to "", "#pull_modal", class: "modal_trigger"
+    #pull_modal.modal
+      .modal-content
+        %h6 このシートをプルしますか？
+      .modal-footer
+        = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
+        = link_to "プルする", "#" , method: :POST, class:"modal-close waves-effect waves-green btn-flat sheet_pull_link"
+
 
     -# プレビュー用モーダル
     = link_to "", "#preview_modal", class: "modal_trigger"
     #preview_modal.modal
+      .input-field.col.s12.spinner-hidden.center
+        .preloader-wrapper.active
+          .spinner-layer.spinner-green-only
+            .circle-clipper.left
+              .circle
+            .gap-patch
+              .circle
+            .circle-clipper.right
+              .circle
       #sheet-new.modal-content
         .row
           .col.s12{:style => "top:30px"}

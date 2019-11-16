@@ -40,7 +40,9 @@ $(document).on('turbolinks:load', function () {
     var goto_sheet_page = `<a href="/sheets/${sheet.id}">`
     if (!is_mypage) {
       goto_sheet_page = `<a href="#" class="sheet_preview_btn" data-sheet_id=${sheet.id}>`
-      dropdown_list = ``
+      dropdown_list = `<li tabindex="0">
+                          <a class="sheet_pull_btn" href="#" id="${sheet.id}"><i class="material-icons">cloud_download</i>プル</a>
+                        </li>`
     } else {
       dropdown_list = `<li tabindex="0">
                         <a href="/sheets/${sheet.id}/edit"><i class="material-icons">edit</i>編集</a></li>
@@ -53,7 +55,7 @@ $(document).on('turbolinks:load', function () {
                       <li class="cooperate_select_branch_${sheet.id}" tabindex="0">
                         ${request_command}
                       <div hidden="" id="user_list_branch" tabindex="0">
-                        <div class="name_list" data-name="krile"></div>
+                        
                       </div>`
     }
 
@@ -120,6 +122,11 @@ $(document).on('turbolinks:load', function () {
     $('.share_not_public_btn').on('click', function (e) {
       modal_public_cancel(e, this);
     });
+
+    // プルが押された時
+    $('.sheet_pull_btn').on('click', function (e) {
+      modal_pull(e, this);
+    })
   }
 
   function sheet_search_with_asynchronous_communiation() {

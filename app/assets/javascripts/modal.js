@@ -374,12 +374,59 @@ function modal_public_cancel(e, elem) {
   $(public_cancel_modal).modal("open");
 }
 
+function modal_pull(e, elem) {
+  e.preventDefault();
+
+  // ドロップダウンを閉じる
+  $('.dropdown_trigger').dropdown('close');
+
+  // 表示するモーダルを取得
+  var pull_modal = $("#pull_modal");
+
+  var sheet_id = $(elem).attr('id');
+  var replaced_url = "/sheets/" + sheet_id + "/pull"
+  pull_modal.find('.sheet_pull_link').attr("href", replaced_url);
+
+  // 非同期通信でプルする内容を取得して入力フォームを生成する
+  // var sheet_id = $(elem).attr('id');
+  // var url = "/items/" + sheet_id
+
+  // フォームをくっつけるブランチを取得
+  // var pull_form_branch = $('#pull_form_branch');
+  // console.log(pull_form_branch)
+  // console.log(url);
+
+  // $.ajax({
+  //   type: 'GET',
+  //   url: url,
+  //   dataType: 'json'
+  // })
+  //   .done(function (items) {
+  //     $('.spinner-hidden').css("display", "none");
+  //     if (items.length > 0) {
+  //       $.each(items, function (i, item) {
+  //         var html = build_hidden_form(i, item.name, item.top, item.is_head)
+  //         $(pull_form_branch).append(html);
+  //       })
+  //     }
+  //   })
+  //   .fail(function () {
+  //     M.toast({ html: 'シートの情報取得に失敗しました', classes: 'rounded red lighten-4 black-text', displayLength: 5000 });
+  //   });
+
+
+  // 隠してたモーダルを起動する
+  $(pull_modal).modal("open");
+}
 
 function modal_preview(e, elem) {
   e.preventDefault();
 
   // ドロップダウンを閉じる
   $('.dropdown_trigger').dropdown('close');
+
+  // 検索中のspinnerを表示する
+  $('.spinner-hidden').css("display", "block");
 
   // 表示するモーダルを取得
   var preview_modal = $("#preview_modal");
@@ -398,6 +445,7 @@ function modal_preview(e, elem) {
     dataType: 'json'
   })
     .done(function (items) {
+      $('.spinner-hidden').css("display", "none");
       if (items.length > 0) {
         $.each(items, function (i, item) {
           if (item.is_head) {
@@ -409,7 +457,7 @@ function modal_preview(e, elem) {
       }
     })
     .fail(function () {
-      M.toast({ html: '検索に失敗しました', classes: 'rounded red lighten-4 black-text', displayLength: 5000 });
+      M.toast({ html: 'プレビューに失敗しました', classes: 'rounded red lighten-4 black-text', displayLength: 5000 });
     });
 
   // 隠してたモーダルを起動する

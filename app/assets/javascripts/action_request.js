@@ -51,7 +51,7 @@ $(document).on('turbolinks:load', function () {
 
         // 追加した分にモーダル起動のイベントを付与
         $('.request_cancel_btn').on('click', function (e) {
-          modal_cooperate(e, this)
+          modal_cancel(e, this);
         });
       })
       .fail(function () {

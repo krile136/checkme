@@ -68,6 +68,10 @@ class SheetsController < ApplicationController
     render json: @sheet
   end
 
+  def pull
+    binding.pry
+  end
+
   private
 
   def move_to_index
@@ -79,6 +83,13 @@ class SheetsController < ApplicationController
                   items_attributes:[:name, :is_head, :top])
                   .merge(user_ids: [current_user.id]).merge(pulling_number: 0).merge(last_view: Time.now).merge(author: current_user.name)
   end
+
+  def sheet_pull_params(prms)
+    prms.require(:sheet).permit(:title,:is_public,:pulling_number,:author,
+                                items_attributes:[:name, :is_head, :top])
+                                .merge(user_ids:[current_user.id]).merge(last_view: Time.now)
+  end
+    
 
   def update_params
     params.require(:sheet).permit(:title,

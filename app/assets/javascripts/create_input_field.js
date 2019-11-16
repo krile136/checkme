@@ -28,7 +28,7 @@ function set_input_field() {
 function build_hidden_form(i, name, top, is_head, item_id) {
   var item_attr_num = i + deleted_rows;
   var is_check_box = `<input type="checkbox" hidden="hidden" value="true" name="sheet[items_attributes][${item_attr_num}][is_head]" id="sheet_items_attributes_${item_attr_num}_is_head">`
-  var item_id_form;
+  var item_id_form = ``;
   if (item_id) {
     item_id_form = `<input value="${item_id}" type="text" name="sheet[items_attributes][${item_attr_num}][id]" id="sheet_items_attributes_${item_attr_num}_id"></input>`
   }
