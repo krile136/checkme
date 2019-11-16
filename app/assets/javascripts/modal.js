@@ -387,34 +387,6 @@ function modal_pull(e, elem) {
   var replaced_url = "/sheets/" + sheet_id + "/pull"
   pull_modal.find('.sheet_pull_link').attr("href", replaced_url);
 
-  // 非同期通信でプルする内容を取得して入力フォームを生成する
-  // var sheet_id = $(elem).attr('id');
-  // var url = "/items/" + sheet_id
-
-  // フォームをくっつけるブランチを取得
-  // var pull_form_branch = $('#pull_form_branch');
-  // console.log(pull_form_branch)
-  // console.log(url);
-
-  // $.ajax({
-  //   type: 'GET',
-  //   url: url,
-  //   dataType: 'json'
-  // })
-  //   .done(function (items) {
-  //     $('.spinner-hidden').css("display", "none");
-  //     if (items.length > 0) {
-  //       $.each(items, function (i, item) {
-  //         var html = build_hidden_form(i, item.name, item.top, item.is_head)
-  //         $(pull_form_branch).append(html);
-  //       })
-  //     }
-  //   })
-  //   .fail(function () {
-  //     M.toast({ html: 'シートの情報取得に失敗しました', classes: 'rounded red lighten-4 black-text', displayLength: 5000 });
-  //   });
-
-
   // 隠してたモーダルを起動する
   $(pull_modal).modal("open");
 }

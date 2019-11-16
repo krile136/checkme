@@ -69,7 +69,17 @@ class SheetsController < ApplicationController
   end
 
   def pull
-    binding.pry
+    sheet = Sheet.find(params[:id])
+    cloned_sheet = sheet.deep_clone include: [:items, :user_sheets], only: [:title, :pulling_number, :author, { items: [:name, :is_head, :top]}]
+    user_sheets_first = cloned_sheet.user_sheets.first
+    user_sheets_first.user_id = current_user.id
+    cloned_sheet.user_sheets = []
+    cloned_sheet.user_sheets.push(user_sheets_first)
+    cloned_sheet.last_view = Time.now
+    cloned_sheet.is_pulled = true
+
+    cloned_sheet.save
+
   end
 
   private
