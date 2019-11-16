@@ -3,14 +3,16 @@
     .col.s1.m1
       %i.material-icons.small.icon-vert-center description
     .col.s9.m5.f-container
+      .public_icon{id:"public_sheet_#{sheet.id}"}
+        - if sheet.is_public
+          %i.material-icons.small.icon-vert-center language
       - if sheet.is_cooperate
         %i.material-icons.small.icon-vert-center supervisor_account
       .title
         = sheet.title
-      .has_request{id: "request_sheet_#{sheet.id}"}
+      .has_request{class: "request_sheet_#{sheet.id}"}
         - if sheet.cooperate_requests.length > 0
           (承認待ち)
-      
     .col.m3.hide-on-small-only.grey-text.darken-3
       - if sheet.author == current_user.name
         自分
@@ -34,10 +36,15 @@
           = link_to sheet_path(sheet.id) ,target: :_blank do
             %i.material-icons launch
             新しいタブで開く
-        %li
-          = link_to "" do
-            %i.material-icons language
-            公開する
+        %li{class: "public_select_branch_#{sheet.id}"}
+          - if sheet.is_public
+            = link_to "", class: "sheet_not_public_btn", id: "#{sheet.id}" do
+              %i.material-icons language
+              公開をやめる
+          - else
+            = link_to "", class: "sheet_public_btn", id: "#{sheet.id}" do
+              %i.material-icons language
+              公開する
         %li{class: "cooperate_select_branch_#{sheet.id}"}
           - if sheet.cooperate_requests.length > 0
             = link_to "", class: "request_cancel_btn",id: "#{sheet.cooperate_requests[0].id}"do

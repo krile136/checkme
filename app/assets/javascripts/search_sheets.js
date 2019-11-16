@@ -6,22 +6,70 @@ $(document).on('turbolinks:load', function () {
   var searched_sheets_branch = $('#searched_sheets_branch')
 
   function appendSearchedSheet(i, sheet) {
+    // 共有アイコン
     var coop_icon = "";
     if (sheet.is_cooperate) {
       coop_icon = `<i class="material-icons small icon-vert-center">supervisor_account</i>`
     }
+
+    // 公開アイコンとコマンド
+    var public_command = `<a class="sheet_public_btn" id="${sheet.id}" href="">
+                            <i class="material-icons">language</i>公開する
+                          </a>`
+    var public_icon = "";
+    if (sheet.is_public) {
+      public_icon = `<i class="material-icons small icon-vert-center">language</i>`
+      public_command = `<a class="sheet_not_public_btn" id="${sheet.id}" href="">
+                          <i class="material-icons">language</i>公開をやめる
+                        </a>`
+    }
+
+    // 共有リクエストメッセージとコマンド
+    var request_command = `<a class="sheet_share_btn" id="${sheet.id}" href=""><i class="material-icons">supervisor_account</i>共有する</a></li>`
+    var request_msg = "";
+    if (is_mypage) {
+      if (sheet.requests.length > 0) {
+        request_msg = "(承認待ち)";
+        request_command = `<a class="request_cancel_btn" id="${sheet.requests[0].id}" href="">
+                            <i class="material-icons">supervisor_account</i>共有の取り下げ
+                          </a>`
+      }
+    }
+
+    // マイページ検索と公開検索とで、ドロップダウンリストを変更する
     var goto_sheet_page = `<a href="/sheets/${sheet.id}">`
     if (!is_mypage) {
       goto_sheet_page = `<a href="#" class="sheet_preview_btn" data-sheet_id=${sheet.id}>`
+      dropdown_list = `<li tabindex="0">
+                          <a class="sheet_pull_btn" href="#" id="${sheet.id}"><i class="material-icons">cloud_download</i>プル</a>
+                        </li>`
+    } else {
+      dropdown_list = `<li tabindex="0">
+                        <a href="/sheets/${sheet.id}/edit"><i class="material-icons">edit</i>編集</a></li>
+                      <li tabindex="0">
+                        <a class="sheet_delete_button" id="${sheet.id}" href=""><i class="material-icons">delete</i>削除</a></li>
+                      <li tabindex="0">
+                        <a target="_blank" href="/sheets/${sheet.id}"><i class="material-icons">launch</i>新しいタブで開く</a></li>
+                      <li tabindex="0">
+                        ${public_command}
+                      <li class="cooperate_select_branch_${sheet.id}" tabindex="0">
+                        ${request_command}
+                      <div hidden="" id="user_list_branch" tabindex="0">
+                        
+                      </div>`
     }
+
+    // HTMLの組み立て
     var html = `<div class="row text-vert-center sheet-index">
                   ${goto_sheet_page}
                     <div class="col s1 m1">
                       <i class="material-icons small icon-vert-center">description</i>
                     </div>
                     <div class="col s9 m5 f-container">
+                      <div class="public_icon" id="public_sheet_${sheet.id}">${public_icon}</div>
                       ${coop_icon}
                       <div class="title">${sheet.title}</div>
+                      <div class="has_request request_sheet_${sheet.id}">${request_msg}</div>
                     </div>
                     <div class="col m3 hide-on-small-only grey-text darken-3">${sheet.author}</div>
                     <div class="col m2 hide-on-small-only grey-text darken-3">${sheet.last_view}</div>
@@ -32,17 +80,53 @@ $(document).on('turbolinks:load', function () {
                       <i class="material-icons small icon-vert-center center">more_vert</i>
                     </a>
                     <ul class="dropdown-content" id="dropdown_searched_${i}" tabindex="0" style="">
-                      <li tabindex="0">
-                        <a href="#"><i class="material-icons">edit</i>編集</a>
-                      </li>
-                      <li tabindex="0">
-                        <a href=""><i class="material-icons">delete</i>削除
-                        </a>
+                      ${dropdown_list}
                     </ul>
                   </div>
                 </div>`
 
     searched_sheets_branch.append(html)
+
+    // それぞれのイベントを付与する
+    // 削除が押された時
+    $('.sheet_delete_button').on('click', function (e) {
+      modal_delete_sheet(e, this);
+    });
+
+    // 共有が押された時
+    $('.sheet_share_btn').on('click', function (e) {
+      modal_send_request(e, this);
+    });
+
+    // 共有の取り下げが押された時
+    $('.request_cancel_btn').on('click', function (e) {
+      modal_cancel(e, this);
+    });
+
+    // 共有の拒否が押された時
+    $('.request_reject_btn').on('click', function (e) {
+      modal_reject(e, this);
+    })
+
+    // 共有の承認が押された時
+    $('.request_accept_btn').on('click', function (e) {
+      modal_accept(e, this);
+    })
+
+    // 公開するが押された時
+    $('.sheet_public_btn').on('click', function (e) {
+      modal_public(e, this);
+    })
+
+    // 公開をやめるが押された時
+    $('.share_not_public_btn').on('click', function (e) {
+      modal_public_cancel(e, this);
+    });
+
+    // プルが押された時
+    $('.sheet_pull_btn').on('click', function (e) {
+      modal_pull(e, this);
+    })
   }
 
   function sheet_search_with_asynchronous_communiation() {
@@ -60,7 +144,6 @@ $(document).on('turbolinks:load', function () {
       // ユーザーのシートを隠して、検索結果表示を表示する準備を行う
       $('#display_searched_sheets').css("display", "block");
       $('#display_sheets').css('display', 'none');
-
       $.ajax({
         type: 'GET',
         url: url,
@@ -70,10 +153,7 @@ $(document).on('turbolinks:load', function () {
         .done(function (sheets) {
           if (sheets.length > 0) {
             $.each(sheets, function (index, sheet) {
-              current_user_name = $('.current_user').data("name");
-              if (sheet.author == current_user_name) {
-                sheet.author = '自分';
-              }
+
               appendSearchedSheet(index, sheet);
             })
             // プレビューイベントの付与

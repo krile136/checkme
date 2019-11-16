@@ -12,7 +12,7 @@
               %label{:for => "autocomplete-input"} Search
             .col.s2.center.search_field_height
               = link_to "#", class: "dropdown-trigger btn-flat show_circle_btn user_show_hover","data-target": "dropdown#0" do
-                %i.material-icons.icon-vert-center.middle autorenew
+                %i.material-icons.icon-vert-center.middle find_replace
               %ul.dropdown-content{id: "dropdown#0"}
                 %li 
                   = link_to "", id: "find_in_mypage" do
@@ -77,8 +77,8 @@
           %br/
 
     -# 削除用モーダル
-    = link_to "", "#modal1", class: "modal_trigger"
-    #modal1.modal
+    = link_to "", "#delete_modal", class: "modal_trigger"
+    #delete_modal.modal
       .modal-content
         %h6 チェックシートを削除します。よろしいですか？
       .modal-footer
@@ -86,8 +86,8 @@
         = link_to "削除する", "#", method: :DELETE, class:"modal-close waves-effect waves-green btn-flat sheet_delete_link"
 
     -# 共有用モーダル
-    = link_to "", "#modal2", class: "modal_trigger"
-    #modal2.modal
+    = link_to "", "#cooperate_modal", class: "modal_trigger"
+    #cooperate_modal.modal
       .modal-content
         %h6 共有するユーザー名を検索
         .row
@@ -111,9 +111,13 @@
         = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
         = f.submit "共有する", class:"modal-close waves-effect waves-green btn-flat sheet_cooperate_btn"
 
+    -# cooperate_request用のhidden_field
+    = f.hidden_field :sheet_id, value: "", class:"sheet_cooperate_link"
+    #cooperate_branch
+
     -# 共有リクエストキャンセル用モーダル
-    = link_to "", "#modal3", class: "modal_trigger"
-    #modal3.modal
+    = link_to "", "#cancel_modal", class: "modal_trigger"
+    #cancel_modal.modal
       .modal-content
         %h6 共有リクエストを取り下げます。よろしいですか？
       .modal-footer
@@ -121,8 +125,8 @@
         = link_to "取り下げる", "#", method: :DELETE, class:"modal-close waves-effect waves-green btn-flat request_cancel_link"
 
     -# 共有リクエスト拒否用モーダル
-    = link_to "", "#modal4", class: "modal_trigger"
-    #modal4.modal
+    = link_to "", "#reject_modal", class: "modal_trigger"
+    #reject_modal.modal
       .modal-content
         %h6 共有リクエストを拒否します。よろしいですか？
       .modal-footer
@@ -130,20 +134,54 @@
         = link_to "拒否する", "#", method: :DELETE, class:"modal-close waves-effect waves-green btn-flat request_reject_link"
 
     -# 共有リクエスト承認用モーダル
-    = link_to "", "#modal5", class: "modal_trigger"
-    #modal5.modal
+    = link_to "", "#accept_modal", class: "modal_trigger"
+    #accept_modal.modal
       .modal-content
         %h6 共有リクエストを承認します。よろしいですか？
       .modal-footer
         = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
         = link_to "承認する", "#", method: :PATCH, class:"modal-close waves-effect waves-green btn-flat request_accept_link"
 
-    -# 公開用モーダル建設予定地
+    -# 公開用モーダル
+    = link_to "", "#public_modal", class: "modal_trigger"
+    #public_modal.modal
+      .modal-content
+        %h6 シートを公開しますか？
+      .modal-footer
+        = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
+        = link_to "公開する", "#", method: :PATCH, class:"modal-close waves-effect waves-green btn-flat sheet_public_link"
+
+    -# 公開キャンセル用モーダル
+    = link_to "", "#public_cancel_modal", class: "modal_trigger"
+    #public_cancel_modal.modal
+      .modal-content
+        %h6 シートの公開をやめますか？
+      .modal-footer
+        = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
+        = link_to "公開をやめる", "#", method: :PATCH, class:"modal-close waves-effect waves-green btn-flat sheet_public_cancel_link"
+
+    -# プル用モーダル
+    = link_to "", "#pull_modal", class: "modal_trigger"
+    #pull_modal.modal
+      .modal-content
+        %h6 このシートをプルしますか？
+      .modal-footer
+        = link_to "キャンセル", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
+        = link_to "プルする", "#" , method: :POST, class:"modal-close waves-effect waves-green btn-flat sheet_pull_link"
 
 
     -# プレビュー用モーダル
-    = link_to "", "#modal7", class: "modal_trigger"
-    #modal7.modal
+    = link_to "", "#preview_modal", class: "modal_trigger"
+    #preview_modal.modal
+      .input-field.col.s12.spinner-hidden.center
+        .preloader-wrapper.active
+          .spinner-layer.spinner-green-only
+            .circle-clipper.left
+              .circle
+            .gap-patch
+              .circle
+            .circle-clipper.right
+              .circle
       #sheet-new.modal-content
         .row
           .col.s12{:style => "top:30px"}

@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   def show
-    @items = Sheet.find(params[:id]).items;
+    @items = Item.where(sheet_id: params[:id]).order('top ASC')
     render json:@items
   end
 

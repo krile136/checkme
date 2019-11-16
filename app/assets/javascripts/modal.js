@@ -16,7 +16,7 @@ $(document).on('turbolinks:load', function () {
 
   // モーダルウィンドウのキャンセルが押されたとき
   $('.modal-cancel').on('click', function (e) {
-    modal_cancel(e);
+    modal_close(e);
   });
 
   // モーダルウィンドウの変更が押されたとき
@@ -31,10 +31,10 @@ $(document).on('turbolinks:load', function () {
     $('.sidenav').sidenav('close');
 
     // 表示するモーダルを取得
-    var title_modal = $("#modal1");
+    var save_modal = $("#save_modal");
 
     // 隠してたモーダルを起動する
-    $(title_modal).modal("open");
+    $(save_modal).modal("open");
   })
 
   // 新しいシートがクリックされた時
@@ -44,10 +44,10 @@ $(document).on('turbolinks:load', function () {
     $('.sidenav').sidenav('close');
 
     // 表示するモーダルを取得
-    var title_modal = $("#modal2");
+    var new_modal = $("#new_modal");
 
     // 隠してたモーダルを起動する
-    $(title_modal).modal("open");
+    $(new_modal).modal("open");
   })
 
 
@@ -61,7 +61,7 @@ $(document).on('turbolinks:load', function () {
     $('.sidenav').sidenav('close');
 
     // 表示するモーダルを取得
-    var title_modal = $("#modal3");
+    var title_modal = $("#title_modal");
 
     // シートタイトルを取得、反映させる
     var sheet_title = $('#logo-container').text();
@@ -83,23 +83,11 @@ $(document).on('turbolinks:load', function () {
   })
 
   // --------------------------------------マイページのモーダル関係--------------------------------------
+
+  set_mypage_modals(this);
   // 削除が押された時
   $('.sheet_delete_button').on('click', function (e) {
-    e.preventDefault();
-
-    // ドロップダウンを閉じる
-    $('.dropdown_trigger').dropdown('close');
-
-    // 表示するモーダルを取得
-    var delete_modal = $("#modal1");
-
-    // 削除するためのURIを生成、モーダルのリンクに埋め込む
-    var page_url = $(location).attr('href');
-    var replaced_url = page_url.replace(/user.*$/, "sheets/") + $(this).attr('id');
-    delete_modal.find('.sheet_delete_link').attr('href', replaced_url)
-
-    // 隠してたモーダルを起動する
-    $(delete_modal).modal("open");
+    modal_delete_sheet(e, this);
   });
 
   // 共有が押された時
@@ -109,7 +97,7 @@ $(document).on('turbolinks:load', function () {
 
   // 共有の取り下げが押された時
   $('.request_cancel_btn').on('click', function (e) {
-    modal_cooperate(e, this);
+    modal_cancel(e, this);
   });
 
   // 共有の拒否が押された時
@@ -122,13 +110,22 @@ $(document).on('turbolinks:load', function () {
     modal_accept(e, this);
   })
 
-  // 公開の建設予定地
+  // 公開するが押された時
+  $('.sheet_public_btn').on('click', function (e) {
+    modal_public(e, this);
+  })
+
+  // 公開をやめるが押された時
+  $('.sheet_not_public_btn').on('click', function (e) {
+    modal_public_cancel(e, this);
+  });
 
   // シート検索結果もしくは共有リクエストがきているシートをクリックされた時
   // ajax用
   $('.sheet_preview_btn').on('click', function (e) {
     modal_preview(e, this);
   })
+
   // リクエスト用
   $('.sheet_preview_btn_fixed').on('click', function (e) {
     modal_preview(e, this);
@@ -169,7 +166,7 @@ function getItemHTML(item) {
 // 以下は非同期通信で新たにイベントを付与するため、別に記述されている
 
 // キャンセルが押された時
-function modal_cancel(e) {
+function modal_close(e) {
   e.preventDefault();
 }
 
@@ -216,6 +213,10 @@ function modal_delete(e, elem) {
   }
 }
 
+function set_mypage_modals(elem) {
+
+}
+
 // モーダルを開いた時、カードの内容を入力フォームに反映させる
 function modal_reflect(e, elem) {
   e.preventDefault();
@@ -225,14 +226,32 @@ function modal_reflect(e, elem) {
   input_field.val(text_content);
 }
 
-function modal_cooperate(e, elem) {
+function modal_delete_sheet(e, elem) {
   e.preventDefault();
 
   // ドロップダウンを閉じる
   $('.dropdown_trigger').dropdown('close');
 
   // 表示するモーダルを取得
-  var cancel_modal = $("#modal3");
+  var delete_modal = $("#delete_modal");
+
+  // 削除するためのURIを生成、モーダルのリンクに埋め込む
+  var page_url = $(location).attr('href');
+  var replaced_url = page_url.replace(/user.*$/, "sheets/") + $(elem).attr('id');
+  delete_modal.find('.sheet_delete_link').attr('href', replaced_url)
+
+  // 隠してたモーダルを起動する
+  $(delete_modal).modal("open");
+}
+
+function modal_cancel(e, elem) {
+  e.preventDefault();
+
+  // ドロップダウンを閉じる
+  $('.dropdown_trigger').dropdown('close');
+
+  // 表示するモーダルを取得
+  var cancel_modal = $("#cancel_modal");
 
   // 削除するためのURIを生成、モーダルのリンクに埋め込む
   var page_url = $(location).attr('href');
@@ -261,20 +280,22 @@ function modal_send_request(e, elem) {
   user_list = $('#user_name_branch');
   user_list.empty();
   user_list.append(getErrMsgToHTML("検索するユーザー名を入力してください"));
+  $('#added_user_branch').empty();
+  $('#cooperate_branch').empty();
   $(".input_user_name").val("")
 
   // ドロップダウンを閉じる
   $('.dropdown_trigger').dropdown('close');
 
   // 表示するモーダルを取得
-  var share_modal = $("#modal2");
+  var cooperate_modal = $("#cooperate_modal");
 
   // 共有するシートIDを取得、ページ内のフォームに埋め込む
   var sheet_id = $(elem).attr('id')
   $('.sheet_cooperate_link').val(sheet_id);
 
   // 隠してたモーダルを起動する
-  $(share_modal).modal("open");
+  $(cooperate_modal).modal("open");
 }
 
 function modal_reject(e, elem) {
@@ -284,7 +305,7 @@ function modal_reject(e, elem) {
   $('.dropdown_trigger').dropdown('close');
 
   // 表示するモーダルを取得
-  var reject_modal = $("#modal4");
+  var reject_modal = $("#reject_modal");
 
   // 拒否するリクエストIDを取得、ページ内のフォームに埋め込む
   // 右のリンクを生成する /cooperate_requests/:id/reject
@@ -304,7 +325,7 @@ function modal_accept(e, elem) {
   $('.dropdown_trigger').dropdown('close');
 
   // 表示するモーダルを取得
-  var accept_modal = $("#modal5");
+  var accept_modal = $("#accept_modal");
 
   // 承認するリクエストIDを取得、ページ内のフォームに埋め込む
   // 右のリンクを生成する /cooperate_requests/:id/accept
@@ -317,10 +338,58 @@ function modal_accept(e, elem) {
   $(accept_modal).modal("open");
 }
 
+function modal_public(e, elem) {
+  e.preventDefault();
 
+  // ドロップダウンを閉じる
+  $('.dropdown_trigger').dropdown('close');
 
+  // 表示するモーダルを取得
+  var public_modal = $("#public_modal");
 
+  // 公開するシートIDを取得して、モーダル内のリンクに埋め込む
+  var sheet_id = $(elem).attr('id');
+  var replaced_url = "/sheets/" + sheet_id + "/set_public"
+  public_modal.find('.sheet_public_link').attr("href", replaced_url);
 
+  // 隠してたモーダルを起動する
+  $(public_modal).modal("open");
+}
+
+function modal_public_cancel(e, elem) {
+  e.preventDefault();
+
+  // ドロップダウンを閉じる
+  $('.dropdown_trigger').dropdown('close');
+
+  // 表示するモーダルを取得
+  var public_cancel_modal = $("#public_cancel_modal");
+
+  // 公開キャンセルをするシートIDを取得して、モーダル内のリンクに埋め込む
+  var sheet_id = $(elem).attr('id');
+  var replaced_url = "/sheets/" + sheet_id + "/cancel_public"
+  public_cancel_modal.find('.sheet_public_cancel_link').attr("href", replaced_url);
+
+  // 隠してたモーダルを起動する
+  $(public_cancel_modal).modal("open");
+}
+
+function modal_pull(e, elem) {
+  e.preventDefault();
+
+  // ドロップダウンを閉じる
+  $('.dropdown_trigger').dropdown('close');
+
+  // 表示するモーダルを取得
+  var pull_modal = $("#pull_modal");
+
+  var sheet_id = $(elem).attr('id');
+  var replaced_url = "/sheets/" + sheet_id + "/pull"
+  pull_modal.find('.sheet_pull_link').attr("href", replaced_url);
+
+  // 隠してたモーダルを起動する
+  $(pull_modal).modal("open");
+}
 
 function modal_preview(e, elem) {
   e.preventDefault();
@@ -328,8 +397,11 @@ function modal_preview(e, elem) {
   // ドロップダウンを閉じる
   $('.dropdown_trigger').dropdown('close');
 
+  // 検索中のspinnerを表示する
+  $('.spinner-hidden').css("display", "block");
+
   // 表示するモーダルを取得
-  var preview_modal = $("#modal7");
+  var preview_modal = $("#preview_modal");
 
   // プレビュー内容をリセットする
   var items_branch = $(preview_modal).find('.modal-content');
@@ -345,6 +417,7 @@ function modal_preview(e, elem) {
     dataType: 'json'
   })
     .done(function (items) {
+      $('.spinner-hidden').css("display", "none");
       if (items.length > 0) {
         $.each(items, function (i, item) {
           if (item.is_head) {
@@ -356,7 +429,7 @@ function modal_preview(e, elem) {
       }
     })
     .fail(function () {
-      M.toast({ html: '検索に失敗しました', classes: 'rounded red lighten-4 black-text', displayLength: 5000 });
+      M.toast({ html: 'プレビューに失敗しました', classes: 'rounded red lighten-4 black-text', displayLength: 5000 });
     });
 
   // 隠してたモーダルを起動する

@@ -56,6 +56,32 @@ class SheetsController < ApplicationController
     render json: @item
   end
 
+  def set_public
+    @sheet = Sheet.find(params[:id])
+    @sheet.update(public_update(true))
+    render json: @sheet
+  end
+
+  def cancel_public
+    @sheet = Sheet.find(params[:id])
+    @sheet.update(public_update(false))
+    render json: @sheet
+  end
+
+  def pull
+    sheet = Sheet.find(params[:id])
+    cloned_sheet = sheet.deep_clone include: [:items, :user_sheets], only: [:title, :pulling_number, :author, { items: [:name, :is_head, :top]}]
+    user_sheets_first = cloned_sheet.user_sheets.first
+    user_sheets_first.user_id = current_user.id
+    cloned_sheet.user_sheets = []
+    cloned_sheet.user_sheets.push(user_sheets_first)
+    cloned_sheet.last_view = Time.now
+    cloned_sheet.is_pulled = true
+
+    cloned_sheet.save
+
+  end
+
   private
 
   def move_to_index
@@ -68,6 +94,13 @@ class SheetsController < ApplicationController
                   .merge(user_ids: [current_user.id]).merge(pulling_number: 0).merge(last_view: Time.now).merge(author: current_user.name)
   end
 
+  def sheet_pull_params(prms)
+    prms.require(:sheet).permit(:title,:is_public,:pulling_number,:author,
+                                items_attributes:[:name, :is_head, :top])
+                                .merge(user_ids:[current_user.id]).merge(last_view: Time.now)
+  end
+    
+
   def update_params
     params.require(:sheet).permit(:title,
                   items_attributes:[:id, :name, :is_head, :top, :_destroy])
@@ -76,5 +109,9 @@ class SheetsController < ApplicationController
 
   def data_update
     params.require(:sheet).permit(:id).merge(last_view: Time.now)
+  end
+
+  def public_update(bool)
+    params.permit(:id).merge(is_public: bool)
   end
 end
