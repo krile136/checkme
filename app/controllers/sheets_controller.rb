@@ -56,6 +56,12 @@ class SheetsController < ApplicationController
     render json: @item
   end
 
+  def set_public
+    @sheet = Sheet.find(params[:id])
+    @sheet.update(public_update(true))
+    # binding.pry
+  end
+
   private
 
   def move_to_index
@@ -76,5 +82,9 @@ class SheetsController < ApplicationController
 
   def data_update
     params.require(:sheet).permit(:id).merge(last_view: Time.now)
+  end
+
+  def public_update(bool)
+    params.permit(:id).merge(is_public: bool)
   end
 end

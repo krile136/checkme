@@ -62,7 +62,8 @@ $(document).on('turbolinks:load', function () {
   // リクエストを取り下げる際、非同期通信でデータを削除する
   $('.request_cancel_link').on('click', function (e) {
 
-    // DELETEのイベントをストップさせるが、stopPropagationがないと止められない
+    // 下記のような非同期通信の時、stopPropagationがないと
+    // HTMLとJSONのリクエストが同時に送られてしまう
     e.preventDefault();
     e.stopPropagation();
 
