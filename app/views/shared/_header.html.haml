@@ -7,7 +7,7 @@
     %ul.right.hide-on-med-and-down
       - if user_signed_in?
         %li
-          = link_to "プロフィールを表示", user_path(current_user.id), class: "black-text"
+          = link_to "プロフィールを表示", user_path(current_user.id), class: "black-text show_profile_btn"
         %li
           = link_to "シートを作成", new_sheet_path, class: "black-text"
         %li
@@ -20,7 +20,7 @@
     %ul#nav-mobile.sidenav
       -if user_signed_in?
         %li
-          = link_to  user_path(current_user.id), class: "black-text" do
+          = link_to  user_path(current_user.id), class: "black-text show_profile_btn" do
             %i.material-icons.medium person
             プロフィールを表示
         %li

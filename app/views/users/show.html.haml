@@ -200,6 +200,27 @@
       .modal-footer.preview_footer
         = link_to "閉じる", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
 
+    -# プロフィール表示用モーダル
+    = link_to "", "#profile_modal", class: "modal_trigger"
+    #profile_modal.modal
+      .modal-content
+        .row
+          .col.s12.m8.offset-m2
+            .profile-head
+              %i.material-icons.prefix.icon-vert-center person
+              ユーザー名
+            .profile-item
+              = current_user.name
+            .divider
+            %br/
+            .profile-head
+              %i.material-icons.prefix.icon-vert-center email
+              メールアドレス
+              .profile-item
+                = current_user.email
+            .divider
+      .modal-footer
+        = link_to "閉じる", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
 
     -# cooperate_request用のhidden_field
     = f.hidden_field :sheet_id, value: "", class:"sheet_cooperate_link"
