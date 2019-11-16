@@ -72,3 +72,5 @@ gem 'compass-rails', '3.1.0'
 gem 'sprockets'
 
 gem 'materialize-sass'
+
+gem 'deep_cloneable', '~> 3.0.0'
