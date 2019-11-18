@@ -3,6 +3,7 @@ $primary-color: color("blue", "lighten-2") !default;
 $secondary-color: color("yellow", "base") !default;
 @import "materialize";
 @import "https://fonts.googleapis.com/icon?family=Material+Icons";
+@import "font-awesome";
 @import "fixed_materialize";
 @import "drag-and-drop";
 @import "common";
