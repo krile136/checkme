@@ -1,6 +1,3 @@
-var search_sheets_timer;
-var is_mypage = true;
-
 $(document).on('turbolinks:load', function () {
 
   var searched_sheets_branch = $('#searched_sheets_branch')

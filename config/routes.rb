@@ -28,5 +28,6 @@ Rails.application.routes.draw do
         get :public
       end
     end
+    resources :users, only: [:index, :update], defaults: { format: 'json' }
   end
 end

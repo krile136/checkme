@@ -1,10 +1,13 @@
 %nav.white{role: "navigation"}
   .nav-wrapper.container
-    = link_to "CheckMe！", root_path,id: 'logo-container', class:"brand-logo orange-text text-darken-4"
+    = link_to root_path,id: 'logo-container', class:"hide-on-med-and-down" do
+      = image_tag "logo-1.png", size: '220x64'
+    = link_to root_path,id: 'logo-container', class:"hide-on-large-only" do
+      = image_tag "logo-1.png", size: '192x56'
     %ul.right.hide-on-med-and-down
       - if user_signed_in?
         %li
-          = link_to "プロフィールを表示", user_path(current_user.id), class: "black-text"
+          = link_to "プロフィールを表示", user_path(current_user.id), class: "black-text show_profile_btn"
         %li
           = link_to "シートを作成", new_sheet_path, class: "black-text"
         %li
@@ -17,7 +20,7 @@
     %ul#nav-mobile.sidenav
       -if user_signed_in?
         %li
-          = link_to  user_path(current_user.id), class: "black-text" do
+          = link_to  user_path(current_user.id), class: "black-text show_profile_btn" do
             %i.material-icons.medium person
             プロフィールを表示
         %li

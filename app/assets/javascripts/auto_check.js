@@ -1,5 +1,3 @@
-var check_interval_timer;
-
 var check_reload = function () {
   var is_show_page = $('.auto_check');
 

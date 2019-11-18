@@ -1,5 +1,18 @@
 $(document).on('turbolinks:load', function () {
 
+  $('.show_profile_btn').on('click', function (e) {
+    e.preventDefault();
+
+    // サイドバーを閉じる
+    $('.sidenav').sidenav('close');
+
+    // 表示するモーダルを取得
+    var profile_modal = $("#profile_modal");
+
+    // 隠してたモーダルを起動する
+    $(profile_modal).modal("open");
+  })
+
   // --------------------------------------シート作成時のモーダル関係--------------------------------------
   // カードに付与するモーダル関連関数は、カード追加時にイベントを付与する必要があるため
   // タイトル用のモーダルとは別の記述になっている
