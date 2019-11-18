@@ -6,9 +6,9 @@
       %br/
       %br/
       .container.col.s6.m6
-        .row
-          .col.s12.offset-m3.m6.center
-            %h1 CheckMe！
+        .row.outer
+          = image_tag "logo-top.png", size: "500x137", class: "hide-on-med-and-down image_center"
+          = image_tag "logo-top.png", size: "300x82", class: "hide-on-large-only image_center"
         .row.center
           %h5.header.col.s12.offset-m3.m6.light.black-text.shadow-text
             チェックシートを作って
@@ -50,32 +50,23 @@
   .container
     .row
       .col.l6.s12
-        %h5.white-text Company Bio
-        %p.grey-text.text-lighten-4 We are a team of college students working on this project like it's our full time job. Any amount would help support and continue development on this project and is greatly appreciated.
-      .col.l3.s12
-        %h5.white-text Settings
-        %ul
-          %li
-            %a.white-text{:href => "#!"} Link 1
-          %li
-            %a.white-text{:href => "#!"} Link 2
-          %li
-            %a.white-text{:href => "#!"} Link 3
-          %li
-            %a.white-text{:href => "#!"} Link 4
-      .col.l3.s12
-        %h5.white-text Connect
-        %ul
-          %li
-            %a.white-text{:href => "#!"} Link 1
-          %li
-            %a.white-text{:href => "#!"} Link 2
-          %li
-            %a.white-text{:href => "#!"} Link 3
-          %li
-            %a.white-text{:href => "#!"} Link 4
+        %h5.white-text 更新履歴
+        %p.grey-text.text-lighten-4 公開しました(2019年11月18日)
+      .col.l6.s12
+        %h5.white-text CONTACT
+        .col.l6.s12
+          = link_to "https://twitter.com/krile136",target: :_blank, class: "sns_link" do
+            %i.fa.fa-twitter.fa-2x
+            Twitter
+          %br/
+        .col.l6.s12
+          = link_to "https://www.facebook.com/profile.php?id=100042286305127",target: :_blank, class: "sns_link" do
+            %i.fa.fa-facebook.fa-2x
+            Facebook
   .footer-copyright
     .container
       Made by
-      %a.brown-text.text-lighten-3{:href => "http://materializecss.com"} Materialize
+      = link_to "Ruby on Rails", "https://rubyonrails.org/", target: :_blank, class: "lime-text text-lighten-2 "
+      ,
+      = link_to "Materialize", "http://materializecss.com", target: :_blank, class: "lime-text text-lighten-2 "
     

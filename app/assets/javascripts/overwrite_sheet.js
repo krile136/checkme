@@ -40,6 +40,8 @@ $(document).on('turbolinks:load', function () {
           };
         });
         M.toast({ html: '保存が完了しました', classes: 'rounded blue lighten-5 black-text', displayLength: 1000 });
+        $('#items_branch').empty();
+        $('#deleted_items').empty();
       })
       .fail(function () {
         M.toast({ html: '保存に失敗しました', classes: 'rounded red lighten-4 black-text', displayLength: 1000 });
