@@ -209,18 +209,19 @@
             .profile-head
               %i.material-icons.prefix.icon-vert-center person
               ユーザー名
-            .profile-item
-              = current_user.name
-            .divider
-            %br/
+            .input-field.col.s12#edit_username_form{"data-name": "#{current_user.name}"}
+              %input#autocomplete-input.autocomplete.edit_user_name{type: "text", value: "#{current_user.name}"}/
+              %label{:for => "autocomplete-input"}
             .profile-head
               %i.material-icons.prefix.icon-vert-center email
               メールアドレス
-              .profile-item
-                = current_user.email
-            .divider
+            .input-field.col.s12#edit_email_form{"data-email": "#{current_user.email}"}
+              %input#autocomplete-input.autocomplete.edit_email{type: "text", value: "#{current_user.email}"}/
+              %label{:for => "autocomplete-input"}
+            .error_msg.center
       .modal-footer
-        = link_to "閉じる", "#", class:"modal-cancel modal-close waves-effect waves-green btn-flat red-text"
+        = link_to "閉じる", "#", class: "modal-cancel modal-close waves-effect btn-flat red-text"
+        = link_to "更新する", "#", class: "modal-cancel modal-close waves-effect btn-flat user_edit_link",style: "pointer-events: none; color: rgb(189,189,189);"
 
     -# cooperate_request用のhidden_field
     = f.hidden_field :sheet_id, value: "", class:"sheet_cooperate_link"

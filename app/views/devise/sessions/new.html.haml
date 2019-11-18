@@ -21,14 +21,10 @@
                   %i.material-icons.prefix lock
                   = f.password_field :password, required: true, autocomplete: "off"
                   = f.label :password
-                -# - if devise_mapping.rememberable?
-                -#   %p
-                -#     = f.check_box :remember_me
-                -#     = f.label :remember_me
               .form-actions.center
                 = f.submit "ログイン", class: "btn waves-effect teal lighten-1 white-text"
           .card-action
             .devise-links
               = render "devise/shared/links"
   .parallax
-    = image_tag "background1.jpg"
+    = image_tag "checksheet.jpg"
