@@ -1,7 +1,3 @@
-var search_name_timer;
-var added_user_list = [];
-var cooperate_user_list = [];
-
 // search_sheet.jsでも使っているのでグローバル化しておく
 function getErrMsgToHTML(msg) {
   var html = `<div class="row">

@@ -1,4 +1,3 @@
-var auto_save_timer;
 $(document).on('turbolinks:load', function () {
   $(".update_check").on("click", function () {
 

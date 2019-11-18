@@ -1,5 +1,3 @@
-var deleted_rows = 0;
-
 // データ保存用のフィールド作成
 function set_input_field() {
   // #items_branchより下のフィールドを削除
