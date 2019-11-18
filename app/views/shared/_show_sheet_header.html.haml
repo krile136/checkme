@@ -1,14 +1,20 @@
 %nav.white.get_nav_height{role: "navigation"}
   .nav-wrapper.container
-    = link_to sheet.title, root_path ,id: 'logo-container', class:"show_sheet_title sub-header orange-text text-darken-4 hide-on-med-and-down "
-    = link_to sheet.title, root_path ,id: 'logo-container', class:"show_sheet_title orange-text text-darken-4 hide-on-large-only hide-on-small-only"
-    = link_to sheet.title, root_path ,id: 'logo-container', class:"show_sheet_title orange-text text-darken-4 hide-on-med-and-up"
+    = link_to sheet.title, user_path(current_user.id) ,id: 'logo-container', class:"show_sheet_title sub-header orange-text text-darken-4 hide-on-med-and-down "
+    = link_to sheet.title, user_path(current_user.id) ,id: 'logo-container', class:"show_sheet_title orange-text text-darken-4 hide-on-large-only hide-on-small-only"
+    = link_to sheet.title, user_path(current_user.id) ,id: 'logo-container', class:"show_sheet_title orange-text text-darken-4 hide-on-med-and-up"
     %ul.right.hide-on-med-and-down
+      %li
+        = link_to "シートを作成", new_sheet_path, class: "black-text"
       %li
         = link_to "TOP", root_path, class: "red-text"
       %li
         = link_to "マイページ", user_path(current_user.id), class: "red-text"
     %ul#nav-mobile.sidenav
+      %li
+        = link_to new_sheet_path, class: "black-text" do
+          %i.material-icons.medium create
+          シートを作る
       %li
         = link_to root_path, class: "red-text" do
           %i.material-icons.medium exit_to_app

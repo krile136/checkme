@@ -1,4 +1,6 @@
 class CooperateRequestsController < ApplicationController
+  before_action :move_to_index, except: :index
+
   def create
     request_params['request_id'].each do |id|
       cooperate_request = CooperateRequest.new
@@ -54,6 +56,9 @@ class CooperateRequestsController < ApplicationController
   end
 
   private
+  def move_to_index
+    redirect_to root_path unless user_signed_in?
+  end
 
   def request_params
     params.permit(:sheet_id, request_id: []).merge(user_id: current_user.id)
