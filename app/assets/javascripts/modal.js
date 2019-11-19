@@ -1,5 +1,18 @@
 $(document).on('turbolinks:load', function () {
 
+  $('.help_btn').on('click', function (e) {
+    e.preventDefault();
+
+    // サイドバーを閉じる
+    $('.sidenav').sidenav('close');
+
+    // 表示するモーダルを取得
+    var help_modal = $("#help_modal");
+
+    // 隠してたモーダルを起動する
+    $(help_modal).modal("open");
+  })
+
   $('.show_profile_btn').on('click', function (e) {
     e.preventDefault();
 

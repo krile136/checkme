@@ -2,11 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
   root 'sheets#index'
 
-  resources :users, only: [:index, :show, :edit, :update] do
-    collection do
-      get :how_to_use
-    end
-  end
+  resources :users, only: [:index, :show, :edit, :update]
 
   resources :sheets, only: [:index, :new, :create, :edit, :update, :destroy, :show] do
     member do

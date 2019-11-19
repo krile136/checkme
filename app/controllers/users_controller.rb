@@ -52,7 +52,7 @@ class UsersController < ApplicationController
   end
 
   def how_to_use
-
+    
   end
 
   private
