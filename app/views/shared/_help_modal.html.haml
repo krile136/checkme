@@ -1,5 +1,5 @@
 = link_to "", "#help_modal", class: "modal_trigger"
-#help_modal.modal
+#help_modal.modal.modal-fixed-footer
   .modal-content
     #help_list
       %h5 ヘルプ一覧
@@ -33,7 +33,7 @@
         .col.s12
           = link_to "#",class: "btn-flat help-pull" do
             %h6 プルの方法
-    #help_make_content{"hidden": "hidden"}
+    #help_make_content.help_back_content{"hidden": "hidden"}
       %h5 シートの作り方
       .divider
       %br/
@@ -66,4 +66,5 @@
             %br/
             = image_tag 'make_7.png', class:'image_class'
   .modal-footer
+    = link_to "戻る", "#", class: "modal-back black-text btn-flat"
     = link_to "閉じる", "#", class: "modal-cancel modal-close waves-effect btn-flat red-text"
