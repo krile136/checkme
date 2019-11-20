@@ -1,6 +1,37 @@
 = link_to "", "#help_modal", class: "modal_trigger"
 #help_modal.modal
   .modal-content
-    
+    %h5 ヘルプ一覧
+    .divider
+    %br/
+    .row
+      .col.12
+        = link_to "#",class: "btn-flat help-make" do
+          %h6 シートの作り方
+    .row
+      .col.12
+        = link_to "#",class: "btn-flat help-use" do
+          %h6 シートの使い方
+    .row
+      .col.12
+        = link_to "#",class: "btn-flat help-share" do
+          %h6 シートの共有
+    .row
+      .col.12
+        = link_to "#",class: "btn-flat help-publc" do
+          %h6 シートの公開
+    .row
+      .col.12
+        = link_to "#",class: "btn-flat help-search-mypage" do
+          %h6 マイページ検索
+    .row
+      .col.12
+        = link_to "#",class: "btn-flat help-search-public" do
+          %h6 公開シート検索
+    .row
+      .col.12
+        = link_to "#",class: "btn-flat help-pull" do
+          %h6 プルの方法
+
   .modal-footer
     = link_to "閉じる", "#", class: "modal-cancel modal-close waves-effect btn-flat red-text"
