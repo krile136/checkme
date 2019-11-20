@@ -16,7 +16,7 @@
             共有しよう
         .row.center
           - if user_signed_in?
-            = link_to "さぁ、始めよう", user_path(current_user.id), class: "btn-large waves-effect waves-light teal lighten-1", id: "download-botton"
+            = link_to "マイページ", user_path(current_user.id), class: "btn-large waves-effect waves-light teal lighten-1", id: "download-botton"
           - else
             = link_to "さぁ、始めよう", new_user_registration_path, class: "btn-large waves-effect waves-light teal lighten-1", id: "download-botton"
       %br/
