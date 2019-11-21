@@ -127,6 +127,7 @@ $(document).on('turbolinks:load', function () {
             if (users.length > 0) {
               users.forEach(function (user) {
                 // 自分以外のユーザーかつ、user.nameと一致するデータがadded_user_listとcooperate_listになければ追加する
+                console.log(user.name);
                 var index = added_user_list.findIndex(item => item === user.name)
                 var coop_index = cooperate_user_list.findIndex(item => item === user.name)
                 if (user.id != current_id && index == -1 && coop_index == -1) {

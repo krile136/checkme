@@ -305,6 +305,7 @@ function modal_send_request(e, elem) {
   $('#added_user_branch').empty();
   user_list = $('#user_name_branch');
   user_list.empty();
+  added_user_list = [];
   user_list.append(getErrMsgToHTML("検索するユーザー名を入力してください"));
   $('#added_user_branch').empty();
   $('#cooperate_branch').empty();
