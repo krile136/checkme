@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   root 'sheets#index'
 
   resources :users, only: [:index, :show, :edit, :update]
+
   resources :sheets, only: [:index, :new, :create, :edit, :update, :destroy, :show] do
     member do
       patch :update_date
@@ -14,13 +15,16 @@ Rails.application.routes.draw do
       get :get_check
     end
   end
+
   resources :items, only: [:update, :show]
+
   resources :cooperate_requests, only: [:create, :destroy] do
     member do
       delete :reject
       patch :accept
     end
   end
+
   namespace :api do
     resources :sheets, only: :index, defaults: { format: 'json' } do
       collection do
@@ -30,4 +34,5 @@ Rails.application.routes.draw do
     end
     resources :users, only: [:index, :update], defaults: { format: 'json' }
   end
+  
 end

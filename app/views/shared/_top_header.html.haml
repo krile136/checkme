@@ -11,6 +11,8 @@
         %li
           = link_to "シートを作成", new_sheet_path, class: "black-text"
         %li
+          = link_to "使い方を見る", "", class:"help_btn black-text"
+        %li
           = link_to "ログアウト", destroy_user_session_path, method: :delete, class: "red-text"
       - else
         %li
@@ -27,6 +29,10 @@
           = link_to new_sheet_path, class: "black-text" do
             %i.material-icons.medium create
             シートを作る
+        %li
+          = link_to "#", class: "help_btn bkack-text" do
+            %i.material-icons.medium help
+            使い方を見る
         %li
           = link_to destroy_user_session_path, method: :delete, class: "red-text" do
             %i.material-icons.medium exit_to_app

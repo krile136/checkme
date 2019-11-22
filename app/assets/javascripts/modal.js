@@ -1,5 +1,18 @@
 $(document).on('turbolinks:load', function () {
 
+  $('.help_btn').on('click', function (e) {
+    e.preventDefault();
+
+    // サイドバーを閉じる
+    $('.sidenav').sidenav('close');
+
+    // 表示するモーダルを取得
+    var help_modal = $("#help_modal");
+
+    // 隠してたモーダルを起動する
+    $(help_modal).modal("open");
+  })
+
   $('.show_profile_btn').on('click', function (e) {
     e.preventDefault();
 
@@ -292,6 +305,7 @@ function modal_send_request(e, elem) {
   $('#added_user_branch').empty();
   user_list = $('#user_name_branch');
   user_list.empty();
+  added_user_list = [];
   user_list.append(getErrMsgToHTML("検索するユーザー名を入力してください"));
   $('#added_user_branch').empty();
   $('#cooperate_branch').empty();

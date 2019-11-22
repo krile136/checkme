@@ -51,6 +51,10 @@ class UsersController < ApplicationController
     @requests_time = @requests.map{|request| request.sheet.get_request_last_view(today)}
   end
 
+  def how_to_use
+    
+  end
+
   private
 
   def move_to_index
