@@ -14,18 +14,20 @@
             チェックシートを作って
             %br/
             共有しよう
-        .row.center
-          - if user_signed_in?
+        - if user_signed_in?
+          .row.center
             = link_to "マイページ", user_path(current_user.id), class: "btn-large waves-effect waves-light teal lighten-1", id: "download-botton"
-          - else
+        - else
+          .row.center
             = link_to "さぁ、始めよう", new_user_registration_path, class: "btn-large waves-effect waves-light teal lighten-1", id: "download-botton"
+          .row.center
+            = link_to "機能を試す（ゲスト）", users_guest_sign_in_path, method: :post, class: "btn-large waves-effect waves-light teal lighten-1", id: "download-botton"
       %br/
       %br/
   .parallax
     = image_tag "checksheet.jpg", class: "blur"
 .container
   .section
-    / Icon Section
     .row
       .col.s12.m4
         .icon-block
