@@ -12,7 +12,5 @@ $(document).on('turbolinks:load', function () {
 // 特にsidenavはリセットしないと動かない
 $(document).on("turbolinks:before-cache", function () {
   $('.sidenav').sidenav('destroy');
-  $('.dropdown-trigger').dropdown('destroy');
-  $('.modal').modal('destroy');
 });
 
