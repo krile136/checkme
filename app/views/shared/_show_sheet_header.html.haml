@@ -5,7 +5,9 @@
     = link_to sheet.title, user_path(current_user.id) ,id: 'logo-container', class:"show_sheet_title orange-text text-darken-4 hide-on-med-and-up"
     %ul.right.hide-on-med-and-down
       %li
-        = link_to "シートを作成", new_sheet_path, class: "black-text"
+        = link_to "新しいシートを作成", new_sheet_path, class: "black-text"
+      %li
+        = link_to "このシートを編集", edit_sheet_path(sheet.id), class: "black-text"
       %li
         = link_to "TOP", root_path, class: "red-text"
       %li
@@ -13,8 +15,12 @@
     %ul#nav-mobile.sidenav
       %li
         = link_to new_sheet_path, class: "black-text" do
-          %i.material-icons.medium create
-          シートを作る
+          %i.material-icons.medium fiber_new
+          新しいシートを作る
+      %li
+        = link_to edit_sheet_path(sheet.id), class: "black-text" do
+          %i.material-icons.medium edit
+          このシートを編集
       %li
         = link_to root_path, class: "red-text" do
           %i.material-icons.medium exit_to_app
