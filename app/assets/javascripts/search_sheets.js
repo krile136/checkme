@@ -212,7 +212,9 @@ $(document).on('turbolinks:load', function () {
     sheet_search_with_asynchronous_communiation()
   })
 
-  $('.sheet_search_form').on('keyup', function () {
+  $('.sheet_search_form').on('keyup　compositionend', function () {
+
+    console.log("searched");
 
     // 検索実行のタイマーが起動済みの時はリセットする
     clearTimeout(search_sheets_timer);
@@ -222,4 +224,5 @@ $(document).on('turbolinks:load', function () {
       sheet_search_with_asynchronous_communiation()
     }, 500);
   });
+
 });

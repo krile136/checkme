@@ -97,7 +97,7 @@ $(document).on('turbolinks:load', function () {
     });
   }
 
-  $(".input_user_name").on("keyup", function () {
+  $(".input_user_name").on("keyup　compositionend", function () {
 
     // 検索実行のタイマーが起動済みの時はリセットする
     clearTimeout(search_name_timer);
