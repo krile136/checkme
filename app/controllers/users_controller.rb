@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :move_to_index
+  before_action :move_to_show, except: :index
 
   def index
     @users = User.where('name LIKE(?)',"%#{params[:keyword]}%")
@@ -57,7 +57,7 @@ class UsersController < ApplicationController
 
   private
 
-  def move_to_index
-    redirect_to root_path unless user_signed_in?
+  def move_to_show
+    redirect_to user_path(current_user.id) if params[:id]!=current_user.id.to_s
   end
 end
