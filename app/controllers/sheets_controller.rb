@@ -11,8 +11,13 @@ class SheetsController < ApplicationController
   end
 
   def show 
-    @sheet = Sheet.find(params[:id])
-    @item = Item.where(sheet_id: @sheet.id).order('top ASC')
+    if Sheet.find_by(id: params[:id])
+      @sheet = Sheet.find(params[:id])
+      @item = Item.where(sheet_id: @sheet.id).order('top ASC')
+      redirect_to user_path(current_user.id) if @sheet.users.first.id!=current_user.id
+    else
+      redirect_to user_path(current_user.id)
+    end
   end
 
   def create
